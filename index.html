@@ -8,7 +8,7 @@
   <style>
     body { font-family: Arial, sans-serif; background: #f4f6f8; color: #222; margin: 0; line-height: 1.6; }
     header { background: #1f6feb; color: white; padding: 30px 20px; text-align: center; }
-    nav { background: white; padding: 15px; text-align: center; border-bottom: 1px solid #ddd; position: sticky; top: 0; }
+    nav { background: white; padding: 15px; text-align: center; border-bottom: 1px solid #ddd; position: sticky; top: 0; z-index: 30; }
     nav a { margin: 0 8px; color: #1f6feb; text-decoration: none; font-weight: bold; font-size: 14px; }
     main { max-width: 1000px; margin: 30px auto; padding: 0 20px; }
     section { background: white; margin-bottom: 25px; padding: 22px; border-radius: 12px; box-shadow: 0 2px 8px rgba(0,0,0,0.08); }
@@ -24,83 +24,84 @@
     .question { background: #f0f0ff; padding: 10px; border-radius: 8px; margin: 8px 0; }
     textarea { width: 100%; min-height: 130px; padding: 12px; font-size: 15px; border: 1px solid #bbb; border-radius: 8px; box-sizing: border-box; }
     footer { text-align: center; padding: 25px; color: #666; }
-    /* ===== Staggered menu ===== */
-.sm-wrap { position: fixed; inset: 0 0 auto auto; z-index: 1000; pointer-events: none; }
 
-.sm-toggle {
-  pointer-events: auto;
-  position: fixed; top: 18px; right: 22px; z-index: 1003;
-  display: inline-flex; align-items: center; gap: 10px;
-  background: #1f6feb; color: #fff; border: none;
-  padding: 11px 18px; border-radius: 30px;
-  font-weight: bold; font-size: 15px; cursor: pointer;
-  box-shadow: 0 4px 14px rgba(0,0,0,0.25);
-  transition: background 0.25s;
-}
-.sm-toggle:hover { background: #1557c0; }
+    /* Felolvaso gombok */
+    .speak-btn { background: #fff3cd; border: 1px solid #f4b400; color: #8a6d00; border-radius: 8px; cursor: pointer; font-size: 13px; font-weight: bold; padding: 5px 10px; margin-bottom: 10px; }
+    .speak-btn:hover { background: #ffe9a8; }
+    td.it-cell { cursor: pointer; }
+    td.it-cell:hover { background: #fff8e1; }
+    .q-speak { margin-left: 8px; cursor: pointer; border: none; background: none; font-size: 15px; }
 
-.sm-icon { position: relative; width: 16px; height: 16px; display: inline-block; transition: transform 0.6s cubic-bezier(0.2,0.8,0.2,1); }
-.sm-icon-line { position: absolute; top: 50%; left: 0; width: 100%; height: 2px; background: currentColor; border-radius: 2px; transform: translateY(-50%); }
-.sm-icon-line.v { transform: translateY(-50%) rotate(90deg); }
-.sm-wrap[data-open] .sm-icon { transform: rotate(225deg); }
+    /* Szokartya */
+    .fc-controls { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; margin: 12px 0; }
+    .fc-controls select, .fc-btn { font-size: 14px; padding: 8px 12px; border-radius: 10px; border: 1px solid #cdddff; background: #eef4ff; color: #1f6feb; font-weight: bold; cursor: pointer; }
+    .fc-btn:hover { background: #dbe8ff; }
+    .fc-prog { margin-left: auto; color: #666; font-size: 14px; }
+    .fc-card { perspective: 1200px; height: 200px; margin: 6px 0 4px; cursor: pointer; }
+    .fc-inner { position: relative; width: 100%; height: 100%; transition: transform 0.5s; transform-style: preserve-3d; }
+    .fc-card.flipped .fc-inner { transform: rotateY(180deg); }
+    .fc-face { position: absolute; inset: 0; backface-visibility: hidden; -webkit-backface-visibility: hidden; display: flex; align-items: center; justify-content: center; border-radius: 14px; padding: 20px; text-align: center; font-size: clamp(1.3rem, 4vw, 2rem); font-weight: bold; box-sizing: border-box; }
+    .fc-front { background: #fff8e1; border: 2px solid #f4b400; color: #5a4500; }
+    .fc-back { background: #eef7ee; border: 2px solid #34a853; color: #1d5b2a; transform: rotateY(180deg); }
+    .fc-hint { text-align: center; color: #888; font-size: 13px; margin-top: 6px; }
 
-.sm-prelayers { position: fixed; top: 0; right: 0; height: 100vh; width: min(88vw, 420px); z-index: 1001; pointer-events: none; }
-.sm-prelayer { position: absolute; inset: 0; transform: translateX(100%); transition: transform 0.55s cubic-bezier(0.2,0.8,0.2,1); }
-.sm-wrap[data-open] .sm-prelayer:nth-child(1) { transform: translateX(0); transition-delay: 0.08s; }
-.sm-wrap[data-open] .sm-prelayer:nth-child(2) { transform: translateX(0); transition-delay: 0s; }
+    /* Staggered menu */
+    .sm-wrap { position: fixed; inset: 0 0 auto auto; z-index: 1000; pointer-events: none; }
+    .sm-toggle { pointer-events: auto; position: fixed; top: 18px; right: 22px; z-index: 1003; display: inline-flex; align-items: center; gap: 10px; background: #1f6feb; color: #fff; border: none; padding: 11px 18px; border-radius: 30px; font-weight: bold; font-size: 15px; cursor: pointer; box-shadow: 0 4px 14px rgba(0,0,0,0.25); transition: background 0.25s; }
+    .sm-toggle:hover { background: #1557c0; }
+    .sm-icon { position: relative; width: 16px; height: 16px; display: inline-block; transition: transform 0.6s cubic-bezier(0.2,0.8,0.2,1); }
+    .sm-icon-line { position: absolute; top: 50%; left: 0; width: 100%; height: 2px; background: currentColor; border-radius: 2px; transform: translateY(-50%); }
+    .sm-icon-line.v { transform: translateY(-50%) rotate(90deg); }
+    .sm-wrap[data-open] .sm-icon { transform: rotate(225deg); }
+    .sm-prelayers { position: fixed; top: 0; right: 0; height: 100vh; width: min(88vw, 420px); z-index: 1001; pointer-events: none; }
+    .sm-prelayer { position: absolute; inset: 0; transform: translateX(100%); transition: transform 0.55s cubic-bezier(0.2,0.8,0.2,1); }
+    .sm-wrap[data-open] .sm-prelayer:nth-child(1) { transform: translateX(0); transition-delay: 0.08s; }
+    .sm-wrap[data-open] .sm-prelayer:nth-child(2) { transform: translateX(0); transition-delay: 0s; }
+    .sm-panel { position: fixed; top: 0; right: 0; height: 100vh; width: min(88vw, 420px); background: #fff; z-index: 1002; pointer-events: auto; transform: translateX(100%); transition: transform 0.6s cubic-bezier(0.2,0.8,0.2,1) 0.16s; padding: 95px 34px 32px; overflow-y: auto; box-shadow: -12px 0 32px rgba(0,0,0,0.18); }
+    .sm-wrap[data-open] .sm-panel { transform: translateX(0); }
+    .sm-list { list-style: none; margin: 0; padding: 0; counter-reset: smItem; }
+    .sm-list li { overflow: hidden; }
+    .sm-list a { position: relative; display: block; font-size: clamp(1.4rem, 4.5vw, 2.2rem); font-weight: 700; text-transform: uppercase; letter-spacing: -1px; line-height: 1.15; color: #111; text-decoration: none; padding: 4px 40px 4px 0; transform: translateY(140%) rotate(8deg); transition: transform 0.7s cubic-bezier(0.2,0.8,0.2,1), color 0.2s; }
+    .sm-wrap[data-open] .sm-list a { transform: translateY(0) rotate(0); }
+    .sm-list a:hover { color: #5227FF; }
+    .sm-list a::before { counter-increment: smItem; content: counter(smItem, decimal-leading-zero); position: absolute; top: 0.35em; right: 0; font-size: 14px; font-weight: 400; color: #5227FF; }
+    .sm-extra { margin-top: 28px; padding-top: 20px; border-top: 1px solid #eee; display: flex; flex-direction: column; gap: 10px; }
+    .sm-extra a { color: #1f6feb; font-weight: bold; text-decoration: none; }
+    .sm-extra a:hover { text-decoration: underline; }
 
-.sm-panel {
-  position: fixed; top: 0; right: 0; height: 100vh; width: min(88vw, 420px);
-  background: #fff; z-index: 1002; pointer-events: auto;
-  transform: translateX(100%);
-  transition: transform 0.6s cubic-bezier(0.2,0.8,0.2,1) 0.16s;
-  padding: 95px 34px 32px; overflow-y: auto;
-  box-shadow: -12px 0 32px rgba(0,0,0,0.18);
-}
-.sm-wrap[data-open] .sm-panel { transform: translateX(0); }
-
-.sm-list { list-style: none; margin: 0; padding: 0; counter-reset: smItem; }
-.sm-list li { overflow: hidden; }
-.sm-list a {
-  position: relative; display: block;
-  font-size: clamp(1.5rem, 5vw, 2.4rem); font-weight: 700;
-  text-transform: uppercase; letter-spacing: -1px; line-height: 1.15;
-  color: #111; text-decoration: none; padding: 4px 40px 4px 0;
-  transform: translateY(140%) rotate(8deg);
-  transition: transform 0.7s cubic-bezier(0.2,0.8,0.2,1), color 0.2s;
-}
-.sm-wrap[data-open] .sm-list a { transform: translateY(0) rotate(0); }
-.sm-list a:hover { color: #5227FF; }
-.sm-list a::before {
-  counter-increment: smItem;
-  content: counter(smItem, decimal-leading-zero);
-  position: absolute; top: 0.35em; right: 0;
-  font-size: 14px; font-weight: 400; color: #5227FF;
-}
-
-.sm-extra { margin-top: 28px; padding-top: 20px; border-top: 1px solid #eee; display: flex; flex-direction: column; gap: 10px; }
-.sm-extra a { color: #1f6feb; font-weight: bold; text-decoration: none; }
-.sm-extra a:hover { text-decoration: underline; }
+    /* Gyakorlo AI */
+    #aiBubble { position: fixed; bottom: 22px; right: 22px; z-index: 1100; width: 56px; height: 56px; border-radius: 50%; border: none; background: #1f6feb; color: #fff; font-size: 24px; cursor: pointer; box-shadow: 0 6px 18px rgba(0,0,0,0.28); transition: transform 0.2s; }
+    #aiBubble:hover { transform: scale(1.08); }
+    #aiPanel { position: fixed; bottom: 90px; right: 22px; z-index: 1100; width: min(92vw, 340px); height: min(70vh, 480px); background: #fff; border-radius: 16px; overflow: hidden; display: none; flex-direction: column; box-shadow: 0 12px 40px rgba(0,0,0,0.3); }
+    #aiPanel.open { display: flex; }
+    #aiHeader { background: #1f6feb; color: #fff; padding: 12px 14px; display: flex; justify-content: space-between; align-items: center; font-weight: bold; }
+    #aiClose { background: none; border: none; color: #fff; font-size: 22px; cursor: pointer; line-height: 1; }
+    #aiBody { flex: 1; overflow-y: auto; padding: 12px; background: #f4f6f8; font-size: 14px; }
+    .aiMsg { margin: 8px 0; padding: 9px 12px; border-radius: 12px; max-width: 85%; line-height: 1.45; white-space: pre-wrap; }
+    .aiMsg.bot { background: #e8f1ff; color: #14375f; border-bottom-left-radius: 3px; }
+    .aiMsg.user { background: #1f6feb; color: #fff; margin-left: auto; border-bottom-right-radius: 3px; }
+    #aiChips { display: flex; flex-wrap: wrap; gap: 6px; padding: 8px; border-top: 1px solid #eee; }
+    #aiChips select, .aiChip { font-size: 12px; padding: 6px 9px; border-radius: 14px; border: 1px solid #cdddff; background: #eef4ff; color: #1f6feb; cursor: pointer; font-weight: bold; }
+    .aiChip:hover { background: #dbe8ff; }
+    #aiInputRow { display: flex; gap: 6px; padding: 8px; border-top: 1px solid #eee; }
+    #aiInput { flex: 1; padding: 9px 11px; border: 1px solid #ccc; border-radius: 10px; font-size: 14px; }
+    #aiSend { background: #1f6feb; color: #fff; border: none; border-radius: 10px; padding: 0 14px; font-weight: bold; cursor: pointer; }
+    #aiSend:hover { background: #1557c0; }
   </style>
 </head>
 
-  
 <body>
+
 <!-- Staggered tetelvalaszto menu -->
 <div class="sm-wrap" id="smWrap" data-position="right">
   <div class="sm-prelayers" aria-hidden="true">
     <div class="sm-prelayer" style="background:#B497CF"></div>
     <div class="sm-prelayer" style="background:#5227FF"></div>
   </div>
-
   <button class="sm-toggle" id="smToggle" aria-expanded="false" aria-controls="smPanel" type="button">
-    <span class="sm-toggle-text" id="smToggleText">Temak</span>
-    <span class="sm-icon" aria-hidden="true">
-      <span class="sm-icon-line"></span>
-      <span class="sm-icon-line v"></span>
-    </span>
+    <span id="smToggleText">Temak</span>
+    <span class="sm-icon" aria-hidden="true"><span class="sm-icon-line"></span><span class="sm-icon-line v"></span></span>
   </button>
-
   <aside class="sm-panel" id="smPanel" aria-hidden="true">
     <ul class="sm-list">
       <li><a href="#aspetti">Aspetti personali</a></li>
@@ -115,29 +116,23 @@
       <li><a href="#finanze">Questioni finanziarie</a></li>
     </ul>
     <div class="sm-extra">
+      <a href="#szokartya">Szokartyak</a>
       <a href="#kerdesek">Gyakorlo kerdesek</a>
       <a href="#sajat">Sajat monolog</a>
     </div>
   </aside>
 </div>
+
 <header>
   <h1>Olasz kozep szintu szobeli erettsegi gyakorlo</h1>
-  <p>10 fo temakor szokinccsel, vazlatokkal es mintamonologokkal</p>
+  <p>10 fo temakor szokinccsel, vazlatokkal, mintamonologokkal es felolvasoval</p>
 </header>
 
 <nav>
-  <a href="#aspetti">1. Aspetti personali</a>
-  <a href="#gente">2. Gente e societa</a>
-  <a href="#ambiente">3. Ambiente</a>
-  <a href="#scuola">4. Scuola</a>
-  <a href="#lavoro">5. Mondo del lavoro</a>
-  <a href="#vivere">6. Modo di vivere</a>
-  <a href="#divertimento">7. Divertimento</a>
-  <a href="#viaggi">8. Viaggi e vacanze</a>
-  <a href="#scienza">9. Scienza e tecnologia</a>
-  <a href="#finanze">10. Questioni finanziarie</a>
-  <a href="#kerdesek">Kerdesek</a>
-  <a href="#sajat">Sajat monolog</a>
+  <a href="#aspetti">1</a><a href="#gente">2</a><a href="#ambiente">3</a><a href="#scuola">4</a>
+  <a href="#lavoro">5</a><a href="#vivere">6</a><a href="#divertimento">7</a><a href="#viaggi">8</a>
+  <a href="#scienza">9</a><a href="#finanze">10</a>
+  <a href="#szokartya">Szokartya</a><a href="#kerdesek">Kerdesek</a><a href="#sajat">Monolog</a>
 </nav>
 
 <main>
@@ -145,15 +140,48 @@
 <section>
   <h2>Hogyan hasznald?</h2>
   <p>
-    Ez az oldal segit gyakorolni az olasz kozep szintu szobeli erettsegire.
     Tanuld meg a szavakat, nezd at a vazlatokat, majd probald elmondani a monologokat sajat szavaiddal.
+    Kattints a 🔊 gombokra a kiejtes meghallgatasahoz, a szokartyaknal pedig gyakorolhatod a szokincset.
   </p>
+</section>
+
+<!-- ===== SZOKARTYA ===== -->
+<section id="szokartya">
+  <h2>Szokartyak - Szokincs gyakorlo</h2>
+  <div class="fc-controls">
+    <select id="fcTopic" aria-label="Temavalasztas">
+      <option value="all">Mind</option>
+      <option value="aspetti">1. Aspetti personali</option>
+      <option value="gente">2. Gente e societa</option>
+      <option value="ambiente">3. Ambiente</option>
+      <option value="scuola">4. Scuola</option>
+      <option value="lavoro">5. Mondo del lavoro</option>
+      <option value="vivere">6. Modo di vivere</option>
+      <option value="divertimento">7. Divertimento</option>
+      <option value="viaggi">8. Viaggi e vacanze</option>
+      <option value="scienza">9. Scienza e tecnologia</option>
+      <option value="finanze">10. Questioni finanziarie</option>
+    </select>
+    <button class="fc-btn" id="fcShuffle" type="button">Kever</button>
+    <button class="fc-btn" id="fcSpeak" type="button">🔊 Kiejtes</button>
+    <span class="fc-prog" id="fcProg">0 / 0</span>
+  </div>
+  <div class="fc-card" id="fcCard">
+    <div class="fc-inner">
+      <div class="fc-face fc-front" id="fcFront">-</div>
+      <div class="fc-face fc-back" id="fcBack">-</div>
+    </div>
+  </div>
+  <div class="fc-hint">Kattints a kartyara a megforditashoz</div>
+  <div class="fc-controls">
+    <button class="fc-btn" id="fcPrev" type="button">&larr; Elozo</button>
+    <button class="fc-btn" id="fcNext" type="button">Kovetkezo &rarr;</button>
+  </div>
 </section>
 
 <!-- ============ 1. ASPETTI PERSONALI, FAMIGLIA ============ -->
 <section id="aspetti">
   <h2>1. Aspetti personali, famiglia - Szemelyes adatok, csalad</h2>
-
   <h3>Alap szokincs</h3>
   <table>
     <tr><th>Olaszul</th><th>Magyarul</th></tr>
@@ -170,89 +198,31 @@
     <tr><td>i lavori domestici</td><td>hazimunka</td></tr>
     <tr><td>i progetti per il futuro</td><td>jovobeli tervek</td></tr>
   </table>
-
-  <details>
-    <summary>Dati personali, fasi della vita</summary>
-    <ul>
-      <li>Mi chiamo... - Engem ... hivnak</li>
-      <li>Ho diciotto anni. - 18 eves vagyok.</li>
-      <li>Sono nato/nata a... - ...-ban szulettem</li>
-      <li>l'infanzia, l'adolescenza, l'eta adulta, la vecchiaia - gyerekkor, kamaszkor, felnottkor, oregkor</li>
-      <li>crescere - felnoni</li>
-    </ul>
+  <details><summary>Dati personali, fasi della vita</summary>
+    <ul><li>Mi chiamo... - Engem ... hivnak</li><li>Ho diciotto anni. - 18 eves vagyok.</li><li>Sono nato/nata a... - ...-ban szulettem</li><li>l'infanzia, l'adolescenza, l'eta adulta, la vecchiaia - gyerekkor, kamaszkor, felnottkor, oregkor</li></ul>
   </details>
-
-  <details>
-    <summary>Vita familiare, relazioni familiari</summary>
-    <ul>
-      <li>la famiglia numerosa - nagycsalad</li>
-      <li>il fratello / la sorella - testver (fiu / lany)</li>
-      <li>i nonni - nagyszulok</li>
-      <li>andare d'accordo con - jol kijonni valakivel</li>
-      <li>litigare - veszekedni</li>
-      <li>passare il tempo insieme - egyutt tolteni az idot</li>
-    </ul>
+  <details><summary>Vita familiare, relazioni familiari</summary>
+    <ul><li>la famiglia numerosa - nagycsalad</li><li>il fratello / la sorella - testver</li><li>i nonni - nagyszulok</li><li>andare d'accordo con - jol kijonni valakivel</li><li>litigare - veszekedni</li></ul>
   </details>
-
-  <details>
-    <summary>Impegni quotidiani nella famiglia, lavori domestici</summary>
-    <ul>
-      <li>cucinare - fozni</li>
-      <li>lavare i piatti - mosogatni</li>
-      <li>fare la spesa - bevasarolni</li>
-      <li>pulire la casa - takaritani</li>
-      <li>aiutare in casa - segiteni a hazimunkaban</li>
-      <li>portare fuori i rifiuti - kivinni a szemetet</li>
-    </ul>
+  <details><summary>Impegni quotidiani, lavori domestici</summary>
+    <ul><li>cucinare - fozni</li><li>lavare i piatti - mosogatni</li><li>fare la spesa - bevasarolni</li><li>pulire la casa - takaritani</li><li>aiutare in casa - segiteni a hazimunkaban</li></ul>
   </details>
-
-  <details>
-    <summary>Progetti personali</summary>
-    <ul>
-      <li>vorrei studiare all'universita - egyetemen szeretnek tanulni</li>
-      <li>imparare le lingue - nyelveket tanulni</li>
-      <li>trovare un buon lavoro - jo munkat talalni</li>
-      <li>viaggiare - utazni</li>
-      <li>il mio sogno e... - az almom az, hogy...</li>
-    </ul>
+  <details><summary>Progetti personali</summary>
+    <ul><li>vorrei studiare all'universita - egyetemen szeretnek tanulni</li><li>imparare le lingue - nyelveket tanulni</li><li>trovare un buon lavoro - jo munkat talalni</li><li>il mio sogno e... - az almom az, hogy...</li></ul>
   </details>
-
-  <h3>Vazlat - Aspetti personali, famiglia</h3>
-  <div class="box-hu">
-    <ol>
-      <li>Bemutatkozas: nev, kor, hol laksz.</li>
-      <li>Csalad bemutatasa: kik a tagjai, milyen a kapcsolat.</li>
-      <li>Hazimunka: ki mit csinal otthon, te miben segitesz.</li>
-      <li>Az elet szakaszai roviden.</li>
-      <li>Jovobeli terveid az erettsegi utan.</li>
-    </ol>
-  </div>
-
-  <h3>Mintamonolog - Aspetti personali, famiglia</h3>
+  <h3>Vazlat</h3>
+  <div class="box-hu"><ol><li>Bemutatkozas: nev, kor, hol laksz.</li><li>Csalad bemutatasa.</li><li>Hazimunka: ki mit csinal.</li><li>Az elet szakaszai.</li><li>Jovobeli terveid.</li></ol></div>
+  <h3>Mintamonolog</h3>
   <div class="box-it">
-    <p>
-      Mi chiamo Marton e ho diciotto anni. Abito in Ungheria con la mia famiglia.
-      La mia famiglia non e molto numerosa: siamo io, i miei genitori e mio fratello.
-    </p>
-    <p>
-      Con i miei genitori vado abbastanza d'accordo, anche se qualche volta litighiamo per piccole cose.
-      A casa tutti aiutano: io di solito lavo i piatti, faccio la spesa e tengo in ordine la mia camera.
-    </p>
-    <p>
-      Secondo me ogni fase della vita e importante: l'infanzia, l'adolescenza e poi l'eta adulta.
-      Adesso sono nell'adolescenza ed e un periodo pieno di cambiamenti.
-    </p>
-    <p>
-      Per il futuro ho molti progetti. Dopo la maturita vorrei studiare all'universita,
-      imparare bene le lingue straniere e trovare un lavoro interessante. Il mio sogno e poter viaggiare molto.
-    </p>
+    <p>Mi chiamo Marton e ho diciotto anni. Abito in Ungheria con la mia famiglia. La mia famiglia non e molto numerosa: siamo io, i miei genitori e mio fratello.</p>
+    <p>Con i miei genitori vado abbastanza d'accordo, anche se qualche volta litighiamo. A casa tutti aiutano: io di solito lavo i piatti, faccio la spesa e tengo in ordine la mia camera.</p>
+    <p>Per il futuro ho molti progetti. Dopo la maturita vorrei studiare all'universita, imparare bene le lingue straniere e trovare un lavoro interessante. Il mio sogno e poter viaggiare molto.</p>
   </div>
 </section>
 
 <!-- ============ 2. GENTE E SOCIETA ============ -->
 <section id="gente">
   <h2>2. Gente e societa - Emberek es tarsadalom</h2>
-
   <h3>Alap szokincs</h3>
   <table>
     <tr><th>Olaszul</th><th>Magyarul</th></tr>
@@ -269,122 +239,41 @@
     <tr><td>il conflitto</td><td>konfliktus</td></tr>
     <tr><td>il volontariato</td><td>onkentes munka</td></tr>
   </table>
-
-  <details>
-    <summary>Aspetto fisico e carattere, somiglianze e differenze</summary>
-    <ul>
-      <li>alto / basso - magas / alacsony</li>
-      <li>i capelli biondi / castani / neri - szoke / barna / fekete haj</li>
-      <li>gentile, simpatico, timido, allegro - kedves, szimpatikus, felenk, vidam</li>
-      <li>assomigliare a - hasonlitani valakire</li>
-      <li>la differenza - kulonbseg</li>
-    </ul>
+  <details><summary>Aspetto fisico e carattere</summary>
+    <ul><li>alto / basso - magas / alacsony</li><li>i capelli biondi / castani / neri - szoke / barna / fekete haj</li><li>gentile, timido, allegro - kedves, felenk, vidam</li><li>assomigliare a - hasonlitani valakire</li></ul>
   </details>
-
-  <details>
-    <summary>Amicizia e amici</summary>
-    <ul>
-      <li>il migliore amico / la migliore amica - legjobb barat / baratno</li>
-      <li>fidarsi di qualcuno - megbizni valakiben</li>
-      <li>aiutarsi a vicenda - segiteni egymasnak</li>
-      <li>passare il tempo insieme - egyutt tolteni az idot</li>
-      <li>un vero amico - igazi barat</li>
-    </ul>
+  <details><summary>Amicizia e amici</summary>
+    <ul><li>il migliore amico - legjobb barat</li><li>fidarsi di qualcuno - megbizni valakiben</li><li>aiutarsi a vicenda - segiteni egymasnak</li><li>un vero amico - igazi barat</li></ul>
   </details>
-
-  <details>
-    <summary>Il mondo degli adolescenti e il loro rapporto con gli altri</summary>
-    <ul>
-      <li>i problemi dei giovani - a fiatalok problemai</li>
-      <li>la pressione dei coetanei - kortarsak nyomasa</li>
-      <li>i social media - kozossegi media</li>
-      <li>il rapporto con i genitori - kapcsolat a szulokkel</li>
-      <li>essere indipendente - fuggetlennek lenni</li>
-    </ul>
+  <details><summary>Adolescenti e rapporto con gli altri</summary>
+    <ul><li>i problemi dei giovani - a fiatalok problemai</li><li>la pressione dei coetanei - kortarsak nyomasa</li><li>i social media - kozossegi media</li><li>essere indipendente - fuggetlennek lenni</li></ul>
   </details>
-
-  <details>
-    <summary>Il ruolo sociale delle donne e degli uomini</summary>
-    <ul>
-      <li>la parita - egyenloseg</li>
-      <li>lavorare e occuparsi della famiglia - dolgozni es a csaladdal foglalkozni</li>
-      <li>i ruoli tradizionali - hagyomanyos szerepek</li>
-      <li>oggi le cose sono cambiate - ma mar megvaltoztak a dolgok</li>
-    </ul>
+  <details><summary>Ruolo sociale di donne e uomini</summary>
+    <ul><li>la parita - egyenloseg</li><li>lavorare e occuparsi della famiglia - dolgozni es a csaladdal foglalkozni</li><li>i ruoli tradizionali - hagyomanyos szerepek</li></ul>
   </details>
-
-  <details>
-    <summary>Vacanze, feste, feste familiari e celebrazioni</summary>
-    <ul>
-      <li>il Natale - karacsony</li>
-      <li>la Pasqua - husvet</li>
-      <li>il compleanno - szuletesnap</li>
-      <li>festeggiare - unnepelni</li>
-      <li>fare un regalo - ajandekot adni</li>
-    </ul>
+  <details><summary>Feste familiari e celebrazioni</summary>
+    <ul><li>il Natale - karacsony</li><li>la Pasqua - husvet</li><li>il compleanno - szuletesnap</li><li>festeggiare - unnepelni</li><li>fare un regalo - ajandekot adni</li></ul>
   </details>
-
-  <details>
-    <summary>Moda e abbigliamento</summary>
-    <ul>
-      <li>i vestiti - ruhak</li>
-      <li>essere alla moda - divatosnak lenni</li>
-      <li>lo stile - stilus</li>
-      <li>comodo / elegante - kenyelmes / elegans</li>
-      <li>seguire la moda - kovetni a divatot</li>
-    </ul>
+  <details><summary>Moda e abbigliamento</summary>
+    <ul><li>i vestiti - ruhak</li><li>essere alla moda - divatosnak lenni</li><li>lo stile - stilus</li><li>comodo / elegante - kenyelmes / elegans</li></ul>
   </details>
-
-  <details>
-    <summary>Lavoro sociale, tolleranza, conflitti</summary>
-    <ul>
-      <li>il volontariato - onkentes munka</li>
-      <li>aiutare gli altri - segiteni masoknak</li>
-      <li>rispettare le differenze - tisztelni a kulonbsegeket</li>
-      <li>la discriminazione - diszkriminacio</li>
-      <li>risolvere un conflitto - megoldani egy konfliktust</li>
-    </ul>
+  <details><summary>Lavoro sociale, tolleranza, conflitti</summary>
+    <ul><li>il volontariato - onkentes munka</li><li>rispettare le differenze - tisztelni a kulonbsegeket</li><li>la discriminazione - diszkriminacio</li><li>risolvere un conflitto - megoldani egy konfliktust</li></ul>
   </details>
-
-  <h3>Vazlat - Gente e societa</h3>
-  <div class="box-hu">
-    <ol>
-      <li>Kulso es jellem leirasa, hasonlosagok es kulonbsegek.</li>
-      <li>Baratsag: mitol jo egy barat.</li>
-      <li>A kamaszok vilaga es kapcsolatuk masokkal.</li>
-      <li>Noi es ferfi szerepek a tarsadalomban.</li>
-      <li>Unnepek, csaladi unnepek.</li>
-      <li>Divat es oltozkodes.</li>
-      <li>Onkentesseg, tolerancia, konfliktusok.</li>
-    </ol>
-  </div>
-
-  <h3>Mintamonolog - Gente e societa</h3>
+  <h3>Vazlat</h3>
+  <div class="box-hu"><ol><li>Kulso es jellem.</li><li>Baratsag.</li><li>Kamaszok vilaga.</li><li>Noi es ferfi szerepek.</li><li>Unnepek.</li><li>Divat.</li><li>Tolerancia, konfliktusok.</li></ol></div>
+  <h3>Mintamonolog</h3>
   <div class="box-it">
-    <p>
-      Ogni persona e diversa: c'e chi e alto e chi e basso, chi e timido e chi e estroverso.
-      Secondo me e piu importante il carattere dell'aspetto fisico.
-    </p>
-    <p>
-      L'amicizia per me e molto importante. Un vero amico e una persona di cui ci si puo fidare,
-      che ci aiuta nei momenti difficili e con cui possiamo passare il tempo libero.
-    </p>
-    <p>
-      Noi adolescenti a volte abbiamo problemi con i genitori, perche vogliamo essere piu indipendenti.
-      I social media sono molto presenti nella nostra vita e influenzano anche la moda e lo stile.
-    </p>
-    <p>
-      Mi piacciono molto le feste familiari, come il Natale o i compleanni, perche tutta la famiglia sta insieme.
-      Penso anche che sia importante la tolleranza: dobbiamo rispettare le differenze e aiutare gli altri,
-      per esempio con il volontariato.
-    </p>
+    <p>Ogni persona e diversa: c'e chi e alto e chi e basso, chi e timido e chi e estroverso. Secondo me e piu importante il carattere dell'aspetto fisico.</p>
+    <p>L'amicizia per me e molto importante. Un vero amico e una persona di cui ci si puo fidare e che ci aiuta nei momenti difficili.</p>
+    <p>Noi adolescenti a volte abbiamo problemi con i genitori, perche vogliamo essere piu indipendenti. I social media influenzano anche la moda e lo stile.</p>
+    <p>Mi piacciono le feste familiari, come il Natale, perche tutta la famiglia sta insieme. Penso anche che la tolleranza sia importante: dobbiamo rispettare le differenze e aiutare gli altri.</p>
   </div>
 </section>
 
 <!-- ============ 3. AMBIENTE ============ -->
 <section id="ambiente">
   <h2>3. Ambiente - Kornyezet</h2>
-
   <h3>Alap szokincs</h3>
   <table>
     <tr><th>Olaszul</th><th>Magyarul</th></tr>
@@ -396,113 +285,43 @@
     <tr><td>la campagna</td><td>videk</td></tr>
     <tr><td>la natura</td><td>termeszet</td></tr>
     <tr><td>l'animale</td><td>allat</td></tr>
-    <tr><td>la pianta</td><td>novey</td></tr>
+    <tr><td>la pianta</td><td>noveny</td></tr>
     <tr><td>il tempo (meteo)</td><td>idojaras</td></tr>
     <tr><td>l'ambiente</td><td>kornyezet</td></tr>
     <tr><td>l'inquinamento</td><td>szennyezes</td></tr>
   </table>
-
-  <details>
-    <summary>Casa, abitazione e i dintorni</summary>
-    <ul>
-      <li>la cucina, il bagno, il soggiorno, la camera da letto - konyha, furdo, nappali, haloszoba</li>
-      <li>abito in un appartamento / in una casa - lakasban / hazban lakom</li>
-      <li>al centro / in periferia - kozpontban / kulvarosban</li>
-      <li>i dintorni - kornyek</li>
-      <li>comodo, luminoso, spazioso - kenyelmes, vilagos, tagas</li>
-    </ul>
+  <details><summary>Casa, abitazione e i dintorni</summary>
+    <ul><li>la cucina, il bagno, il soggiorno - konyha, furdo, nappali</li><li>al centro / in periferia - kozpontban / kulvarosban</li><li>comodo, luminoso, spazioso - kenyelmes, vilagos, tagas</li></ul>
   </details>
-
-  <details>
-    <summary>Attrazioni nella propria citta</summary>
-    <ul>
-      <li>il monumento - emlekmu</li>
-      <li>il museo - muzeum</li>
-      <li>la piazza - ter</li>
-      <li>il parco - park</li>
-      <li>vale la pena visitare - erdemes meglatogatni</li>
-    </ul>
+  <details><summary>Attrazioni nella propria citta</summary>
+    <ul><li>il monumento - emlekmu</li><li>il museo - muzeum</li><li>la piazza - ter</li><li>vale la pena visitare - erdemes meglatogatni</li></ul>
   </details>
-
-  <details>
-    <summary>Vivere in campagna o in citta</summary>
-    <ul>
-      <li>la citta: piu servizi, piu rumore - varos: tobb szolgaltatas, tobb zaj</li>
-      <li>la campagna: piu tranquilla, aria pulita - videk: nyugodtabb, tiszta levego</li>
-      <li>i vantaggi e gli svantaggi - elonyok es hatranyok</li>
-      <li>il traffico - forgalom</li>
-    </ul>
+  <details><summary>Vivere in campagna o in citta</summary>
+    <ul><li>la citta: piu servizi, piu rumore - varos: tobb szolgaltatas, tobb zaj</li><li>la campagna: piu tranquilla - videk: nyugodtabb</li><li>il traffico - forgalom</li></ul>
   </details>
-
-  <details>
-    <summary>Piante e animali attorno a noi</summary>
-    <ul>
-      <li>gli animali domestici - haziallatok</li>
-      <li>il cane, il gatto - kutya, macska</li>
-      <li>gli alberi, i fiori - fak, viragok</li>
-      <li>prendersi cura di - gondoskodni valamirol</li>
-    </ul>
+  <details><summary>Piante e animali attorno a noi</summary>
+    <ul><li>gli animali domestici - haziallatok</li><li>il cane, il gatto - kutya, macska</li><li>gli alberi, i fiori - fak, viragok</li></ul>
   </details>
-
-  <details>
-    <summary>Tempo (meteo)</summary>
-    <ul>
-      <li>fa caldo / fa freddo - meleg / hideg van</li>
-      <li>piove / nevica - esik / havazik</li>
-      <li>c'e il sole / e nuvoloso - sut a nap / felhos</li>
-      <li>le stagioni - evszakok</li>
-    </ul>
+  <details><summary>Tempo (meteo)</summary>
+    <ul><li>fa caldo / fa freddo - meleg / hideg van</li><li>piove / nevica - esik / havazik</li><li>le stagioni - evszakok</li></ul>
   </details>
-
-  <details>
-    <summary>Tutela dell'ambiente</summary>
-    <ul>
-      <li>proteggere l'ambiente - vedeni a kornyezetet</li>
-      <li>il riciclaggio - ujrahasznositas</li>
-      <li>risparmiare energia / acqua - energiat / vizet sporolni</li>
-      <li>l'inquinamento dell'aria - legszennyezes</li>
-      <li>il cambiamento climatico - klimavaltozas</li>
-    </ul>
+  <details><summary>Tutela dell'ambiente</summary>
+    <ul><li>proteggere l'ambiente - vedeni a kornyezetet</li><li>il riciclaggio - ujrahasznositas</li><li>risparmiare energia - energiat sporolni</li><li>il cambiamento climatico - klimavaltozas</li></ul>
   </details>
-
-  <h3>Vazlat - Ambiente</h3>
-  <div class="box-hu">
-    <ol>
-      <li>Hol laksz: haz vagy lakas, helyisegek.</li>
-      <li>Varosod latnivaloi.</li>
-      <li>Varos vs. videk: elonyok es hatranyok.</li>
-      <li>Allatok es novenyek kornyezetedben.</li>
-      <li>Idojaras es evszakok.</li>
-      <li>Kornyezetvedelem: mit tehetunk.</li>
-    </ol>
-  </div>
-
-  <h3>Mintamonolog - Ambiente</h3>
+  <h3>Vazlat</h3>
+  <div class="box-hu"><ol><li>Hol laksz.</li><li>Varosod latnivaloi.</li><li>Varos vs. videk.</li><li>Allatok es novenyek.</li><li>Idojaras.</li><li>Kornyezetvedelem.</li></ol></div>
+  <h3>Mintamonolog</h3>
   <div class="box-it">
-    <p>
-      Io abito in un appartamento con la mia famiglia. Non e molto grande, ma e comodo e luminoso.
-      Ci sono una cucina, un bagno, un soggiorno e le camere da letto.
-    </p>
-    <p>
-      La mia citta e abbastanza interessante: ci sono musei, parchi e belle piazze che vale la pena visitare.
-      Secondo me vivere in citta ha dei vantaggi, perche ci sono molti servizi, ma c'e anche piu traffico e piu rumore.
-      In campagna invece l'aria e piu pulita e tutto e piu tranquillo.
-    </p>
-    <p>
-      Mi piacciono molto gli animali; a casa abbiamo un cane di cui mi prendo cura.
-      Il tempo in Ungheria cambia con le stagioni: in estate fa caldo, in inverno fa freddo e qualche volta nevica.
-    </p>
-    <p>
-      Penso che proteggere l'ambiente sia molto importante. Possiamo fare il riciclaggio,
-      risparmiare energia e acqua e usare di piu i mezzi pubblici per ridurre l'inquinamento.
-    </p>
+    <p>Io abito in un appartamento con la mia famiglia. Non e molto grande, ma e comodo e luminoso.</p>
+    <p>La mia citta e interessante: ci sono musei, parchi e belle piazze. Vivere in citta ha dei vantaggi, ma c'e anche piu traffico. In campagna l'aria e piu pulita e tutto e piu tranquillo.</p>
+    <p>Mi piacciono gli animali; a casa abbiamo un cane. Il tempo in Ungheria cambia con le stagioni: in estate fa caldo, in inverno fa freddo.</p>
+    <p>Penso che proteggere l'ambiente sia importante. Possiamo fare il riciclaggio, risparmiare energia e usare di piu i mezzi pubblici.</p>
   </div>
 </section>
 
 <!-- ============ 4. SCUOLA ============ -->
 <section id="scuola">
   <h2>4. Scuola - Iskola</h2>
-
   <h3>Alap szokincs</h3>
   <table>
     <tr><th>Olaszul</th><th>Magyarul</th></tr>
@@ -511,103 +330,43 @@
     <tr><td>la materia</td><td>tantargy</td></tr>
     <tr><td>l'orario</td><td>orarend</td></tr>
     <tr><td>la lezione</td><td>tanora</td></tr>
-    <tr><td>l'insegnante / il professore</td><td>tanar</td></tr>
+    <tr><td>il professore</td><td>tanar</td></tr>
     <tr><td>lo studente</td><td>diak</td></tr>
     <tr><td>il voto</td><td>jegy, osztalyzat</td></tr>
     <tr><td>l'esame di maturita</td><td>erettsegi vizsga</td></tr>
     <tr><td>studiare</td><td>tanulni</td></tr>
     <tr><td>la lingua straniera</td><td>idegen nyelv</td></tr>
-    <tr><td>le attivita extracurricolari</td><td>tanorán kivuli tevekenysegek</td></tr>
+    <tr><td>le attivita extracurricolari</td><td>tanoran kivuli tevekenysegek</td></tr>
   </table>
-
-  <details>
-    <summary>Scuola (caratteristiche locali, formazione professionale)</summary>
-    <ul>
-      <li>la mia scuola e un liceo - az iskolam egy gimnazium</li>
-      <li>la formazione professionale - szakkepzes</li>
-      <li>l'aula, la palestra, la biblioteca - tanterem, tornaterem, konyvtar</li>
-      <li>frequentare la scuola - iskolaba jarni</li>
-    </ul>
+  <details><summary>Scuola (caratteristiche, formazione)</summary>
+    <ul><li>la mia scuola e un liceo - az iskolam egy gimnazium</li><li>l'aula, la palestra, la biblioteca - tanterem, tornaterem, konyvtar</li><li>frequentare la scuola - iskolaba jarni</li></ul>
   </details>
-
-  <details>
-    <summary>Materie, orario, interessi, studi</summary>
-    <ul>
-      <li>la matematica, la storia, la geografia - matek, tortenelem, foldrajz</li>
-      <li>le lingue, le scienze - nyelvek, termeszettudomanyok</li>
-      <li>la mia materia preferita e... - a kedvenc tantargyam...</li>
-      <li>le lezioni cominciano alle 8 - az orak 8-kor kezdodnek</li>
-    </ul>
+  <details><summary>Materie, orario, interessi</summary>
+    <ul><li>la matematica, la storia, la geografia - matek, tortenelem, foldrajz</li><li>la mia materia preferita e... - a kedvenc tantargyam...</li><li>le lezioni cominciano alle 8 - az orak 8-kor kezdodnek</li></ul>
   </details>
-
-  <details>
-    <summary>I diversi metodi di studio</summary>
-    <ul>
-      <li>prendere appunti - jegyzetelni</li>
-      <li>ripetere ad alta voce - hangosan ismetelni</li>
-      <li>fare riassunti - osszefoglalokat keszteni</li>
-      <li>studiare in gruppo - csoportban tanulni</li>
-      <li>usare Internet per studiare - neten tanulni</li>
-    </ul>
+  <details><summary>Metodi di studio</summary>
+    <ul><li>prendere appunti - jegyzetelni</li><li>fare riassunti - osszefoglalokat keszteni</li><li>studiare in gruppo - csoportban tanulni</li></ul>
   </details>
-
-  <details>
-    <summary>Il ruolo e l'importanza delle lingue straniere</summary>
-    <ul>
-      <li>imparare le lingue e utile - hasznos nyelvet tanulni</li>
-      <li>per il lavoro e per viaggiare - munkahoz es utazashoz</li>
-      <li>parlare con persone di altri paesi - mas orszagok lakoival beszelni</li>
-      <li>l'inglese e l'italiano - az angol es az olasz</li>
-    </ul>
+  <details><summary>Lingue straniere</summary>
+    <ul><li>imparare le lingue e utile - hasznos nyelvet tanulni</li><li>per il lavoro e per viaggiare - munkahoz es utazashoz</li><li>l'inglese e l'italiano - az angol es az olasz</li></ul>
   </details>
-
-  <details>
-    <summary>Attivita extracurricolari, tradizioni scolastiche</summary>
-    <ul>
-      <li>il coro, il teatro scolastico - korus, iskolai szinjatszas</li>
-      <li>le gite scolastiche - osztalykirandulasok</li>
-      <li>le feste della scuola - iskolai unnepsegek</li>
-      <li>le competizioni - versenyek</li>
-    </ul>
+  <details><summary>Attivita extracurricolari</summary>
+    <ul><li>il coro, il teatro scolastico - korus, iskolai szinjatszas</li><li>le gite scolastiche - osztalykirandulasok</li><li>le competizioni - versenyek</li></ul>
   </details>
-
-  <h3>Vazlat - Scuola</h3>
-  <div class="box-hu">
-    <ol>
-      <li>Milyen iskolaba jarsz, milyen az epulet.</li>
-      <li>Tantargyak, orarend, kedvenc targy.</li>
-      <li>Tanulasi modszereid.</li>
-      <li>Idegen nyelvek fontossaga.</li>
-      <li>Tanórán kivuli tevekenysegek, iskolai hagyomanyok.</li>
-    </ol>
-  </div>
-
-  <h3>Mintamonolog - Scuola</h3>
+  <h3>Vazlat</h3>
+  <div class="box-hu"><ol><li>Milyen iskolaba jarsz.</li><li>Tantargyak, kedvenc targy.</li><li>Tanulasi modszerek.</li><li>Idegen nyelvek.</li><li>Tanoran kivuli tevekenysegek.</li></ol></div>
+  <h3>Mintamonolog</h3>
   <div class="box-it">
-    <p>
-      Io frequento un liceo. La mia scuola e abbastanza grande: ci sono molte aule, una palestra e una biblioteca.
-      Le lezioni cominciano la mattina e finiscono nel pomeriggio.
-    </p>
-    <p>
-      Studiamo molte materie, per esempio matematica, storia, geografia, scienze e lingue straniere.
-      La mia materia preferita e l'italiano, perche mi piace imparare le lingue.
-    </p>
-    <p>
-      Ognuno ha il suo metodo di studio. Io di solito prendo appunti, faccio riassunti e ripeto ad alta voce.
-      Qualche volta studio anche in gruppo con i miei compagni o uso Internet.
-    </p>
-    <p>
-      Secondo me imparare le lingue straniere e molto importante, perche e utile per il lavoro e per viaggiare.
-      Nella mia scuola ci sono anche attivita extracurricolari, come gite, feste e competizioni,
-      e a me piacciono molto perche cosi la scuola non e solo studio.
-    </p>
+    <p>Io frequento un liceo. La mia scuola e abbastanza grande: ci sono molte aule, una palestra e una biblioteca.</p>
+    <p>Studiamo molte materie, per esempio matematica, storia e lingue straniere. La mia materia preferita e l'italiano, perche mi piace imparare le lingue.</p>
+    <p>Io di solito prendo appunti, faccio riassunti e ripeto ad alta voce. Qualche volta studio in gruppo con i miei compagni.</p>
+    <p>Secondo me imparare le lingue straniere e molto importante, perche e utile per il lavoro e per viaggiare. Nella mia scuola ci sono anche gite e competizioni.</p>
   </div>
 </section>
 
 <!-- ============ 5. IL MONDO DEL LAVORO ============ -->
 <section id="lavoro">
   <h2>5. Il mondo del lavoro - A munka vilaga</h2>
-
   <h3>Alap szokincs</h3>
   <table>
     <tr><th>Olaszul</th><th>Magyarul</th></tr>
@@ -624,66 +383,26 @@
     <tr><td>il datore di lavoro</td><td>munkaado</td></tr>
     <tr><td>il dipendente</td><td>alkalmazott</td></tr>
   </table>
-
-  <details>
-    <summary>Lavori estivi, lavori part-time</summary>
-    <ul>
-      <li>lavorare durante l'estate - nyaron dolgozni</li>
-      <li>fare il cameriere / la commessa - pincernek / eladonak lenni</li>
-      <li>guadagnare i primi soldi - elso penzt keresni</li>
-      <li>avere piu indipendenza - fuggetlenebbnek lenni</li>
-      <li>fare esperienza - tapasztalatot szerezni</li>
-    </ul>
+  <details><summary>Lavori estivi, part-time</summary>
+    <ul><li>lavorare durante l'estate - nyaron dolgozni</li><li>fare il cameriere / la commessa - pincernek / eladonak lenni</li><li>guadagnare i primi soldi - elso penzt keresni</li><li>fare esperienza - tapasztalatot szerezni</li></ul>
   </details>
-
-  <details>
-    <summary>Scegliere tra carriera e l'educazione accademica-universitaria</summary>
-    <ul>
-      <li>continuare gli studi - tovabb tanulni</li>
-      <li>iniziare subito a lavorare - rogton dolgozni kezdeni</li>
-      <li>il diploma / la laurea - bizonyitvany / diploma</li>
-      <li>i vantaggi e gli svantaggi - elonyok es hatranyok</li>
-      <li>seguire le proprie passioni - kovetni a szenvedelyeinket</li>
-    </ul>
+  <details><summary>Carriera o universita</summary>
+    <ul><li>continuare gli studi - tovabb tanulni</li><li>iniziare subito a lavorare - rogton dolgozni</li><li>il diploma / la laurea - bizonyitvany / diploma</li><li>seguire le proprie passioni - kovetni a szenvedelyeinket</li></ul>
   </details>
-
-  <h3>Vazlat - Il mondo del lavoro</h3>
-  <div class="box-hu">
-    <ol>
-      <li>Diakmunka, nyari es reszmunka: miert jo.</li>
-      <li>Sajat (esetleges) munkatapasztalat.</li>
-      <li>Tovabbtanulas vagy azonnali munka.</li>
-      <li>Egyetem elonyei es hatranyai.</li>
-      <li>Sajat velemeny a jovorol.</li>
-    </ol>
-  </div>
-
-  <h3>Mintamonolog - Il mondo del lavoro</h3>
+  <h3>Vazlat</h3>
+  <div class="box-hu"><ol><li>Diakmunka, nyari munka.</li><li>Sajat tapasztalat.</li><li>Tovabbtanulas vagy munka.</li><li>Egyetem elonyei.</li><li>Sajat velemeny.</li></ol></div>
+  <h3>Mintamonolog</h3>
   <div class="box-it">
-    <p>
-      Molti giovani in Ungheria fanno lavori estivi o part-time durante le vacanze.
-      Per esempio lavorano come camerieri, commessi o aiutano in piccole aziende.
-    </p>
-    <p>
-      Secondo me lavorare da giovani e una buona idea, perche cosi si guadagnano i primi soldi,
-      si diventa piu indipendenti e si fa esperienza.
-    </p>
-    <p>
-      Dopo la maturita bisogna scegliere: continuare gli studi all'universita o iniziare subito a lavorare.
-      Studiare all'universita richiede piu tempo e a volte piu soldi, pero con una laurea
-      e piu facile trovare un buon lavoro in futuro.
-    </p>
-    <p>
-      Io penso che sia importante seguire le proprie passioni. Dopo la maturita vorrei continuare gli studi,
-      perche voglio avere una buona preparazione prima di iniziare la mia carriera.
-    </p>
+    <p>Molti giovani in Ungheria fanno lavori estivi o part-time durante le vacanze, per esempio come camerieri o commessi.</p>
+    <p>Secondo me lavorare da giovani e una buona idea, perche cosi si guadagnano i primi soldi, si diventa piu indipendenti e si fa esperienza.</p>
+    <p>Dopo la maturita bisogna scegliere: continuare gli studi o iniziare subito a lavorare. Con una laurea e piu facile trovare un buon lavoro.</p>
+    <p>Io penso che sia importante seguire le proprie passioni. Dopo la maturita vorrei continuare gli studi all'universita.</p>
   </div>
 </section>
 
 <!-- ============ 6. MODO DI VIVERE ============ -->
 <section id="vivere">
   <h2>6. Modo di vivere - Eletmod</h2>
-
   <h3>Alap szokincs</h3>
   <table>
     <tr><th>Olaszul</th><th>Magyarul</th></tr>
@@ -700,99 +419,35 @@
     <tr><td>il medico</td><td>orvos</td></tr>
     <tr><td>la dipendenza</td><td>fuggoseg</td></tr>
   </table>
-
-  <details>
-    <summary>Giorno tipico, gestione del tempo</summary>
-    <ul>
-      <li>mi sveglio / mi alzo - felebredek / felkelek</li>
-      <li>vado a scuola - iskolaba megyek</li>
-      <li>il pomeriggio studio - delutan tanulok</li>
-      <li>la sera mi rilasso - este pihenek</li>
-      <li>organizzare il tempo - beosztani az idot</li>
-    </ul>
+  <details><summary>Giorno tipico, gestione del tempo</summary>
+    <ul><li>mi sveglio / mi alzo - felebredek / felkelek</li><li>vado a scuola - iskolaba megyek</li><li>la sera mi rilasso - este pihenek</li><li>organizzare il tempo - beosztani az idot</li></ul>
   </details>
-
-  <details>
-    <summary>Vita sana (alimentazione, stare in forma, curare il corpo)</summary>
-    <ul>
-      <li>mangiare frutta e verdura - gyumolcsot es zoldseget enni</li>
-      <li>bere molta acqua - sok vizet inni</li>
-      <li>fare sport regolarmente - rendszeresen sportolni</li>
-      <li>dormire abbastanza - eleget aludni</li>
-      <li>evitare il cibo spazzatura - kerulni a gyorsetelt</li>
-    </ul>
+  <details><summary>Vita sana</summary>
+    <ul><li>mangiare frutta e verdura - gyumolcsot es zoldseget enni</li><li>bere molta acqua - sok vizet inni</li><li>fare sport regolarmente - rendszeresen sportolni</li><li>dormire abbastanza - eleget aludni</li></ul>
   </details>
-
-  <details>
-    <summary>Abitudini alimentari, cibo, piatti preferiti</summary>
-    <ul>
-      <li>la colazione, il pranzo, la cena - reggeli, ebed, vacsora</li>
-      <li>la pasta, la pizza, la carne, l'insalata - teszta, pizza, hus, salata</li>
-      <li>il mio piatto preferito e... - a kedvenc etelem...</li>
-      <li>cucinare a casa - otthon fozni</li>
-    </ul>
+  <details><summary>Cibo, piatti preferiti</summary>
+    <ul><li>la colazione, il pranzo, la cena - reggeli, ebed, vacsora</li><li>la pasta, la pizza, la carne - teszta, pizza, hus</li><li>il mio piatto preferito e... - a kedvenc etelem...</li></ul>
   </details>
-
-  <details>
-    <summary>Mangiare alla mensa, al ristorante, al fast-food</summary>
-    <ul>
-      <li>la mensa scolastica - iskolai menza</li>
-      <li>ordinare - rendelni</li>
-      <li>il menu - etlap</li>
-      <li>il fast-food: comodo ma non sano - gyorsetterem: kenyelmes de nem egeszseges</li>
-    </ul>
+  <details><summary>Mensa, ristorante, fast-food</summary>
+    <ul><li>la mensa scolastica - iskolai menza</li><li>ordinare - rendelni</li><li>il menu - etlap</li><li>il fast-food: comodo ma non sano - gyorsetterem: kenyelmes de nem egeszseges</li></ul>
   </details>
-
-  <details>
-    <summary>Malattie, lesioni, cura, dipendenze</summary>
-    <ul>
-      <li>il raffreddore, la febbre, la tosse - nathà, laz, kohoges</li>
-      <li>andare dal medico - orvoshoz menni</li>
-      <li>la medicina - gyogyszer</li>
-      <li>l'ospedale - korhaz</li>
-      <li>il fumo, l'alcol, il telefono - dohanyzas, alkohol, telefon (fuggoseg)</li>
-    </ul>
+  <details><summary>Malattie, cura, dipendenze</summary>
+    <ul><li>il raffreddore, la febbre - natha, laz</li><li>andare dal medico - orvoshoz menni</li><li>l'ospedale - korhaz</li><li>il fumo, l'alcol - dohanyzas, alkohol</li></ul>
   </details>
-
-  <h3>Vazlat - Modo di vivere</h3>
-  <div class="box-hu">
-    <ol>
-      <li>Egy atlagos napod, idobeosztas.</li>
-      <li>Egeszseges eletmod: taplalkozas, sport, alvas.</li>
-      <li>Etkezesi szokasok, kedvenc etelek.</li>
-      <li>Menza, etterem, gyorsetterem.</li>
-      <li>Gyakori betegsegek, orvos.</li>
-      <li>Fuggosegek es veszelyeik.</li>
-    </ol>
-  </div>
-
-  <h3>Mintamonolog - Modo di vivere</h3>
+  <h3>Vazlat</h3>
+  <div class="box-hu"><ol><li>Egy atlagos napod.</li><li>Egeszseges eletmod.</li><li>Etkezesi szokasok.</li><li>Menza, etterem.</li><li>Betegsegek, orvos.</li><li>Fuggosegek.</li></ol></div>
+  <h3>Mintamonolog</h3>
   <div class="box-it">
-    <p>
-      Una mia giornata tipica e abbastanza normale: la mattina mi sveglio presto, vado a scuola,
-      il pomeriggio studio e la sera mi rilasso un po' con la famiglia o con gli amici.
-      Cerco di organizzare bene il mio tempo, ma non e sempre facile.
-    </p>
-    <p>
-      Secondo me la vita sana e molto importante. Per stare in forma bisogna mangiare bene,
-      per esempio frutta e verdura, bere molta acqua, dormire abbastanza e fare sport regolarmente.
-      Il cibo spazzatura e buono ma non e sano, quindi non bisogna mangiarlo troppo spesso.
-    </p>
-    <p>
-      A casa di solito mangiamo piatti cucinati dai miei genitori. Il mio piatto preferito e la pasta.
-      Qualche volta mangio alla mensa della scuola o al fast-food, perche e comodo e veloce.
-    </p>
-    <p>
-      Quando sono malato, per esempio quando ho la febbre o il raffreddore, vado dal medico e prendo le medicine.
-      Penso anche che le dipendenze, come il fumo o l'alcol, siano molto pericolose per la salute.
-    </p>
+    <p>Una mia giornata tipica e normale: la mattina mi sveglio presto, vado a scuola, il pomeriggio studio e la sera mi rilasso con la famiglia o con gli amici.</p>
+    <p>Secondo me la vita sana e importante. Per stare in forma bisogna mangiare bene, bere molta acqua, dormire abbastanza e fare sport. Il cibo spazzatura non e sano.</p>
+    <p>A casa mangiamo piatti cucinati dai miei genitori. Il mio piatto preferito e la pasta. Qualche volta mangio al fast-food, perche e comodo e veloce.</p>
+    <p>Quando sono malato vado dal medico e prendo le medicine. Penso anche che le dipendenze, come il fumo o l'alcol, siano molto pericolose.</p>
   </div>
 </section>
 
-<!-- ============ 7. DIVERTIMENTO (kesz) ============ -->
+<!-- ============ 7. DIVERTIMENTO ============ -->
 <section id="divertimento">
   <h2>7. Divertimento - Szorakozas, szabadido</h2>
-
   <h3>Alap szokincs</h3>
   <table>
     <tr><th>Olaszul</th><th>Magyarul</th></tr>
@@ -812,112 +467,36 @@
     <tr><td>guardare una partita</td><td>meccset nezni</td></tr>
     <tr><td>un evento culturale</td><td>kulturalis esemeny</td></tr>
   </table>
-
-  <details>
-    <summary>Passatempi e hobby</summary>
-    <ul>
-      <li>Nel mio tempo libero mi piace... - Szabadidomben szeretek...</li>
-      <li>Il mio hobby preferito e... - A kedvenc hobbim...</li>
-      <li>Quando ho tempo, di solito... - Amikor van idom, altalaban...</li>
-      <li>Mi aiuta a rilassarmi. - Segit kikapcsolodni.</li>
-      <li>Preferisco attivita tranquille. - A nyugodt tevekenysegeket szeretem jobban.</li>
-    </ul>
+  <details><summary>Passatempi e hobby</summary>
+    <ul><li>Nel mio tempo libero mi piace... - Szabadidomben szeretek...</li><li>Il mio hobby preferito e... - A kedvenc hobbim...</li><li>Mi aiuta a rilassarmi. - Segit kikapcsolodni.</li></ul>
   </details>
-
-  <details>
-    <summary>Teatro, cinema, concerti, esposizioni</summary>
-    <ul>
-      <li>il teatro - szinhaz</li>
-      <li>il cinema - mozi</li>
-      <li>il concerto - koncert</li>
-      <li>la mostra - kiallitas</li>
-      <li>il biglietto - jegy</li>
-      <li>l'attore / l'attrice - szinesz / szineszno</li>
-      <li>il film - film</li>
-      <li>la commedia - vigjatek</li>
-      <li>il museo - muzeum</li>
-    </ul>
+  <details><summary>Teatro, cinema, concerti, esposizioni</summary>
+    <ul><li>il teatro - szinhaz</li><li>il cinema - mozi</li><li>il concerto - koncert</li><li>la mostra - kiallitas</li><li>il biglietto - jegy</li><li>la commedia - vigjatek</li></ul>
   </details>
-
-  <details>
-    <summary>Sport (fare/guardare sport, sport scolastici)</summary>
-    <ul>
-      <li>giocare a calcio - focizni</li>
-      <li>giocare a pallacanestro - kosarlabdazni</li>
-      <li>nuotare - uszni</li>
-      <li>correre - futni</li>
-      <li>andare in palestra - edzoterembe jarni</li>
-      <li>lo sport scolastico - iskolai sport</li>
-      <li>la squadra - csapat</li>
-      <li>la partita - meccs</li>
-      <li>il tifoso - szurkolo</li>
-    </ul>
+  <details><summary>Sport</summary>
+    <ul><li>giocare a calcio - focizni</li><li>nuotare - uszni</li><li>correre - futni</li><li>andare in palestra - edzoterembe jarni</li><li>la squadra - csapat</li><li>il tifoso - szurkolo</li></ul>
   </details>
-
-  <details>
-    <summary>Leggere, radio, televisione, computer e Internet</summary>
-    <ul>
-      <li>leggere romanzi - regenyt olvasni</li>
-      <li>ascoltare la radio - radiot hallgatni</li>
-      <li>guardare serie - sorozatokat nezni</li>
-      <li>usare il computer - szamitogepet hasznalni</li>
-      <li>chattare con gli amici - baratokkal chatelni</li>
-      <li>usare i social media - kozossegi mediat hasznalni</li>
-      <li>giocare ai videogiochi - videojatekokkal jatszani</li>
-    </ul>
+  <details><summary>Leggere, radio, TV, computer, Internet</summary>
+    <ul><li>leggere romanzi - regenyt olvasni</li><li>guardare serie - sorozatokat nezni</li><li>usare i social media - kozossegi mediat hasznalni</li><li>giocare ai videogiochi - videojatekokkal jatszani</li></ul>
   </details>
-
-  <details>
-    <summary>Eventi culturali</summary>
-    <ul>
-      <li>il festival - fesztival</li>
-      <li>la mostra d'arte - muveszeti kiallitas</li>
-      <li>il concerto all'aperto - szabadteri koncert</li>
-      <li>partecipare a un evento - reszt venni egy esemenyen</li>
-    </ul>
+  <details><summary>Eventi culturali</summary>
+    <ul><li>il festival - fesztival</li><li>la mostra d'arte - muveszeti kiallitas</li><li>partecipare a un evento - reszt venni egy esemenyen</li></ul>
   </details>
-
-  <h3>Vazlat - Divertimento</h3>
-  <div class="box-hu">
-    <ol>
-      <li>Mit jelent szamodra a szabadido?</li>
-      <li>Kedvenc hobbijaid.</li>
-      <li>Kulturalis programok: mozi, szinhaz, koncert, kiallitas.</li>
-      <li>Sport: sportolsz-e, nezel-e sportot?</li>
-      <li>Olvasas, media, internet szerepe.</li>
-      <li>Miert fontos a kikapcsolodas?</li>
-    </ol>
-  </div>
-
-  <h3>Mintamonolog - Divertimento</h3>
+  <h3>Vazlat</h3>
+  <div class="box-hu"><ol><li>Mit jelent a szabadido?</li><li>Kedvenc hobbijaid.</li><li>Kulturalis programok.</li><li>Sport.</li><li>Olvasas, media, internet.</li><li>Miert fontos a kikapcsolodas?</li></ol></div>
+  <h3>Mintamonolog</h3>
   <div class="box-it">
-    <p>
-      Nel mio tempo libero mi piace rilassarmi e fare attivita che mi aiutano a dimenticare lo stress della scuola.
-      Di solito ascolto musica, guardo film o serie e passo un po' di tempo con i miei amici.
-    </p>
-    <p>
-      Il mio passatempo preferito e usare Internet, perche posso guardare video, leggere notizie,
-      chattare con gli amici e imparare cose nuove. Pero penso che sia importante non passare troppo tempo davanti al computer.
-    </p>
-    <p>
-      Mi piace anche andare al cinema. Preferisco i film d'azione e le commedie, perche sono divertenti e interessanti.
-      Qualche volta vado a concerti o a eventi culturali, ma non molto spesso, perche di solito non ho molto tempo.
-    </p>
-    <p>
-      Per quanto riguarda lo sport, mi piace fare sport perche e sano e aiuta a mantenersi in forma.
-      A scuola abbiamo educazione fisica, ma nel tempo libero preferisco camminare, correre o andare in palestra.
-    </p>
-    <p>
-      Secondo me il divertimento e molto importante, perche dopo lo studio bisogna riposarsi.
-      Se una persona ha hobby interessanti, puo vivere in modo piu equilibrato e felice.
-    </p>
+    <p>Nel mio tempo libero mi piace rilassarmi e fare attivita che mi aiutano a dimenticare lo stress della scuola. Di solito ascolto musica, guardo film e passo del tempo con i miei amici.</p>
+    <p>Il mio passatempo preferito e usare Internet, perche posso guardare video, leggere notizie e imparare cose nuove. Pero penso che sia importante non passare troppo tempo davanti al computer.</p>
+    <p>Mi piace anche andare al cinema. Preferisco i film d'azione e le commedie. Qualche volta vado a concerti o a eventi culturali.</p>
+    <p>Per quanto riguarda lo sport, mi piace fare sport perche e sano e aiuta a mantenersi in forma. Nel tempo libero preferisco correre o andare in palestra.</p>
+    <p>Secondo me il divertimento e molto importante, perche dopo lo studio bisogna riposarsi. Se una persona ha hobby interessanti, puo vivere in modo piu equilibrato.</p>
   </div>
 </section>
 
-<!-- ============ 8. VIAGGIO E VACANZE (kesz) ============ -->
+<!-- ============ 8. VIAGGIO E VACANZE ============ -->
 <section id="viaggi">
   <h2>8. Viaggio e vacanze - Utazas es nyaralas</h2>
-
   <h3>Alap szokincs</h3>
   <table>
     <tr><th>Olaszul</th><th>Magyarul</th></tr>
@@ -931,115 +510,38 @@
     <tr><td>organizzare un viaggio</td><td>utazast szervezni</td></tr>
     <tr><td>fare la valigia</td><td>bepakolni</td></tr>
     <tr><td>il passaporto</td><td>utlevel</td></tr>
-    <tr><td>il documento d'identita</td><td>szemelyi igazolvany</td></tr>
     <tr><td>il biglietto</td><td>jegy</td></tr>
     <tr><td>l'albergo</td><td>szalloda</td></tr>
     <tr><td>l'appartamento</td><td>apartman</td></tr>
     <tr><td>il campeggio</td><td>kemping</td></tr>
   </table>
-
-  <details>
-    <summary>Viaggiare, trasporto pubblico</summary>
-    <ul>
-      <li>andare in autobus - busszal menni</li>
-      <li>andare in treno - vonattal menni</li>
-      <li>andare in macchina - autoval menni</li>
-      <li>andare in aereo - repulovel menni</li>
-      <li>il trasporto pubblico - tomegkozlekedes</li>
-      <li>la stazione - allomas</li>
-      <li>l'aeroporto - repuloter</li>
-      <li>la fermata - megallo</li>
-      <li>comprare un biglietto - jegyet venni</li>
-      <li>perdere il treno - lekesni a vonatot</li>
-    </ul>
+  <details><summary>Viaggiare, trasporto pubblico</summary>
+    <ul><li>andare in autobus / in treno - busszal / vonattal menni</li><li>andare in aereo - repulovel menni</li><li>la stazione - allomas</li><li>l'aeroporto - repuloter</li><li>perdere il treno - lekesni a vonatot</li></ul>
   </details>
-
-  <details>
-    <summary>Vacanze in Ungheria e all'estero</summary>
-    <ul>
-      <li>in Ungheria - Magyarorszagon</li>
-      <li>all'estero - kulfoldon</li>
-      <li>al mare - tengerparton</li>
-      <li>in montagna - hegyekben</li>
-      <li>al lago Balaton - a Balatonnal</li>
-      <li>visitare una citta - meglatogatni egy varost</li>
-      <li>vedere monumenti - muemlekeket latni</li>
-      <li>conoscere una nuova cultura - uj kulturat megismerni</li>
-    </ul>
+  <details><summary>Vacanze in Ungheria e all'estero</summary>
+    <ul><li>in Ungheria / all'estero - Magyarorszagon / kulfoldon</li><li>al mare / in montagna - tengerparton / hegyekben</li><li>al lago Balaton - a Balatonnal</li><li>conoscere una nuova cultura - uj kulturat megismerni</li></ul>
   </details>
-
-  <details>
-    <summary>Prepararsi, progettare e organizzare le vacanze</summary>
-    <ul>
-      <li>scegliere la destinazione - kivalasztani az uti celt</li>
-      <li>prenotare l'alloggio - szallast foglalni</li>
-      <li>comprare i biglietti - jegyeket venni</li>
-      <li>fare un programma - programot kesziteni</li>
-      <li>controllare il tempo - megnezni az idojarast</li>
-      <li>preparare i documenti - elokesziteni az iratokat</li>
-      <li>fare la valigia - bepakolni</li>
-    </ul>
+  <details><summary>Organizzare le vacanze</summary>
+    <ul><li>scegliere la destinazione - kivalasztani az uti celt</li><li>prenotare l'alloggio - szallast foglalni</li><li>fare un programma - programot kesziteni</li><li>preparare i documenti - elokesziteni az iratokat</li></ul>
   </details>
-
-  <details>
-    <summary>Vacanze autogestite e preorganizzate</summary>
-    <p><strong>Vacanza autogestita:</strong> sajat szervezesu nyaralas.</p>
-    <ul>
-      <li>piu liberta - tobb szabadsag</li>
-      <li>piu economica - olcsobb lehet</li>
-      <li>bisogna organizzare tutto - mindent magunknak kell megszervezni</li>
-    </ul>
-    <p><strong>Vacanza preorganizzata:</strong> utazasi iroda altal szervezett nyaralas.</p>
-    <ul>
-      <li>piu comoda - kenyelmesebb</li>
-      <li>meno stressante - kevesbe stresszes</li>
-      <li>puo essere piu cara - dragabb lehet</li>
-    </ul>
+  <details><summary>Vacanze autogestite e preorganizzate</summary>
+    <ul><li>piu liberta - tobb szabadsag</li><li>piu economica - olcsobb</li><li>piu comoda - kenyelmesebb</li><li>l'agenzia organizza tutto - az iroda mindent megszervez</li></ul>
   </details>
-
-  <h3>Vazlat - Viaggio e vacanze</h3>
-  <div class="box-hu">
-    <ol>
-      <li>Szeretsz-e utazni, es miert?</li>
-      <li>Milyen kozlekedesi eszkozoket hasznalsz?</li>
-      <li>Nyaralas Magyarorszagon: Balaton, Budapest, hegyek.</li>
-      <li>Nyaralas kulfoldon: tengerpart, varosnezes, kultura.</li>
-      <li>Hogyan kell megszervezni egy utazast?</li>
-      <li>Sajat szervezesu vagy elore szervezett nyaralas?</li>
-      <li>Szemelyes velemeny vagy sajat elmeny.</li>
-    </ol>
-  </div>
-
-  <h3>Mintamonolog - Viaggio e vacanze</h3>
+  <h3>Vazlat</h3>
+  <div class="box-hu"><ol><li>Szeretsz-e utazni?</li><li>Kozlekedesi eszkozok.</li><li>Nyaralas Magyarorszagon.</li><li>Nyaralas kulfoldon.</li><li>Utazas szervezese.</li><li>Sajat vagy elore szervezett nyaralas.</li></ol></div>
+  <h3>Mintamonolog</h3>
   <div class="box-it">
-    <p>
-      Mi piace molto viaggiare, perche durante un viaggio posso conoscere nuovi posti,
-      nuove culture e nuove persone. Secondo me viaggiare e anche un buon modo per rilassarsi.
-    </p>
-    <p>
-      Di solito viaggio con la mia famiglia o con i miei amici. In Ungheria mi piace andare al lago Balaton,
-      perche e un posto molto bello e in estate si puo nuotare, prendere il sole e fare passeggiate.
-    </p>
-    <p>
-      Mi piacerebbe viaggiare anche all'estero. Vorrei visitare l'Italia, perche mi interessa la lingua italiana,
-      la cultura, la cucina e le citta storiche come Roma, Firenze e Venezia.
-    </p>
-    <p>
-      Per quanto riguarda i mezzi di trasporto, mi piace viaggiare in treno, perche e comodo e abbastanza economico.
-      Per viaggi piu lunghi l'aereo e piu veloce, ma spesso e piu costoso.
-    </p>
-    <p>
-      Una vacanza autogestita da piu liberta, perche possiamo decidere il programma da soli.
-      Una vacanza preorganizzata invece e piu comoda, perche l'agenzia organizza tutto.
-      Io preferisco una vacanza autogestita, perche mi piace scegliere cosa fare ogni giorno.
-    </p>
+    <p>Mi piace molto viaggiare, perche durante un viaggio posso conoscere nuovi posti, nuove culture e nuove persone. Viaggiare e anche un buon modo per rilassarsi.</p>
+    <p>Di solito viaggio con la mia famiglia o con i miei amici. In Ungheria mi piace andare al lago Balaton, perche in estate si puo nuotare e fare passeggiate.</p>
+    <p>Mi piacerebbe viaggiare anche all'estero. Vorrei visitare l'Italia, perche mi interessa la lingua, la cultura e citta come Roma, Firenze e Venezia.</p>
+    <p>Mi piace viaggiare in treno, perche e comodo ed economico. Per viaggi piu lunghi l'aereo e piu veloce, ma piu costoso.</p>
+    <p>Una vacanza autogestita da piu liberta, una preorganizzata invece e piu comoda. Io preferisco una vacanza autogestita, perche mi piace scegliere cosa fare ogni giorno.</p>
   </div>
 </section>
 
 <!-- ============ 9. SCIENZA E TECNOLOGIA ============ -->
 <section id="scienza">
   <h2>9. Scienza e tecnologia - Tudomany es technologia</h2>
-
   <h3>Alap szokincs</h3>
   <table>
     <tr><th>Olaszul</th><th>Magyarul</th></tr>
@@ -1051,71 +553,31 @@
     <tr><td>lo smartphone</td><td>okostelefon</td></tr>
     <tr><td>Internet</td><td>internet</td></tr>
     <tr><td>il social media</td><td>kozossegi media</td></tr>
-    <tr><td>l'applicazione (app)</td><td>alkalmazas</td></tr>
+    <tr><td>l'applicazione</td><td>alkalmazas</td></tr>
     <tr><td>l'intelligenza artificiale</td><td>mesterseges intelligencia</td></tr>
     <tr><td>essere utile</td><td>hasznosnak lenni</td></tr>
     <tr><td>i pericoli</td><td>veszelyek</td></tr>
   </table>
-
-  <details>
-    <summary>Scienze popolari</summary>
-    <ul>
-      <li>le scoperte scientifiche - tudomanyos felfedezesek</li>
-      <li>la medicina - orvostudomany</li>
-      <li>lo spazio - vilagur</li>
-      <li>la ricerca - kutatas</li>
-      <li>migliorare la vita - jobba tenni az eletet</li>
-    </ul>
+  <details><summary>Scienze popolari</summary>
+    <ul><li>le scoperte scientifiche - tudomanyos felfedezesek</li><li>la medicina - orvostudomany</li><li>la ricerca - kutatas</li><li>migliorare la vita - jobba tenni az eletet</li></ul>
   </details>
-
-  <details>
-    <summary>Tecnologia nella vita quotidiana, computer, Internet</summary>
-    <ul>
-      <li>usare lo smartphone ogni giorno - mindennap hasznalni a telefont</li>
-      <li>cercare informazioni - informaciot keresni</li>
-      <li>fare i compiti online - online hazit csinalni</li>
-      <li>comunicare con gli amici - kommunikalni a baratokkal</li>
-      <li>i vantaggi e i pericoli di Internet - az internet elonyei es veszelyei</li>
-      <li>passare troppo tempo online - tul sok idot tolteni a neten</li>
-    </ul>
+  <details><summary>Tecnologia nella vita quotidiana</summary>
+    <ul><li>usare lo smartphone ogni giorno - mindennap hasznalni a telefont</li><li>cercare informazioni - informaciot keresni</li><li>fare i compiti online - online hazit csinalni</li><li>passare troppo tempo online - tul sok idot tolteni a neten</li></ul>
   </details>
-
-  <h3>Vazlat - Scienza e tecnologia</h3>
-  <div class="box-hu">
-    <ol>
-      <li>Tudomanyos felfedezesek, miert fontosak.</li>
-      <li>Technologia a mindennapokban.</li>
-      <li>Szamitogep es internet hasznalata.</li>
-      <li>Elonyok es veszelyek (pl. tul sok keperny ido).</li>
-      <li>Sajat velemeny a technologia szereperol.</li>
-    </ol>
-  </div>
-
-  <h3>Mintamonolog - Scienza e tecnologia</h3>
+  <h3>Vazlat</h3>
+  <div class="box-hu"><ol><li>Tudomanyos felfedezesek.</li><li>Technologia a mindennapokban.</li><li>Szamitogep es internet.</li><li>Elonyok es veszelyek.</li><li>Sajat velemeny.</li></ol></div>
+  <h3>Mintamonolog</h3>
   <div class="box-it">
-    <p>
-      La scienza e la tecnologia sono molto importanti nella vita moderna.
-      Grazie alle scoperte scientifiche, per esempio nella medicina, oggi viviamo meglio e piu a lungo.
-    </p>
-    <p>
-      Nella vita quotidiana uso la tecnologia ogni giorno. Lo smartphone e il computer mi servono
-      per cercare informazioni, fare i compiti, comunicare con gli amici e divertirmi.
-    </p>
-    <p>
-      Internet ha molti vantaggi, perche possiamo trovare quasi tutto e imparare cose nuove.
-      Pero ci sono anche dei pericoli: per esempio si puo passare troppo tempo online
-      e non sempre le informazioni sono vere.
-    </p>
-    <p>
-      Secondo me la tecnologia e molto utile, ma bisogna usarla con attenzione e non dipendere troppo da essa.
-    </p>
+    <p>La scienza e la tecnologia sono molto importanti nella vita moderna. Grazie alle scoperte scientifiche, per esempio nella medicina, oggi viviamo meglio e piu a lungo.</p>
+    <p>Nella vita quotidiana uso la tecnologia ogni giorno. Lo smartphone e il computer mi servono per cercare informazioni, fare i compiti e comunicare con gli amici.</p>
+    <p>Internet ha molti vantaggi, perche possiamo trovare quasi tutto. Pero ci sono anche dei pericoli: si puo passare troppo tempo online e non sempre le informazioni sono vere.</p>
+    <p>Secondo me la tecnologia e molto utile, ma bisogna usarla con attenzione e non dipendere troppo da essa.</p>
   </div>
 </section>
 
 <!-- ============ 10. QUESTIONI FINANZIARIE ============ -->
 <section id="finanze">
   <h2>10. Questioni finanziarie - Penzugyek</h2>
-
   <h3>Alap szokincs</h3>
   <table>
     <tr><th>Olaszul</th><th>Magyarul</th></tr>
@@ -1132,127 +594,62 @@
     <tr><td>lo sconto</td><td>kedvezmeny</td></tr>
     <tr><td>la pubblicita</td><td>reklam</td></tr>
   </table>
-
-  <details>
-    <summary>Budget familiare, denaro nella vita quotidiana</summary>
-    <ul>
-      <li>gestire i soldi - kezelni a penzt</li>
-      <li>la paghetta - zsebpenz</li>
-      <li>risparmiare per qualcosa - sporolni valamire</li>
-      <li>le spese mensili - havi kiadasok</li>
-      <li>il denaro non e tutto - a penz nem minden</li>
-    </ul>
+  <details><summary>Budget familiare, denaro</summary>
+    <ul><li>gestire i soldi - kezelni a penzt</li><li>la paghetta - zsebpenz</li><li>risparmiare per qualcosa - sporolni valamire</li><li>le spese mensili - havi kiadasok</li></ul>
   </details>
-
-  <details>
-    <summary>Servizi bancari</summary>
-    <ul>
-      <li>aprire un conto - szamlat nyitni</li>
-      <li>prelevare soldi - penzt felvenni</li>
-      <li>pagare con la carta - kartyaval fizetni</li>
-      <li>il bancomat - bankautomata</li>
-      <li>il pagamento online - online fizetes</li>
-    </ul>
+  <details><summary>Servizi bancari</summary>
+    <ul><li>aprire un conto - szamlat nyitni</li><li>prelevare soldi - penzt felvenni</li><li>pagare con la carta - kartyaval fizetni</li><li>il pagamento online - online fizetes</li></ul>
   </details>
-
-  <details>
-    <summary>Negozi e fare la spesa, pubblicita</summary>
-    <ul>
-      <li>il supermercato - szupermarket</li>
-      <li>il centro commerciale - bevasarlokozpont</li>
-      <li>fare acquisti online - online vasarolni</li>
-      <li>la pubblicita ci influenza - a reklam befolyasol minket</li>
-      <li>comprare in saldo - akcioban venni</li>
-    </ul>
+  <details><summary>Negozi, fare la spesa, pubblicita</summary>
+    <ul><li>il supermercato - szupermarket</li><li>il centro commerciale - bevasarlokozpont</li><li>fare acquisti online - online vasarolni</li><li>comprare in saldo - akcioban venni</li></ul>
   </details>
-
-  <details>
-    <summary>Servizi</summary>
-    <ul>
-      <li>la posta - posta</li>
-      <li>il parrucchiere - fodrasz</li>
-      <li>il meccanico - szereło</li>
-      <li>usare un servizio - igenybe venni egy szolgaltatast</li>
-    </ul>
+  <details><summary>Servizi</summary>
+    <ul><li>la posta - posta</li><li>il parrucchiere - fodrasz</li><li>usare un servizio - igenybe venni egy szolgaltatast</li></ul>
   </details>
-
-  <h3>Vazlat - Questioni finanziarie</h3>
-  <div class="box-hu">
-    <ol>
-      <li>Penz a mindennapokban, zsebpenz, sporolas.</li>
-      <li>Banki szolgaltatasok: szamla, kartya, bankautomata.</li>
-      <li>Vasarlas: bolt, szupermarket, online.</li>
-      <li>Reklam szerepe es hatasa.</li>
-      <li>Sajat velemeny a penz kezeleserol.</li>
-    </ol>
-  </div>
-
-  <h3>Mintamonolog - Questioni finanziarie</h3>
+  <h3>Vazlat</h3>
+  <div class="box-hu"><ol><li>Penz a mindennapokban, zsebpenz.</li><li>Banki szolgaltatasok.</li><li>Vasarlas.</li><li>Reklam hatasa.</li><li>Sajat velemeny.</li></ol></div>
+  <h3>Mintamonolog</h3>
   <div class="box-it">
-    <p>
-      Secondo me e importante saper gestire bene il denaro. Io ricevo una piccola paghetta dai miei genitori
-      e cerco di non spendere tutto subito, ma di risparmiare un po' per le cose che mi piacciono.
-    </p>
-    <p>
-      Oggi quasi tutti usano i servizi bancari. Si puo aprire un conto, prelevare soldi al bancomat
-      e pagare con la carta o online. Per me e molto comodo pagare con la carta.
-    </p>
-    <p>
-      Mi piace fare la spesa, soprattutto nei centri commerciali o online.
-      Pero penso che la pubblicita ci influenzi molto e a volte ci faccia comprare cose che non ci servono.
-    </p>
-    <p>
-      Per questo cerco di stare attento: confronto i prezzi, approfitto degli sconti
-      e compro solo quello di cui ho davvero bisogno.
-    </p>
+    <p>Secondo me e importante saper gestire bene il denaro. Io ricevo una piccola paghetta dai miei genitori e cerco di risparmiare un po' per le cose che mi piacciono.</p>
+    <p>Oggi quasi tutti usano i servizi bancari. Si puo aprire un conto, prelevare soldi al bancomat e pagare con la carta o online. Per me e comodo pagare con la carta.</p>
+    <p>Mi piace fare la spesa, soprattutto nei centri commerciali o online. Pero penso che la pubblicita ci influenzi molto e a volte ci faccia comprare cose inutili.</p>
+    <p>Per questo cerco di stare attento: confronto i prezzi, approfitto degli sconti e compro solo quello di cui ho davvero bisogno.</p>
   </div>
 </section>
 
 <!-- ============ KERDESEK ============ -->
 <section id="kerdesek">
   <h2>Gyakorlo kerdesek</h2>
-
-  <h3>1. Aspetti personali, famiglia</h3>
-  <div class="question">1. Puoi presentarti e parlare della tua famiglia?</div>
-  <div class="question">2. Chi fa i lavori domestici a casa tua?</div>
-  <div class="question">3. Quali sono i tuoi progetti per il futuro?</div>
-
+  <h3>1. Aspetti personali</h3>
+  <div class="question">Puoi presentarti e parlare della tua famiglia?</div>
+  <div class="question">Quali sono i tuoi progetti per il futuro?</div>
   <h3>2. Gente e societa</h3>
-  <div class="question">1. Com'e un vero amico secondo te?</div>
-  <div class="question">2. Quali feste familiari ti piacciono di piu?</div>
-  <div class="question">3. Segui la moda?</div>
-
+  <div class="question">Com'e un vero amico secondo te?</div>
+  <div class="question">Segui la moda?</div>
   <h3>3. Ambiente</h3>
-  <div class="question">1. Dove abiti, in citta o in campagna?</div>
-  <div class="question">2. Cosa possiamo fare per proteggere l'ambiente?</div>
-
+  <div class="question">Dove abiti, in citta o in campagna?</div>
+  <div class="question">Cosa possiamo fare per proteggere l'ambiente?</div>
   <h3>4. Scuola</h3>
-  <div class="question">1. Qual e la tua materia preferita e perche?</div>
-  <div class="question">2. Perche e importante imparare le lingue straniere?</div>
-
+  <div class="question">Qual e la tua materia preferita e perche?</div>
+  <div class="question">Perche e importante imparare le lingue straniere?</div>
   <h3>5. Il mondo del lavoro</h3>
-  <div class="question">1. Hai mai fatto un lavoro estivo o part-time?</div>
-  <div class="question">2. Preferisci continuare gli studi o iniziare a lavorare?</div>
-
+  <div class="question">Hai mai fatto un lavoro estivo o part-time?</div>
+  <div class="question">Preferisci continuare gli studi o iniziare a lavorare?</div>
   <h3>6. Modo di vivere</h3>
-  <div class="question">1. Com'e una tua giornata tipica?</div>
-  <div class="question">2. Cosa fai per avere una vita sana?</div>
-
+  <div class="question">Com'e una tua giornata tipica?</div>
+  <div class="question">Cosa fai per avere una vita sana?</div>
   <h3>7. Divertimento</h3>
-  <div class="question">1. Che cosa fai nel tuo tempo libero?</div>
-  <div class="question">2. Fai sport? Quale sport ti piace?</div>
-
+  <div class="question">Che cosa fai nel tuo tempo libero?</div>
+  <div class="question">Fai sport? Quale sport ti piace?</div>
   <h3>8. Viaggio e vacanze</h3>
-  <div class="question">1. Ti piace viaggiare? Perche?</div>
-  <div class="question">2. Preferisci una vacanza autogestita o preorganizzata?</div>
-
+  <div class="question">Ti piace viaggiare? Perche?</div>
+  <div class="question">Preferisci una vacanza autogestita o preorganizzata?</div>
   <h3>9. Scienza e tecnologia</h3>
-  <div class="question">1. Come usi la tecnologia ogni giorno?</div>
-  <div class="question">2. Quali sono i vantaggi e i pericoli di Internet?</div>
-
+  <div class="question">Come usi la tecnologia ogni giorno?</div>
+  <div class="question">Quali sono i vantaggi e i pericoli di Internet?</div>
   <h3>10. Questioni finanziarie</h3>
-  <div class="question">1. Come gestisci i tuoi soldi?</div>
-  <div class="question">2. La pubblicita ti influenza quando fai acquisti?</div>
+  <div class="question">Come gestisci i tuoi soldi?</div>
+  <div class="question">La pubblicita ti influenza quando fai acquisti?</div>
 </section>
 
 <!-- ============ SAJAT MONOLOG ============ -->
@@ -1269,9 +666,7 @@
     <tr><td>Secondo me...</td><td>Szerintem...</td></tr>
     <tr><td>Penso che...</td><td>Azt gondolom, hogy...</td></tr>
     <tr><td>Mi piace...</td><td>Szeretem...</td></tr>
-    <tr><td>Non mi piace molto...</td><td>Nem nagyon szeretem...</td></tr>
     <tr><td>Di solito...</td><td>Altalaban...</td></tr>
-    <tr><td>Qualche volta...</td><td>Neha...</td></tr>
     <tr><td>Per esempio...</td><td>Peldaul...</td></tr>
     <tr><td>Per concludere...</td><td>Osszefoglalva...</td></tr>
   </table>
@@ -1279,56 +674,14 @@
 
 </main>
 
-<footer>
-  Olasz szobeli erettsegi gyakorlo - 10 temakor
-</footer>
-<script>
-  (function () {
-    var wrap = document.getElementById('smWrap');
-    var toggle = document.getElementById('smToggle');
-    var panel = document.getElementById('smPanel');
-    var text = document.getElementById('smToggleText');
-    var links = panel.querySelectorAll('.sm-list a, .sm-extra a');
-
-    function setOpen(open) {
-      if (open) { wrap.setAttribute('data-open', ''); }
-      else { wrap.removeAttribute('data-open'); }
-      toggle.setAttribute('aria-expanded', open);
-      panel.setAttribute('aria-hidden', !open);
-      text.textContent = open ? 'Close' : 'Temak';
-      panel.querySelectorAll('.sm-list a').forEach(function (a, i) {
-        a.style.transitionDelay = open ? (0.22 + i * 0.05) + 's' : '0s';
-      });
-    }
-
-    toggle.addEventListener('click', function () {
-      setOpen(!wrap.hasAttribute('data-open'));
-    });
-    links.forEach(function (a) {
-      a.addEventListener('click', function () { setOpen(false); });
-    });
-    document.addEventListener('click', function (e) {
-      if (!wrap.hasAttribute('data-open')) return;
-      if (!panel.contains(e.target) && !toggle.contains(e.target)) setOpen(false);
-    });
-    document.addEventListener('keydown', function (e) {
-      if (e.key === 'Escape') setOpen(false);
-    });
-  })();
-</script>
+<footer>Olasz szobeli erettsegi gyakorlo - 10 temakor</footer>
 
 <!-- ===== Gyakorlo AI ablak ===== -->
 <div id="aiWidget">
-  <button id="aiBubble" type="button" aria-label="Gyakorlo partner megnyitasa">🤖</button>
-
+  <button id="aiBubble" type="button" aria-label="Gyakorlo partner">🤖</button>
   <div id="aiPanel" aria-hidden="true">
-    <div id="aiHeader">
-      <span>Gyakorlo partner</span>
-      <button id="aiClose" type="button" aria-label="Bezaras">×</button>
-    </div>
-
+    <div id="aiHeader"><span>Gyakorlo partner</span><button id="aiClose" type="button" aria-label="Bezaras">×</button></div>
     <div id="aiBody"></div>
-
     <div id="aiChips">
       <select id="aiTopic" aria-label="Temavalasztas">
         <option value="all">Mind</option>
@@ -1347,7 +700,6 @@
       <button class="aiChip" data-act="model" type="button">Mintavalasz</button>
       <button class="aiChip" data-act="phrases" type="button">Kifejezesek</button>
     </div>
-
     <div id="aiInputRow">
       <input id="aiInput" type="text" placeholder="Ird ide a valaszod olaszul..." autocomplete="off">
       <button id="aiSend" type="button">Kuld</button>
@@ -1355,209 +707,169 @@
   </div>
 </div>
 
-<style>
-  #aiBubble {
-    position: fixed; bottom: 22px; right: 22px; z-index: 1100;
-    width: 56px; height: 56px; border-radius: 50%; border: none;
-    background: #1f6feb; color: #fff; font-size: 24px; cursor: pointer;
-    box-shadow: 0 6px 18px rgba(0,0,0,0.28); transition: transform 0.2s;
-  }
-  #aiBubble:hover { transform: scale(1.08); }
-
-  #aiPanel {
-    position: fixed; bottom: 90px; right: 22px; z-index: 1100;
-    width: min(92vw, 340px); height: min(70vh, 480px);
-    background: #fff; border-radius: 16px; overflow: hidden;
-    display: none; flex-direction: column;
-    box-shadow: 0 12px 40px rgba(0,0,0,0.3);
-    font-family: Arial, sans-serif;
-  }
-  #aiPanel.open { display: flex; }
-
-  #aiHeader {
-    background: #1f6feb; color: #fff; padding: 12px 14px;
-    display: flex; justify-content: space-between; align-items: center;
-    font-weight: bold;
-  }
-  #aiClose { background: none; border: none; color: #fff; font-size: 22px; cursor: pointer; line-height: 1; }
-
-  #aiBody { flex: 1; overflow-y: auto; padding: 12px; background: #f4f6f8; font-size: 14px; }
-  .aiMsg { margin: 8px 0; padding: 9px 12px; border-radius: 12px; max-width: 85%; line-height: 1.45; white-space: pre-wrap; }
-  .aiMsg.bot { background: #e8f1ff; color: #14375f; border-bottom-left-radius: 3px; }
-  .aiMsg.user { background: #1f6feb; color: #fff; margin-left: auto; border-bottom-right-radius: 3px; }
-
-  #aiChips { display: flex; flex-wrap: wrap; gap: 6px; padding: 8px; border-top: 1px solid #eee; }
-  #aiChips select, .aiChip {
-    font-size: 12px; padding: 6px 9px; border-radius: 14px;
-    border: 1px solid #cdddff; background: #eef4ff; color: #1f6feb;
-    cursor: pointer; font-weight: bold;
-  }
-  .aiChip:hover { background: #dbe8ff; }
-
-  #aiInputRow { display: flex; gap: 6px; padding: 8px; border-top: 1px solid #eee; }
-  #aiInput { flex: 1; padding: 9px 11px; border: 1px solid #ccc; border-radius: 10px; font-size: 14px; }
-  #aiSend { background: #1f6feb; color: #fff; border: none; border-radius: 10px; padding: 0 14px; font-weight: bold; cursor: pointer; }
-  #aiSend:hover { background: #1557c0; }
-</style>
-
 <script>
-  (function () {
-    var BANK = {
-      aspetti: {
-        q: ["Puoi presentarti e parlare della tua famiglia?", "Chi fa i lavori domestici a casa tua?", "Quali sono i tuoi progetti per il futuro?"],
-        phrases: ["Mi chiamo... e ho ... anni.", "La mia famiglia non e molto numerosa.", "Dopo la maturita vorrei...", "Il mio sogno e..."],
-        model: "Mi chiamo Marton e ho diciotto anni. Abito con la mia famiglia e a casa tutti aiutano nei lavori domestici. Dopo la maturita vorrei studiare all'universita e imparare bene le lingue."
-      },
-      gente: {
-        q: ["Com'e un vero amico secondo te?", "Quali feste familiari ti piacciono di piu?", "Segui la moda?"],
-        phrases: ["Un vero amico e una persona di cui ci si puo fidare.", "Mi piacciono le feste familiari come...", "Secondo me e piu importante il carattere."],
-        model: "Per me l'amicizia e molto importante. Un vero amico ci aiuta nei momenti difficili. Mi piacciono molto le feste familiari, come il Natale, perche tutta la famiglia sta insieme."
-      },
-      ambiente: {
-        q: ["Dove abiti, in citta o in campagna?", "Cosa possiamo fare per proteggere l'ambiente?", "Com'e il tempo in Ungheria?"],
-        phrases: ["Io abito in un appartamento / in una casa.", "Per proteggere l'ambiente possiamo...", "In estate fa caldo, in inverno fa freddo."],
-        model: "Io abito in un appartamento comodo e luminoso. Penso che proteggere l'ambiente sia importante: possiamo fare il riciclaggio, risparmiare energia e usare i mezzi pubblici."
-      },
-      scuola: {
-        q: ["Qual e la tua materia preferita e perche?", "Perche e importante imparare le lingue straniere?", "Com'e la tua scuola?"],
-        phrases: ["La mia materia preferita e... perche...", "Imparare le lingue e utile per il lavoro e per viaggiare.", "Le lezioni cominciano la mattina."],
-        model: "Frequento un liceo. La mia materia preferita e l'italiano. Secondo me imparare le lingue straniere e molto importante, perche e utile per il lavoro e per viaggiare."
-      },
-      lavoro: {
-        q: ["Hai mai fatto un lavoro estivo o part-time?", "Preferisci continuare gli studi o iniziare a lavorare?", "Perche e utile lavorare da giovani?"],
-        phrases: ["Molti giovani fanno lavori estivi.", "Lavorando si fa esperienza e si diventa indipendenti.", "Dopo la maturita vorrei continuare gli studi."],
-        model: "Molti giovani fanno lavori estivi, per esempio come camerieri. Cosi si guadagnano i primi soldi e si fa esperienza. Io vorrei continuare gli studi all'universita."
-      },
-      vivere: {
-        q: ["Com'e una tua giornata tipica?", "Cosa fai per avere una vita sana?", "Qual e il tuo piatto preferito?"],
-        phrases: ["La mattina mi sveglio presto e vado a scuola.", "Per stare in forma bisogna mangiare bene e fare sport.", "Il mio piatto preferito e..."],
-        model: "Una mia giornata tipica e normale: la mattina vado a scuola e il pomeriggio studio. Per una vita sana cerco di mangiare bene, dormire abbastanza e fare sport."
-      },
-      divertimento: {
-        q: ["Che cosa fai nel tuo tempo libero?", "Fai sport? Quale sport ti piace?", "Ti piace andare al cinema o a teatro?"],
-        phrases: ["Nel mio tempo libero mi piace...", "Il mio hobby preferito e...", "Mi piace fare sport perche e sano."],
-        model: "Nel mio tempo libero mi piace ascoltare musica, guardare film e stare con gli amici. Mi piace anche fare sport, perche e sano e aiuta a rilassarsi."
-      },
-      viaggi: {
-        q: ["Ti piace viaggiare? Perche?", "Preferisci una vacanza autogestita o preorganizzata?", "Dove vai di solito in vacanza?"],
-        phrases: ["Mi piace viaggiare perche posso conoscere posti nuovi.", "In Ungheria mi piace andare al lago Balaton.", "Preferisco una vacanza autogestita."],
-        model: "Mi piace molto viaggiare, perche posso conoscere nuove culture. In Ungheria vado al Balaton. Preferisco una vacanza autogestita, perche mi piace decidere il programma da solo."
-      },
-      scienza: {
-        q: ["Come usi la tecnologia ogni giorno?", "Quali sono i vantaggi e i pericoli di Internet?", "La tecnologia ti aiuta a studiare?"],
-        phrases: ["Uso lo smartphone ogni giorno per...", "Internet ha molti vantaggi, pero ci sono anche pericoli.", "Bisogna usare la tecnologia con attenzione."],
-        model: "Uso la tecnologia ogni giorno: lo smartphone mi serve per cercare informazioni e studiare. Internet ha molti vantaggi, pero bisogna usarlo con attenzione."
-      },
-      finanze: {
-        q: ["Come gestisci i tuoi soldi?", "La pubblicita ti influenza quando fai acquisti?", "Preferisci pagare in contanti o con la carta?"],
-        phrases: ["Cerco di risparmiare un po'.", "La pubblicita ci influenza molto.", "Per me e comodo pagare con la carta."],
-        model: "Cerco di gestire bene i soldi e di risparmiare un po'. Penso che la pubblicita ci influenzi molto, percio compro solo quello di cui ho bisogno."
+(function () {
+  /* ===== Felolvaso (TTS) ===== */
+  function speak(text) {
+    if (!('speechSynthesis' in window)) { alert('A bongeszod nem tamogatja a felolvasast.'); return; }
+    window.speechSynthesis.cancel();
+    var u = new SpeechSynthesisUtterance(text);
+    u.lang = 'it-IT'; u.rate = 0.95;
+    window.speechSynthesis.speak(u);
+  }
+
+  var TOPIC_IDS = ['aspetti','gente','ambiente','scuola','lavoro','vivere','divertimento','viaggi','scienza','finanze'];
+
+  /* Monologokhoz felolvaso gomb */
+  document.querySelectorAll('.box-it').forEach(function (box) {
+    var btn = document.createElement('button');
+    btn.className = 'speak-btn'; btn.type = 'button'; btn.textContent = '🔊 Meghallgatas';
+    btn.addEventListener('click', function () {
+      var txt = Array.prototype.map.call(box.querySelectorAll('p'), function (p) { return p.textContent; }).join(' ');
+      speak(txt);
+    });
+    box.insertBefore(btn, box.firstChild);
+  });
+
+  /* Szokincs-tablazat olasz cellai kattinthatok */
+  TOPIC_IDS.forEach(function (id) {
+    var sec = document.getElementById(id); if (!sec) return;
+    var table = sec.querySelector('table'); if (!table) return;
+    Array.prototype.forEach.call(table.querySelectorAll('tr'), function (tr) {
+      var tds = tr.querySelectorAll('td');
+      if (tds.length >= 2) {
+        tds[0].classList.add('it-cell');
+        tds[0].title = 'Kattints a meghallgatashoz';
+        tds[0].addEventListener('click', function () { speak(tds[0].textContent.trim()); });
       }
-    };
+    });
+  });
 
-    var TOPIC_NAMES = {
-      aspetti:"Aspetti personali", gente:"Gente e societa", ambiente:"Ambiente",
-      scuola:"Scuola", lavoro:"Mondo del lavoro", vivere:"Modo di vivere",
-      divertimento:"Divertimento", viaggi:"Viaggi e vacanze",
-      scienza:"Scienza e tecnologia", finanze:"Questioni finanziarie"
-    };
+  /* Kerdesekhez felolvaso */
+  document.querySelectorAll('.question').forEach(function (q) {
+    var orig = q.textContent.replace(/^\s*\d+\.\s*/, '').trim();
+    var b = document.createElement('button'); b.className = 'q-speak'; b.type = 'button'; b.textContent = '🔊'; b.title = 'Meghallgatas';
+    b.addEventListener('click', function () { speak(orig); });
+    q.appendChild(b);
+  });
 
-    var bubble = document.getElementById('aiBubble');
-    var panel = document.getElementById('aiPanel');
-    var closeBtn = document.getElementById('aiClose');
-    var body = document.getElementById('aiBody');
-    var topicSel = document.getElementById('aiTopic');
-    var input = document.getElementById('aiInput');
-    var sendBtn = document.getElementById('aiSend');
-    var current = null; // {topic, question}
-    var greeted = false;
-
-    function add(text, who) {
-      var d = document.createElement('div');
-      d.className = 'aiMsg ' + (who || 'bot');
-      d.textContent = text;
-      body.appendChild(d);
-      body.scrollTop = body.scrollHeight;
-    }
-
-    function pickTopic() {
-      var t = topicSel.value;
-      if (t === 'all') {
-        var keys = Object.keys(BANK);
-        t = keys[Math.floor(Math.random() * keys.length)];
-      }
-      return t;
-    }
-
-    function rand(arr) { return arr[Math.floor(Math.random() * arr.length)]; }
-
-    function newQuestion() {
-      var t = pickTopic();
-      var qs = BANK[t].q;
-      current = { topic: t, question: rand(qs) };
-      add("Tema: " + TOPIC_NAMES[t] + "\n\n" + current.question);
-    }
-
-    function showModel() {
-      if (!current) { add("Eloszor kerj egy kerdest a 'Uj kerdes' gombbal!"); return; }
-      add("Mintavalasz:\n" + BANK[current.topic].model);
-    }
-
-    function showPhrases() {
-      var t = current ? current.topic : pickTopic();
-      add("Hasznos kifejezesek (" + TOPIC_NAMES[t] + "):\n- " + BANK[t].phrases.join("\n- "));
-    }
-
-    function feedback(ans) {
-      var words = ans.trim().split(/\s+/).filter(Boolean).length;
-      var connectives = ['perche','secondo me','di solito','per esempio','pero','anche','quindi','mi piace','vorrei','penso'];
-      var low = ' ' + ans.toLowerCase() + ' ';
-      var used = connectives.filter(function (c) { return low.indexOf(c) !== -1; });
-
-      var tips = [];
-      if (words < 12) tips.push("A valasz elég rovid (" + words + " szo). Probald 4-6 mondatra bovteni.");
-      else tips.push("Jo hosszusag (" + words + " szo)!");
-
-      if (used.length === 0) tips.push("Hasznalj kotoszavakat / vélemeny-kifejezeseket: secondo me, perche, di solito, pero...");
-      else tips.push("Szuper, hasznaltad: " + used.join(", ") + ".");
-
-      tips.push("Tipp: zard le egy velemennyel ('Secondo me...') es egy peldaval ('Per esempio...').");
-      add("Visszajelzes:\n- " + tips.join("\n- ") + "\n\nKattints a 'Mintavalasz'-ra az osszehasonlitashoz.");
-    }
-
-    function send() {
-      var v = input.value.trim();
-      if (!v) return;
-      add(v, 'user');
-      input.value = '';
-      setTimeout(function () { feedback(v); }, 250);
-    }
-
-    function open() {
-      panel.classList.add('open');
-      panel.setAttribute('aria-hidden', 'false');
-      if (!greeted) {
-        greeted = true;
-        add("Ciao! Olasz szobeli gyakorlo partner vagyok. Valassz temat, kerj 'Uj kerdes'-t, majd ird be a valaszod olaszul. Adok visszajelzest es mintavalaszt is. 🇮🇹");
-        newQuestion();
-      }
-    }
-    function close() { panel.classList.remove('open'); panel.setAttribute('aria-hidden', 'true'); }
-
-    bubble.addEventListener('click', function () { panel.classList.contains('open') ? close() : open(); });
-    closeBtn.addEventListener('click', close);
-    sendBtn.addEventListener('click', send);
-    input.addEventListener('keydown', function (e) { if (e.key === 'Enter') send(); });
-    document.querySelectorAll('.aiChip').forEach(function (b) {
-      b.addEventListener('click', function () {
-        var act = b.getAttribute('data-act');
-        if (act === 'q') newQuestion();
-        else if (act === 'model') showModel();
-        else if (act === 'phrases') showPhrases();
+  /* ===== Szokartya ===== */
+  function getVocab(topic) {
+    var ids = topic === 'all' ? TOPIC_IDS : [topic];
+    var out = [];
+    ids.forEach(function (id) {
+      var sec = document.getElementById(id); if (!sec) return;
+      var table = sec.querySelector('table'); if (!table) return;
+      Array.prototype.forEach.call(table.querySelectorAll('tr'), function (tr) {
+        var tds = tr.querySelectorAll('td');
+        if (tds.length >= 2) out.push({ it: tds[0].textContent.trim(), hu: tds[1].textContent.trim() });
       });
     });
-  })();
+    return out;
+  }
+  function shuffle(a) { for (var i = a.length - 1; i > 0; i--) { var j = Math.floor(Math.random() * (i + 1)); var t = a[i]; a[i] = a[j]; a[j] = t; } return a; }
+
+  var fcTopic = document.getElementById('fcTopic');
+  var fcCard = document.getElementById('fcCard');
+  var fcFront = document.getElementById('fcFront');
+  var fcBack = document.getElementById('fcBack');
+  var fcProg = document.getElementById('fcProg');
+  var deck = [], idx = 0;
+
+  function fcRender() {
+    fcCard.classList.remove('flipped');
+    if (!deck.length) { fcFront.textContent = 'Nincs szo'; fcBack.textContent = '-'; fcProg.textContent = '0 / 0'; return; }
+    fcFront.textContent = deck[idx].it;
+    fcBack.textContent = deck[idx].hu;
+    fcProg.textContent = (idx + 1) + ' / ' + deck.length;
+  }
+  function fcBuild() { deck = getVocab(fcTopic.value); idx = 0; fcRender(); }
+
+  fcCard.addEventListener('click', function () { fcCard.classList.toggle('flipped'); });
+  document.getElementById('fcNext').addEventListener('click', function () { if (deck.length) { idx = (idx + 1) % deck.length; fcRender(); } });
+  document.getElementById('fcPrev').addEventListener('click', function () { if (deck.length) { idx = (idx - 1 + deck.length) % deck.length; fcRender(); } });
+  document.getElementById('fcShuffle').addEventListener('click', function () { shuffle(deck); idx = 0; fcRender(); });
+  document.getElementById('fcSpeak').addEventListener('click', function () { if (deck.length) speak(deck[idx].it); });
+  fcTopic.addEventListener('change', fcBuild);
+  fcBuild();
+
+  /* ===== Staggered menu ===== */
+  var wrap = document.getElementById('smWrap');
+  var toggle = document.getElementById('smToggle');
+  var smPanel = document.getElementById('smPanel');
+  var smText = document.getElementById('smToggleText');
+  var smLinks = smPanel.querySelectorAll('.sm-list a, .sm-extra a');
+  function smSet(open) {
+    if (open) wrap.setAttribute('data-open', ''); else wrap.removeAttribute('data-open');
+    toggle.setAttribute('aria-expanded', open);
+    smPanel.setAttribute('aria-hidden', !open);
+    smText.textContent = open ? 'Close' : 'Temak';
+    smPanel.querySelectorAll('.sm-list a').forEach(function (a, i) { a.style.transitionDelay = open ? (0.22 + i * 0.05) + 's' : '0s'; });
+  }
+  toggle.addEventListener('click', function () { smSet(!wrap.hasAttribute('data-open')); });
+  smLinks.forEach(function (a) { a.addEventListener('click', function () { smSet(false); }); });
+  document.addEventListener('click', function (e) {
+    if (!wrap.hasAttribute('data-open')) return;
+    if (!smPanel.contains(e.target) && !toggle.contains(e.target)) smSet(false);
+  });
+  document.addEventListener('keydown', function (e) { if (e.key === 'Escape') smSet(false); });
+
+  /* ===== Gyakorlo AI ===== */
+  var BANK = {
+    aspetti: { q: ["Puoi presentarti e parlare della tua famiglia?", "Chi fa i lavori domestici a casa tua?", "Quali sono i tuoi progetti per il futuro?"], phrases: ["Mi chiamo... e ho ... anni.", "La mia famiglia non e molto numerosa.", "Dopo la maturita vorrei..."], model: "Mi chiamo Marton e ho diciotto anni. A casa tutti aiutano nei lavori domestici. Dopo la maturita vorrei studiare all'universita e imparare bene le lingue." },
+    gente: { q: ["Com'e un vero amico secondo te?", "Quali feste familiari ti piacciono di piu?", "Segui la moda?"], phrases: ["Un vero amico e una persona di cui ci si puo fidare.", "Mi piacciono le feste familiari come...", "Secondo me e piu importante il carattere."], model: "Per me l'amicizia e importante. Un vero amico ci aiuta nei momenti difficili. Mi piace il Natale, perche tutta la famiglia sta insieme." },
+    ambiente: { q: ["Dove abiti, in citta o in campagna?", "Cosa possiamo fare per proteggere l'ambiente?", "Com'e il tempo in Ungheria?"], phrases: ["Io abito in un appartamento.", "Per proteggere l'ambiente possiamo...", "In estate fa caldo, in inverno fa freddo."], model: "Io abito in un appartamento comodo. Per proteggere l'ambiente possiamo fare il riciclaggio, risparmiare energia e usare i mezzi pubblici." },
+    scuola: { q: ["Qual e la tua materia preferita e perche?", "Perche e importante imparare le lingue straniere?", "Com'e la tua scuola?"], phrases: ["La mia materia preferita e... perche...", "Imparare le lingue e utile per il lavoro.", "Le lezioni cominciano la mattina."], model: "Frequento un liceo. La mia materia preferita e l'italiano. Imparare le lingue e importante, perche e utile per il lavoro e per viaggiare." },
+    lavoro: { q: ["Hai mai fatto un lavoro estivo o part-time?", "Preferisci continuare gli studi o iniziare a lavorare?", "Perche e utile lavorare da giovani?"], phrases: ["Molti giovani fanno lavori estivi.", "Lavorando si fa esperienza.", "Dopo la maturita vorrei continuare gli studi."], model: "Molti giovani fanno lavori estivi, per esempio come camerieri. Cosi si fa esperienza. Io vorrei continuare gli studi all'universita." },
+    vivere: { q: ["Com'e una tua giornata tipica?", "Cosa fai per avere una vita sana?", "Qual e il tuo piatto preferito?"], phrases: ["La mattina mi sveglio presto.", "Per stare in forma bisogna mangiare bene e fare sport.", "Il mio piatto preferito e..."], model: "La mattina vado a scuola e il pomeriggio studio. Per una vita sana cerco di mangiare bene, dormire abbastanza e fare sport." },
+    divertimento: { q: ["Che cosa fai nel tuo tempo libero?", "Fai sport? Quale sport ti piace?", "Ti piace andare al cinema?"], phrases: ["Nel mio tempo libero mi piace...", "Il mio hobby preferito e...", "Mi piace fare sport perche e sano."], model: "Nel mio tempo libero mi piace ascoltare musica, guardare film e stare con gli amici. Mi piace anche fare sport, perche e sano." },
+    viaggi: { q: ["Ti piace viaggiare? Perche?", "Preferisci una vacanza autogestita o preorganizzata?", "Dove vai di solito in vacanza?"], phrases: ["Mi piace viaggiare perche conosco posti nuovi.", "In Ungheria vado al lago Balaton.", "Preferisco una vacanza autogestita."], model: "Mi piace viaggiare, perche posso conoscere nuove culture. In Ungheria vado al Balaton. Preferisco una vacanza autogestita, perche posso decidere il programma da solo." },
+    scienza: { q: ["Come usi la tecnologia ogni giorno?", "Quali sono i vantaggi e i pericoli di Internet?", "La tecnologia ti aiuta a studiare?"], phrases: ["Uso lo smartphone ogni giorno per...", "Internet ha molti vantaggi, pero ci sono pericoli.", "Bisogna usare la tecnologia con attenzione."], model: "Uso lo smartphone ogni giorno per cercare informazioni e studiare. Internet ha molti vantaggi, pero bisogna usarlo con attenzione." },
+    finanze: { q: ["Come gestisci i tuoi soldi?", "La pubblicita ti influenza quando fai acquisti?", "Preferisci pagare in contanti o con la carta?"], phrases: ["Cerco di risparmiare un po'.", "La pubblicita ci influenza molto.", "Per me e comodo pagare con la carta."], model: "Cerco di risparmiare un po'. Penso che la pubblicita ci influenzi molto, percio compro solo quello di cui ho bisogno." }
+  };
+  var TOPIC_NAMES = { aspetti: "Aspetti personali", gente: "Gente e societa", ambiente: "Ambiente", scuola: "Scuola", lavoro: "Mondo del lavoro", vivere: "Modo di vivere", divertimento: "Divertimento", viaggi: "Viaggi e vacanze", scienza: "Scienza e tecnologia", finanze: "Questioni finanziarie" };
+
+  var aiBubble = document.getElementById('aiBubble');
+  var aiPanel = document.getElementById('aiPanel');
+  var aiClose = document.getElementById('aiClose');
+  var aiBody = document.getElementById('aiBody');
+  var aiTopic = document.getElementById('aiTopic');
+  var aiInput = document.getElementById('aiInput');
+  var aiSend = document.getElementById('aiSend');
+  var current = null, greeted = false;
+
+  function add(text, who) { var d = document.createElement('div'); d.className = 'aiMsg ' + (who || 'bot'); d.textContent = text; aiBody.appendChild(d); aiBody.scrollTop = aiBody.scrollHeight; }
+  function pickTopic() { var t = aiTopic.value; if (t === 'all') { var k = Object.keys(BANK); t = k[Math.floor(Math.random() * k.length)]; } return t; }
+  function rand(a) { return a[Math.floor(Math.random() * a.length)]; }
+  function newQuestion() { var t = pickTopic(); current = { topic: t, question: rand(BANK[t].q) }; add("Tema: " + TOPIC_NAMES[t] + "\n\n" + current.question); }
+  function showModel() { if (!current) { add("Eloszor kerj egy kerdest a 'Uj kerdes' gombbal!"); return; } add("Mintavalasz:\n" + BANK[current.topic].model); }
+  function showPhrases() { var t = current ? current.topic : pickTopic(); add("Hasznos kifejezesek (" + TOPIC_NAMES[t] + "):\n- " + BANK[t].phrases.join("\n- ")); }
+  function feedback(ans) {
+    var words = ans.trim().split(/\s+/).filter(Boolean).length;
+    var conn = ['perche', 'secondo me', 'di solito', 'per esempio', 'pero', 'anche', 'quindi', 'mi piace', 'vorrei', 'penso'];
+    var low = ' ' + ans.toLowerCase() + ' ';
+    var used = conn.filter(function (c) { return low.indexOf(c) !== -1; });
+    var tips = [];
+    if (words < 12) tips.push("A valasz elég rovid (" + words + " szo). Probald 4-6 mondatra bovteni.");
+    else tips.push("Jo hosszusag (" + words + " szo)!");
+    if (used.length === 0) tips.push("Hasznalj kotoszavakat: secondo me, perche, di solito, pero...");
+    else tips.push("Szuper, hasznaltad: " + used.join(", ") + ".");
+    tips.push("Tipp: zard le egy velemennyel ('Secondo me...') es egy peldaval ('Per esempio...').");
+    add("Visszajelzes:\n- " + tips.join("\n- ") + "\n\nKattints a 'Mintavalasz'-ra az osszehasonlitashoz.");
+  }
+  function aiSendMsg() { var v = aiInput.value.trim(); if (!v) return; add(v, 'user'); aiInput.value = ''; setTimeout(function () { feedback(v); }, 250); }
+  function aiOpen() { aiPanel.classList.add('open'); aiPanel.setAttribute('aria-hidden', 'false'); if (!greeted) { greeted = true; add("Ciao! Olasz szobeli gyakorlo partner vagyok. Valassz temat, kerj 'Uj kerdes'-t, majd ird be a valaszod olaszul. 🇮🇹"); newQuestion(); } }
+  function aiCloseFn() { aiPanel.classList.remove('open'); aiPanel.setAttribute('aria-hidden', 'true'); }
+
+  aiBubble.addEventListener('click', function () { aiPanel.classList.contains('open') ? aiCloseFn() : aiOpen(); });
+  aiClose.addEventListener('click', aiCloseFn);
+  aiSend.addEventListener('click', aiSendMsg);
+  aiInput.addEventListener('keydown', function (e) { if (e.key === 'Enter') aiSendMsg(); });
+  document.querySelectorAll('.aiChip').forEach(function (b) {
+    b.addEventListener('click', function () { var act = b.getAttribute('data-act'); if (act === 'q') newQuestion(); else if (act === 'model') showModel(); else if (act === 'phrases') showPhrases(); });
+  });
+})();
 </script>
-  
+
 </body>
 </html>
