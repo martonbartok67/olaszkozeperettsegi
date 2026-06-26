@@ -1317,5 +1317,247 @@
   })();
 </script>
 
+<!-- ===== Gyakorlo AI ablak ===== -->
+<div id="aiWidget">
+  <button id="aiBubble" type="button" aria-label="Gyakorlo partner megnyitasa">🤖</button>
+
+  <div id="aiPanel" aria-hidden="true">
+    <div id="aiHeader">
+      <span>Gyakorlo partner</span>
+      <button id="aiClose" type="button" aria-label="Bezaras">×</button>
+    </div>
+
+    <div id="aiBody"></div>
+
+    <div id="aiChips">
+      <select id="aiTopic" aria-label="Temavalasztas">
+        <option value="all">Mind</option>
+        <option value="aspetti">1. Aspetti personali</option>
+        <option value="gente">2. Gente e societa</option>
+        <option value="ambiente">3. Ambiente</option>
+        <option value="scuola">4. Scuola</option>
+        <option value="lavoro">5. Mondo del lavoro</option>
+        <option value="vivere">6. Modo di vivere</option>
+        <option value="divertimento">7. Divertimento</option>
+        <option value="viaggi">8. Viaggi e vacanze</option>
+        <option value="scienza">9. Scienza e tecnologia</option>
+        <option value="finanze">10. Questioni finanziarie</option>
+      </select>
+      <button class="aiChip" data-act="q" type="button">Uj kerdes</button>
+      <button class="aiChip" data-act="model" type="button">Mintavalasz</button>
+      <button class="aiChip" data-act="phrases" type="button">Kifejezesek</button>
+    </div>
+
+    <div id="aiInputRow">
+      <input id="aiInput" type="text" placeholder="Ird ide a valaszod olaszul..." autocomplete="off">
+      <button id="aiSend" type="button">Kuld</button>
+    </div>
+  </div>
+</div>
+
+<style>
+  #aiBubble {
+    position: fixed; bottom: 22px; right: 22px; z-index: 1100;
+    width: 56px; height: 56px; border-radius: 50%; border: none;
+    background: #1f6feb; color: #fff; font-size: 24px; cursor: pointer;
+    box-shadow: 0 6px 18px rgba(0,0,0,0.28); transition: transform 0.2s;
+  }
+  #aiBubble:hover { transform: scale(1.08); }
+
+  #aiPanel {
+    position: fixed; bottom: 90px; right: 22px; z-index: 1100;
+    width: min(92vw, 340px); height: min(70vh, 480px);
+    background: #fff; border-radius: 16px; overflow: hidden;
+    display: none; flex-direction: column;
+    box-shadow: 0 12px 40px rgba(0,0,0,0.3);
+    font-family: Arial, sans-serif;
+  }
+  #aiPanel.open { display: flex; }
+
+  #aiHeader {
+    background: #1f6feb; color: #fff; padding: 12px 14px;
+    display: flex; justify-content: space-between; align-items: center;
+    font-weight: bold;
+  }
+  #aiClose { background: none; border: none; color: #fff; font-size: 22px; cursor: pointer; line-height: 1; }
+
+  #aiBody { flex: 1; overflow-y: auto; padding: 12px; background: #f4f6f8; font-size: 14px; }
+  .aiMsg { margin: 8px 0; padding: 9px 12px; border-radius: 12px; max-width: 85%; line-height: 1.45; white-space: pre-wrap; }
+  .aiMsg.bot { background: #e8f1ff; color: #14375f; border-bottom-left-radius: 3px; }
+  .aiMsg.user { background: #1f6feb; color: #fff; margin-left: auto; border-bottom-right-radius: 3px; }
+
+  #aiChips { display: flex; flex-wrap: wrap; gap: 6px; padding: 8px; border-top: 1px solid #eee; }
+  #aiChips select, .aiChip {
+    font-size: 12px; padding: 6px 9px; border-radius: 14px;
+    border: 1px solid #cdddff; background: #eef4ff; color: #1f6feb;
+    cursor: pointer; font-weight: bold;
+  }
+  .aiChip:hover { background: #dbe8ff; }
+
+  #aiInputRow { display: flex; gap: 6px; padding: 8px; border-top: 1px solid #eee; }
+  #aiInput { flex: 1; padding: 9px 11px; border: 1px solid #ccc; border-radius: 10px; font-size: 14px; }
+  #aiSend { background: #1f6feb; color: #fff; border: none; border-radius: 10px; padding: 0 14px; font-weight: bold; cursor: pointer; }
+  #aiSend:hover { background: #1557c0; }
+</style>
+
+<script>
+  (function () {
+    var BANK = {
+      aspetti: {
+        q: ["Puoi presentarti e parlare della tua famiglia?", "Chi fa i lavori domestici a casa tua?", "Quali sono i tuoi progetti per il futuro?"],
+        phrases: ["Mi chiamo... e ho ... anni.", "La mia famiglia non e molto numerosa.", "Dopo la maturita vorrei...", "Il mio sogno e..."],
+        model: "Mi chiamo Marton e ho diciotto anni. Abito con la mia famiglia e a casa tutti aiutano nei lavori domestici. Dopo la maturita vorrei studiare all'universita e imparare bene le lingue."
+      },
+      gente: {
+        q: ["Com'e un vero amico secondo te?", "Quali feste familiari ti piacciono di piu?", "Segui la moda?"],
+        phrases: ["Un vero amico e una persona di cui ci si puo fidare.", "Mi piacciono le feste familiari come...", "Secondo me e piu importante il carattere."],
+        model: "Per me l'amicizia e molto importante. Un vero amico ci aiuta nei momenti difficili. Mi piacciono molto le feste familiari, come il Natale, perche tutta la famiglia sta insieme."
+      },
+      ambiente: {
+        q: ["Dove abiti, in citta o in campagna?", "Cosa possiamo fare per proteggere l'ambiente?", "Com'e il tempo in Ungheria?"],
+        phrases: ["Io abito in un appartamento / in una casa.", "Per proteggere l'ambiente possiamo...", "In estate fa caldo, in inverno fa freddo."],
+        model: "Io abito in un appartamento comodo e luminoso. Penso che proteggere l'ambiente sia importante: possiamo fare il riciclaggio, risparmiare energia e usare i mezzi pubblici."
+      },
+      scuola: {
+        q: ["Qual e la tua materia preferita e perche?", "Perche e importante imparare le lingue straniere?", "Com'e la tua scuola?"],
+        phrases: ["La mia materia preferita e... perche...", "Imparare le lingue e utile per il lavoro e per viaggiare.", "Le lezioni cominciano la mattina."],
+        model: "Frequento un liceo. La mia materia preferita e l'italiano. Secondo me imparare le lingue straniere e molto importante, perche e utile per il lavoro e per viaggiare."
+      },
+      lavoro: {
+        q: ["Hai mai fatto un lavoro estivo o part-time?", "Preferisci continuare gli studi o iniziare a lavorare?", "Perche e utile lavorare da giovani?"],
+        phrases: ["Molti giovani fanno lavori estivi.", "Lavorando si fa esperienza e si diventa indipendenti.", "Dopo la maturita vorrei continuare gli studi."],
+        model: "Molti giovani fanno lavori estivi, per esempio come camerieri. Cosi si guadagnano i primi soldi e si fa esperienza. Io vorrei continuare gli studi all'universita."
+      },
+      vivere: {
+        q: ["Com'e una tua giornata tipica?", "Cosa fai per avere una vita sana?", "Qual e il tuo piatto preferito?"],
+        phrases: ["La mattina mi sveglio presto e vado a scuola.", "Per stare in forma bisogna mangiare bene e fare sport.", "Il mio piatto preferito e..."],
+        model: "Una mia giornata tipica e normale: la mattina vado a scuola e il pomeriggio studio. Per una vita sana cerco di mangiare bene, dormire abbastanza e fare sport."
+      },
+      divertimento: {
+        q: ["Che cosa fai nel tuo tempo libero?", "Fai sport? Quale sport ti piace?", "Ti piace andare al cinema o a teatro?"],
+        phrases: ["Nel mio tempo libero mi piace...", "Il mio hobby preferito e...", "Mi piace fare sport perche e sano."],
+        model: "Nel mio tempo libero mi piace ascoltare musica, guardare film e stare con gli amici. Mi piace anche fare sport, perche e sano e aiuta a rilassarsi."
+      },
+      viaggi: {
+        q: ["Ti piace viaggiare? Perche?", "Preferisci una vacanza autogestita o preorganizzata?", "Dove vai di solito in vacanza?"],
+        phrases: ["Mi piace viaggiare perche posso conoscere posti nuovi.", "In Ungheria mi piace andare al lago Balaton.", "Preferisco una vacanza autogestita."],
+        model: "Mi piace molto viaggiare, perche posso conoscere nuove culture. In Ungheria vado al Balaton. Preferisco una vacanza autogestita, perche mi piace decidere il programma da solo."
+      },
+      scienza: {
+        q: ["Come usi la tecnologia ogni giorno?", "Quali sono i vantaggi e i pericoli di Internet?", "La tecnologia ti aiuta a studiare?"],
+        phrases: ["Uso lo smartphone ogni giorno per...", "Internet ha molti vantaggi, pero ci sono anche pericoli.", "Bisogna usare la tecnologia con attenzione."],
+        model: "Uso la tecnologia ogni giorno: lo smartphone mi serve per cercare informazioni e studiare. Internet ha molti vantaggi, pero bisogna usarlo con attenzione."
+      },
+      finanze: {
+        q: ["Come gestisci i tuoi soldi?", "La pubblicita ti influenza quando fai acquisti?", "Preferisci pagare in contanti o con la carta?"],
+        phrases: ["Cerco di risparmiare un po'.", "La pubblicita ci influenza molto.", "Per me e comodo pagare con la carta."],
+        model: "Cerco di gestire bene i soldi e di risparmiare un po'. Penso che la pubblicita ci influenzi molto, percio compro solo quello di cui ho bisogno."
+      }
+    };
+
+    var TOPIC_NAMES = {
+      aspetti:"Aspetti personali", gente:"Gente e societa", ambiente:"Ambiente",
+      scuola:"Scuola", lavoro:"Mondo del lavoro", vivere:"Modo di vivere",
+      divertimento:"Divertimento", viaggi:"Viaggi e vacanze",
+      scienza:"Scienza e tecnologia", finanze:"Questioni finanziarie"
+    };
+
+    var bubble = document.getElementById('aiBubble');
+    var panel = document.getElementById('aiPanel');
+    var closeBtn = document.getElementById('aiClose');
+    var body = document.getElementById('aiBody');
+    var topicSel = document.getElementById('aiTopic');
+    var input = document.getElementById('aiInput');
+    var sendBtn = document.getElementById('aiSend');
+    var current = null; // {topic, question}
+    var greeted = false;
+
+    function add(text, who) {
+      var d = document.createElement('div');
+      d.className = 'aiMsg ' + (who || 'bot');
+      d.textContent = text;
+      body.appendChild(d);
+      body.scrollTop = body.scrollHeight;
+    }
+
+    function pickTopic() {
+      var t = topicSel.value;
+      if (t === 'all') {
+        var keys = Object.keys(BANK);
+        t = keys[Math.floor(Math.random() * keys.length)];
+      }
+      return t;
+    }
+
+    function rand(arr) { return arr[Math.floor(Math.random() * arr.length)]; }
+
+    function newQuestion() {
+      var t = pickTopic();
+      var qs = BANK[t].q;
+      current = { topic: t, question: rand(qs) };
+      add("Tema: " + TOPIC_NAMES[t] + "\n\n" + current.question);
+    }
+
+    function showModel() {
+      if (!current) { add("Eloszor kerj egy kerdest a 'Uj kerdes' gombbal!"); return; }
+      add("Mintavalasz:\n" + BANK[current.topic].model);
+    }
+
+    function showPhrases() {
+      var t = current ? current.topic : pickTopic();
+      add("Hasznos kifejezesek (" + TOPIC_NAMES[t] + "):\n- " + BANK[t].phrases.join("\n- "));
+    }
+
+    function feedback(ans) {
+      var words = ans.trim().split(/\s+/).filter(Boolean).length;
+      var connectives = ['perche','secondo me','di solito','per esempio','pero','anche','quindi','mi piace','vorrei','penso'];
+      var low = ' ' + ans.toLowerCase() + ' ';
+      var used = connectives.filter(function (c) { return low.indexOf(c) !== -1; });
+
+      var tips = [];
+      if (words < 12) tips.push("A valasz elég rovid (" + words + " szo). Probald 4-6 mondatra bovteni.");
+      else tips.push("Jo hosszusag (" + words + " szo)!");
+
+      if (used.length === 0) tips.push("Hasznalj kotoszavakat / vélemeny-kifejezeseket: secondo me, perche, di solito, pero...");
+      else tips.push("Szuper, hasznaltad: " + used.join(", ") + ".");
+
+      tips.push("Tipp: zard le egy velemennyel ('Secondo me...') es egy peldaval ('Per esempio...').");
+      add("Visszajelzes:\n- " + tips.join("\n- ") + "\n\nKattints a 'Mintavalasz'-ra az osszehasonlitashoz.");
+    }
+
+    function send() {
+      var v = input.value.trim();
+      if (!v) return;
+      add(v, 'user');
+      input.value = '';
+      setTimeout(function () { feedback(v); }, 250);
+    }
+
+    function open() {
+      panel.classList.add('open');
+      panel.setAttribute('aria-hidden', 'false');
+      if (!greeted) {
+        greeted = true;
+        add("Ciao! Olasz szobeli gyakorlo partner vagyok. Valassz temat, kerj 'Uj kerdes'-t, majd ird be a valaszod olaszul. Adok visszajelzest es mintavalaszt is. 🇮🇹");
+        newQuestion();
+      }
+    }
+    function close() { panel.classList.remove('open'); panel.setAttribute('aria-hidden', 'true'); }
+
+    bubble.addEventListener('click', function () { panel.classList.contains('open') ? close() : open(); });
+    closeBtn.addEventListener('click', close);
+    sendBtn.addEventListener('click', send);
+    input.addEventListener('keydown', function (e) { if (e.key === 'Enter') send(); });
+    document.querySelectorAll('.aiChip').forEach(function (b) {
+      b.addEventListener('click', function () {
+        var act = b.getAttribute('data-act');
+        if (act === 'q') newQuestion();
+        else if (act === 'model') showModel();
+        else if (act === 'phrases') showPhrases();
+      });
+    });
+  })();
+</script>
+  
 </body>
 </html>
