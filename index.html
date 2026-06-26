@@ -7,7 +7,25 @@
   <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='33' height='100' x='0' fill='%23009246'/><rect width='34' height='100' x='33' fill='%23f1f1f1'/><rect width='33' height='100' x='67' fill='%23ce2b37'/></svg>">
   <style>
     body { font-family: Arial, sans-serif; background: #f4f6f8; color: #222; margin: 0; line-height: 1.6; }
-    header { background: #1f6feb; color: white; padding: 30px 20px; text-align: center; }
+    header { position: relative; overflow: hidden; background: #07140d; color: #fff; padding: 46px 20px; text-align: center; }
+ header .aurora {
+  position: absolute; inset: -40%; z-index: 0;
+  background:
+    radial-gradient(40% 40% at 25% 30%, rgba(0,146,70,0.85), transparent 60%),
+    radial-gradient(40% 40% at 75% 35%, rgba(206,43,55,0.80), transparent 60%),
+    radial-gradient(45% 45% at 50% 75%, rgba(255,255,255,0.50), transparent 60%);
+  filter: blur(48px) saturate(1.1);
+  animation: auroraShift 16s ease-in-out infinite alternate;
+}
+@keyframes auroraShift {
+  0% { transform: translate(0,0) scale(1); }
+  50% { transform: translate(4%,-3%) scale(1.10); }
+  100% { transform: translate(-4%,3%) scale(1.05); }
+}
+header .tricolore { position: absolute; left: 0; right: 0; bottom: 0; height: 6px; z-index: 1;
+  background: linear-gradient(90deg,#009246 0 33.3%,#fff 33.3% 66.6%,#ce2b37 66.6% 100%); }
+header h1, header p { position: relative; z-index: 2; text-shadow: 0 2px 12px rgba(0,0,0,0.35); }
+@media (prefers-reduced-motion: reduce) { header .aurora, .ride { animation: none !important; } }
     nav { background: white; padding: 15px; text-align: center; border-bottom: 1px solid #ddd; position: sticky; top: 0; z-index: 30; }
     nav a { margin: 0 8px; color: #1f6feb; text-decoration: none; font-weight: bold; font-size: 14px; }
     main { max-width: 1000px; margin: 30px auto; padding: 0 20px; }
