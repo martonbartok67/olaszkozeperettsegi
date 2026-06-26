@@ -1,652 +1,1194 @@
 <!DOCTYPE html>
 <html lang="hu">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Olasz középszintű szóbeli érettségi gyakorló</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Olasz erettsegi gyakorlo</title>
   <style>
-    body {
-      font-family: Arial, sans-serif;
-      background: #f4f6f8;
-      color: #222;
-      margin: 0;
-      padding: 0;
-      line-height: 1.6;
-    }
-
-    header {
-      background: #1f6feb;
-      color: white;
-      padding: 30px 20px;
-      text-align: center;
-    }
-
-    header h1 {
-      margin: 0;
-      font-size: 30px;
-    }
-
-    header p {
-      margin-top: 10px;
-      font-size: 18px;
-    }
-
-    nav {
-      background: white;
-      padding: 15px;
-      text-align: center;
-      box-shadow: 0 2px 6px rgba(0,0,0,0.08);
-      position: sticky;
-      top: 0;
-      z-index: 10;
-    }
-
-    nav a {
-      margin: 0 10px;
-      text-decoration: none;
-      color: #1f6feb;
-      font-weight: bold;
-    }
-
-    main {
-      max-width: 1000px;
-      margin: 30px auto;
-      padding: 0 20px;
-    }
-
-    section {
-      background: white;
-      margin-bottom: 30px;
-      padding: 25px;
-      border-radius: 14px;
-      box-shadow: 0 2px 10px rgba(0,0,0,0.07);
-    }
-
-    h2 {
-      color: #1f6feb;
-      border-bottom: 2px solid #e5e7eb;
-      padding-bottom: 8px;
-    }
-
-    h3 {
-      color: #333;
-      margin-top: 25px;
-    }
-
-    .tag {
-      display: inline-block;
-      background: #e8f1ff;
-      color: #1f6feb;
-      padding: 5px 10px;
-      border-radius: 20px;
-      margin: 4px;
-      font-size: 14px;
-    }
-
-    details {
-      background: #f9fafb;
-      border: 1px solid #ddd;
-      padding: 15px;
-      border-radius: 10px;
-      margin: 12px 0;
-    }
-
-    summary {
-      font-weight: bold;
-      cursor: pointer;
-      color: #1f6feb;
-    }
-
-    table {
-      width: 100%;
-      border-collapse: collapse;
-      margin: 15px 0;
-      background: white;
-    }
-
-    th, td {
-      border: 1px solid #ddd;
-      padding: 10px;
-      vertical-align: top;
-    }
-
-    th {
-      background: #eef4ff;
-    }
-
-    .italian {
-      background: #fff8e1;
-      border-left: 5px solid #f4b400;
-      padding: 15px;
-      border-radius: 8px;
-      margin: 15px 0;
-    }
-
-    .hungarian {
-      background: #eef7ee;
-      border-left: 5px solid #34a853;
-      padding: 15px;
-      border-radius: 8px;
-      margin: 15px 0;
-    }
-
-    .question {
-      background: #f0f0ff;
-      padding: 10px;
-      border-radius: 8px;
-      margin: 8px 0;
-    }
-
-    button {
-      background: #1f6feb;
-      color: white;
-      border: none;
-      padding: 10px 16px;
-      border-radius: 8px;
-      cursor: pointer;
-      margin: 5px 0;
-    }
-
-    button:hover {
-      background: #1557c0;
-    }
-
-    textarea {
-      width: 100%;
-      min-height: 120px;
-      padding: 12px;
-      border-radius: 8px;
-      border: 1px solid #ccc;
-      font-family: Arial, sans-serif;
-      font-size: 15px;
-    }
-
-    footer {
-      text-align: center;
-      padding: 25px;
-      color: #666;
-    }
+    body { font-family: Arial, sans-serif; background: #f4f6f8; color: #222; margin: 0; line-height: 1.6; }
+    header { background: #1f6feb; color: white; padding: 30px 20px; text-align: center; }
+    nav { background: white; padding: 15px; text-align: center; border-bottom: 1px solid #ddd; position: sticky; top: 0; }
+    nav a { margin: 0 8px; color: #1f6feb; text-decoration: none; font-weight: bold; font-size: 14px; }
+    main { max-width: 1000px; margin: 30px auto; padding: 0 20px; }
+    section { background: white; margin-bottom: 25px; padding: 22px; border-radius: 12px; box-shadow: 0 2px 8px rgba(0,0,0,0.08); }
+    h2 { color: #1f6feb; border-bottom: 2px solid #eee; padding-bottom: 8px; }
+    h3 { margin-top: 25px; }
+    table { width: 100%; border-collapse: collapse; margin: 15px 0; }
+    th, td { border: 1px solid #ddd; padding: 10px; vertical-align: top; }
+    th { background: #eef4ff; }
+    details { background: #f9fafb; border: 1px solid #ddd; border-radius: 8px; padding: 12px; margin: 10px 0; }
+    summary { cursor: pointer; font-weight: bold; color: #1f6feb; }
+    .box-it { background: #fff8e1; border-left: 5px solid #f4b400; padding: 15px; border-radius: 8px; margin: 15px 0; }
+    .box-hu { background: #eef7ee; border-left: 5px solid #34a853; padding: 15px; border-radius: 8px; margin: 15px 0; }
+    .question { background: #f0f0ff; padding: 10px; border-radius: 8px; margin: 8px 0; }
+    textarea { width: 100%; min-height: 130px; padding: 12px; font-size: 15px; border: 1px solid #bbb; border-radius: 8px; box-sizing: border-box; }
+    footer { text-align: center; padding: 25px; color: #666; }
   </style>
 </head>
+
 <body>
 
 <header>
-  <h1>Olasz középszintű szóbeli érettségi gyakorló</h1>
-  <p>Témák: <strong>Divertimento</strong> és <strong>Viaggi e vacanze</strong></p>
+  <h1>Olasz kozep szintu szobeli erettsegi gyakorlo</h1>
+  <p>10 fo temakor szokinccsel, vazlatokkal es mintamonologokkal</p>
 </header>
 
 <nav>
-  <a href="#divertimento">Divertimento</a>
-  <a href="#viaggi">Viaggi e vacanze</a>
-  <a href="#kerdesek">Gyakorló kérdések</a>
-  <a href="#sajat">Saját monológ</a>
+  <a href="#aspetti">1. Aspetti personali</a>
+  <a href="#gente">2. Gente e societa</a>
+  <a href="#ambiente">3. Ambiente</a>
+  <a href="#scuola">4. Scuola</a>
+  <a href="#lavoro">5. Mondo del lavoro</a>
+  <a href="#vivere">6. Modo di vivere</a>
+  <a href="#divertimento">7. Divertimento</a>
+  <a href="#viaggi">8. Viaggi e vacanze</a>
+  <a href="#scienza">9. Scienza e tecnologia</a>
+  <a href="#finanze">10. Questioni finanziarie</a>
+  <a href="#kerdesek">Kerdesek</a>
+  <a href="#sajat">Sajat monolog</a>
 </nav>
 
 <main>
 
-  <section id="bevezeto">
-    <h2>Hogyan használd?</h2>
+<section>
+  <h2>Hogyan hasznald?</h2>
+  <p>
+    Ez az oldal segit gyakorolni az olasz kozep szintu szobeli erettsegire.
+    Tanuld meg a szavakat, nezd at a vazlatokat, majd probald elmondani a monologokat sajat szavaiddal.
+  </p>
+</section>
+
+<!-- ============ 1. ASPETTI PERSONALI, FAMIGLIA ============ -->
+<section id="aspetti">
+  <h2>1. Aspetti personali, famiglia - Szemelyes adatok, csalad</h2>
+
+  <h3>Alap szokincs</h3>
+  <table>
+    <tr><th>Olaszul</th><th>Magyarul</th></tr>
+    <tr><td>i dati personali</td><td>szemelyes adatok</td></tr>
+    <tr><td>il nome / il cognome</td><td>keresztnev / vezeteknev</td></tr>
+    <tr><td>la data di nascita</td><td>szuletesi datum</td></tr>
+    <tr><td>l'eta</td><td>kor (eletkor)</td></tr>
+    <tr><td>le fasi della vita</td><td>az elet szakaszai</td></tr>
+    <tr><td>l'infanzia</td><td>gyerekkor</td></tr>
+    <tr><td>l'adolescenza</td><td>kamaszkor</td></tr>
+    <tr><td>la famiglia</td><td>csalad</td></tr>
+    <tr><td>i genitori</td><td>szulok</td></tr>
+    <tr><td>i parenti</td><td>rokonok</td></tr>
+    <tr><td>i lavori domestici</td><td>hazimunka</td></tr>
+    <tr><td>i progetti per il futuro</td><td>jovobeli tervek</td></tr>
+  </table>
+
+  <details>
+    <summary>Dati personali, fasi della vita</summary>
+    <ul>
+      <li>Mi chiamo... - Engem ... hivnak</li>
+      <li>Ho diciotto anni. - 18 eves vagyok.</li>
+      <li>Sono nato/nata a... - ...-ban szulettem</li>
+      <li>l'infanzia, l'adolescenza, l'eta adulta, la vecchiaia - gyerekkor, kamaszkor, felnottkor, oregkor</li>
+      <li>crescere - felnoni</li>
+    </ul>
+  </details>
+
+  <details>
+    <summary>Vita familiare, relazioni familiari</summary>
+    <ul>
+      <li>la famiglia numerosa - nagycsalad</li>
+      <li>il fratello / la sorella - testver (fiu / lany)</li>
+      <li>i nonni - nagyszulok</li>
+      <li>andare d'accordo con - jol kijonni valakivel</li>
+      <li>litigare - veszekedni</li>
+      <li>passare il tempo insieme - egyutt tolteni az idot</li>
+    </ul>
+  </details>
+
+  <details>
+    <summary>Impegni quotidiani nella famiglia, lavori domestici</summary>
+    <ul>
+      <li>cucinare - fozni</li>
+      <li>lavare i piatti - mosogatni</li>
+      <li>fare la spesa - bevasarolni</li>
+      <li>pulire la casa - takaritani</li>
+      <li>aiutare in casa - segiteni a hazimunkaban</li>
+      <li>portare fuori i rifiuti - kivinni a szemetet</li>
+    </ul>
+  </details>
+
+  <details>
+    <summary>Progetti personali</summary>
+    <ul>
+      <li>vorrei studiare all'universita - egyetemen szeretnek tanulni</li>
+      <li>imparare le lingue - nyelveket tanulni</li>
+      <li>trovare un buon lavoro - jo munkat talalni</li>
+      <li>viaggiare - utazni</li>
+      <li>il mio sogno e... - az almom az, hogy...</li>
+    </ul>
+  </details>
+
+  <h3>Vazlat - Aspetti personali, famiglia</h3>
+  <div class="box-hu">
+    <ol>
+      <li>Bemutatkozas: nev, kor, hol laksz.</li>
+      <li>Csalad bemutatasa: kik a tagjai, milyen a kapcsolat.</li>
+      <li>Hazimunka: ki mit csinal otthon, te miben segitesz.</li>
+      <li>Az elet szakaszai roviden.</li>
+      <li>Jovobeli terveid az erettsegi utan.</li>
+    </ol>
+  </div>
+
+  <h3>Mintamonolog - Aspetti personali, famiglia</h3>
+  <div class="box-it">
     <p>
-      Ez az oldal segít felkészülni az olasz középszintű szóbeli érettségire.
-      Először tanuld meg a hasznos szavakat és kifejezéseket, majd nézd át a vázlatokat,
-      végül próbáld elmondani a mintamonológokat saját szavaiddal.
+      Mi chiamo Marton e ho diciotto anni. Abito in Ungheria con la mia famiglia.
+      La mia famiglia non e molto numerosa: siamo io, i miei genitori e mio fratello.
     </p>
-
-    <div class="tag">szókincs</div>
-    <div class="tag">vázlat</div>
-    <div class="tag">mintamonológ</div>
-    <div class="tag">érettségi</div>
-    <div class="tag">olasz szóbeli</div>
-  </section>
-
-  <section id="divertimento">
-    <h2>1. Divertimento — Szórakozás, szabadidő</h2>
-
-    <h3>Alapvető szókincs</h3>
-    <table>
-      <tr>
-        <th>Olaszul</th>
-        <th>Magyarul</th>
-      </tr>
-      <tr>
-        <td>il divertimento</td>
-        <td>szórakozás</td>
-      </tr>
-      <tr>
-        <td>il tempo libero</td>
-        <td>szabadidő</td>
-      </tr>
-      <tr>
-        <td>il passatempo</td>
-        <td>időtöltés</td>
-      </tr>
-      <tr>
-        <td>l'hobby</td>
-        <td>hobbi</td>
-      </tr>
-      <tr>
-        <td>rilassarsi</td>
-        <td>pihenni, kikapcsolódni</td>
-      </tr>
-      <tr>
-        <td>uscire con gli amici</td>
-        <td>barátokkal elmenni</td>
-      </tr>
-      <tr>
-        <td>andare al cinema</td>
-        <td>moziba menni</td>
-      </tr>
-      <tr>
-        <td>andare a teatro</td>
-        <td>színházba menni</td>
-      </tr>
-      <tr>
-        <td>ascoltare musica</td>
-        <td>zenét hallgatni</td>
-      </tr>
-      <tr>
-        <td>guardare la televisione</td>
-        <td>tévét nézni</td>
-      </tr>
-      <tr>
-        <td>navigare su Internet</td>
-        <td>internetezni</td>
-      </tr>
-      <tr>
-        <td>leggere un libro</td>
-        <td>könyvet olvasni</td>
-      </tr>
-      <tr>
-        <td>fare sport</td>
-        <td>sportolni</td>
-      </tr>
-      <tr>
-        <td>guardare una partita</td>
-        <td>meccset nézni</td>
-      </tr>
-      <tr>
-        <td>un evento culturale</td>
-        <td>kulturális esemény</td>
-      </tr>
-    </table>
-
-    <details>
-      <summary>Passatempi e hobby — Szabadidős tevékenységek</summary>
-      <p><strong>Hasznos kifejezések:</strong></p>
-      <ul>
-        <li>Nel mio tempo libero mi piace... — Szabadidőmben szeretek...</li>
-        <li>Il mio hobby preferito è... — A kedvenc hobbim...</li>
-        <li>Quando ho tempo, di solito... — Amikor van időm, általában...</li>
-        <li>Mi aiuta a rilassarmi. — Segít kikapcsolódni.</li>
-        <li>Preferisco attività tranquille / dinamiche. — A nyugodt / aktív tevékenységeket szeretem jobban.</li>
-      </ul>
-    </details>
-
-    <details>
-      <summary>Teatro, cinema, concerti, esposizioni</summary>
-      <ul>
-        <li>il teatro — színház</li>
-        <li>il cinema — mozi</li>
-        <li>il concerto — koncert</li>
-        <li>la mostra / l'esposizione — kiállítás</li>
-        <li>il biglietto — jegy</li>
-        <li>l'attore / l'attrice — színész / színésznő</li>
-        <li>il film — film</li>
-        <li>la commedia — vígjáték</li>
-        <li>il film d'azione — akciófilm</li>
-        <li>il film romantico — romantikus film</li>
-        <li>il museo — múzeum</li>
-      </ul>
-    </details>
-
-    <details>
-      <summary>Sport — fare sport / guardare sport</summary>
-      <ul>
-        <li>fare calcio — focizni</li>
-        <li>giocare a pallacanestro — kosárlabdázni</li>
-        <li>nuotare — úszni</li>
-        <li>correre — futni</li>
-        <li>andare in palestra — edzőterembe járni</li>
-        <li>lo sport scolastico — iskolai sport</li>
-        <li>la squadra — csapat</li>
-        <li>la partita — meccs</li>
-        <li>il tifoso — szurkoló</li>
-      </ul>
-    </details>
-
-    <details>
-      <summary>Leggere, radio, televisione, computer, Internet</summary>
-      <ul>
-        <li>leggere romanzi — regényeket olvasni</li>
-        <li>ascoltare la radio — rádiót hallgatni</li>
-        <li>guardare serie — sorozatokat nézni</li>
-        <li>usare il computer — számítógépet használni</li>
-        <li>chattare con gli amici — barátokkal chatelni</li>
-        <li>usare i social media — közösségi médiát használni</li>
-        <li>giocare ai videogiochi — videójátékokkal játszani</li>
-      </ul>
-    </details>
-
-    <h3>Vázlat — Divertimento</h3>
-    <div class="hungarian">
-      <ol>
-        <li>Bevezetés: mit jelent számodra a szabadidő?</li>
-        <li>Kedvenc hobbijaid.</li>
-        <li>Kulturális programok: mozi, színház, koncert, kiállítás.</li>
-        <li>Sport: sportolsz-e, nézel-e sportot?</li>
-        <li>Olvasás, média, internet szerepe.</li>
-        <li>Vélemény: miért fontos a kikapcsolódás?</li>
-      </ol>
-    </div>
-
-    <h3>Mintamonológ — Divertimento</h3>
-    <div class="italian">
-      <p>
-        Nel mio tempo libero mi piace rilassarmi e fare attività che mi aiutano a dimenticare lo stress della scuola.
-        Di solito ascolto musica, guardo film o serie e passo un po' di tempo con i miei amici.
-      </p>
-      <p>
-        Il mio passatempo preferito è usare Internet, perché posso guardare video, leggere notizie, chattare con gli amici
-        e imparare cose nuove. Però penso che sia importante non passare troppo tempo davanti al computer o al telefono.
-      </p>
-      <p>
-        Mi piace anche andare al cinema. Preferisco i film d'azione e le commedie, perché sono divertenti e interessanti.
-        Qualche volta vado a concerti o a eventi culturali, ma non molto spesso, perché di solito non ho molto tempo.
-      </p>
-      <p>
-        Per quanto riguarda lo sport, mi piace fare sport perché è sano e aiuta a mantenersi in forma.
-        A scuola abbiamo educazione fisica, ma nel tempo libero preferisco camminare, correre o andare in palestra.
-        Mi piace anche guardare le partite, soprattutto con gli amici.
-      </p>
-      <p>
-        Secondo me il divertimento è molto importante, perché dopo lo studio bisogna riposarsi.
-        Se una persona ha hobby interessanti, può vivere in modo più equilibrato e felice.
-      </p>
-    </div>
-
-    <h3>Magyar jelentés röviden</h3>
-    <div class="hungarian">
-      <p>
-        A monológ arról szól, hogy szabadidőben szeretsz pihenni, zenét hallgatni, filmeket vagy sorozatokat nézni,
-        barátokkal lenni, internetezni, moziba menni és sportolni. A végén elmondod, hogy a szórakozás fontos,
-        mert segít kikapcsolódni és kiegyensúlyozottabbá teszi az életet.
-      </p>
-    </div>
-  </section>
-
-  <section id="viaggi">
-    <h2>2. Viaggi e vacanze — Utazás és nyaralás</h2>
-
-    <h3>Alapvető szókincs</h3>
-    <table>
-      <tr>
-        <th>Olaszul</th>
-        <th>Magyarul</th>
-      </tr>
-      <tr>
-        <td>viaggiare</td>
-        <td>utazni</td>
-      </tr>
-      <tr>
-        <td>il viaggio</td>
-        <td>utazás</td>
-      </tr>
-      <tr>
-        <td>la vacanza</td>
-        <td>nyaralás</td>
-      </tr>
-      <tr>
-        <td>andare in vacanza</td>
-        <td>nyaralni menni</td>
-      </tr>
-      <tr>
-        <td>il turista</td>
-        <td>turista</td>
-      </tr>
-      <tr>
-        <td>la destinazione</td>
-        <td>úti cél</td>
-      </tr>
-      <tr>
-        <td>prenotare</td>
-        <td>lefoglalni</td>
-      </tr>
-      <tr>
-        <td>organizzare un viaggio</td>
-        <td>utazást szervezni</td>
-      </tr>
-      <tr>
-        <td>fare la valigia</td>
-        <td>bepakolni a bőröndbe</td>
-      </tr>
-      <tr>
-        <td>il passaporto</td>
-        <td>útlevél</td>
-      </tr>
-      <tr>
-        <td>il documento d'identità</td>
-        <td>személyi igazolvány</td>
-      </tr>
-      <tr>
-        <td>il biglietto</td>
-        <td>jegy</td>
-      </tr>
-      <tr>
-        <td>l'albergo / l'hotel</td>
-        <td>szálloda</td>
-      </tr>
-      <tr>
-        <td>l'appartamento</td>
-        <td>apartman</td>
-      </tr>
-      <tr>
-        <td>il campeggio</td>
-        <td>kemping</td>
-      </tr>
-    </table>
-
-    <details>
-      <summary>Viaggiare e trasporto pubblico</summary>
-      <ul>
-        <li>andare in autobus — busszal menni</li>
-        <li>andare in treno — vonattal menni</li>
-        <li>andare in macchina — autóval menni</li>
-        <li>andare in aereo — repülővel menni</li>
-        <li>il trasporto pubblico — tömegközlekedés</li>
-        <li>la stazione — állomás</li>
-        <li>l'aeroporto — repülőtér</li>
-        <li>la fermata — megálló</li>
-        <li>comprare un biglietto — jegyet venni</li>
-        <li>perdere il treno — lekésni a vonatot</li>
-      </ul>
-    </details>
-
-    <details>
-      <summary>Vacanze in Ungheria e all'estero</summary>
-      <ul>
-        <li>in Ungheria — Magyarországon</li>
-        <li>all'estero — külföldön</li>
-        <li>al mare — tengerparton</li>
-        <li>in montagna — hegyekben</li>
-        <li>al lago Balaton — a Balatonnál</li>
-        <li>visitare una città — meglátogatni egy várost</li>
-        <li>vedere monumenti — műemlékeket látni</li>
-        <li>conoscere una nuova cultura — új kultúrát megismerni</li>
-      </ul>
-    </details>
-
-    <details>
-      <summary>Prepararsi, progettare e organizzare le vacanze</summary>
-      <ul>
-        <li>scegliere la destinazione — kiválasztani az úti célt</li>
-        <li>prenotare l'alloggio — szállást foglalni</li>
-        <li>comprare i biglietti — jegyeket venni</li>
-        <li>fare un programma — programot készíteni</li>
-        <li>controllare il tempo — megnézni az időjárást</li>
-        <li>preparare i documenti — előkészíteni az iratokat</li>
-        <li>fare la valigia — bepakolni</li>
-      </ul>
-    </details>
-
-    <details>
-      <summary>Vacanze autogestite e preorganizzate</summary>
-      <p><strong>Vacanza autogestita:</strong> saját szervezésű nyaralás.</p>
-      <ul>
-        <li>più libertà — több szabadság</li>
-        <li>più economica — olcsóbb lehet</li>
-        <li>bisogna organizzare tutto — mindent magunknak kell megszervezni</li>
-      </ul>
-
-      <p><strong>Vacanza preorganizzata:</strong> utazási iroda által szervezett nyaralás.</p>
-      <ul>
-        <li>più comoda — kényelmesebb</li>
-        <li>meno stressante — kevésbé stresszes</li>
-        <li>può essere più cara — drágább lehet</li>
-      </ul>
-    </details>
-
-    <h3>Vázlat — Viaggi e vacanze</h3>
-    <div class="hungarian">
-      <ol>
-        <li>Bevezetés: szeretsz-e utazni, miért?</li>
-        <li>Milyen közlekedési eszközöket használsz?</li>
-        <li>Nyaralás Magyarországon: például Balaton, Budapest, hegyek.</li>
-        <li>Nyaralás külföldön: tengerpart, városnézés, kultúra.</li>
-        <li>Hogyan kell megszervezni egy utazást?</li>
-        <li>Saját szervezésű vagy előre szervezett nyaralás előnyei-hátrányai.</li>
-        <li>Személyes vélemény / saját élmény.</li>
-      </ol>
-    </div>
-
-    <h3>Mintamonológ — Viaggi e vacanze</h3>
-    <div class="italian">
-      <p>
-        Mi piace molto viaggiare, perché durante un viaggio posso conoscere nuovi posti, nuove culture e nuove persone.
-        Secondo me viaggiare è anche un buon modo per rilassarsi e dimenticare i problemi quotidiani.
-      </p>
-      <p>
-        Di solito viaggio con la mia famiglia o con i miei amici. In Ungheria mi piace andare al lago Balaton,
-        perché è un posto molto bello e in estate si può nuotare, prendere il sole e fare passeggiate.
-        Anche Budapest è interessante, perché ci sono molti monumenti, musei e programmi culturali.
-      </p>
-      <p>
-        Mi piacerebbe viaggiare anche all'estero. Vorrei visitare l'Italia, perché mi interessa la lingua italiana,
-        la cultura, la cucina e le città storiche come Roma, Firenze e Venezia.
-        Quando si viaggia all'estero, è importante preparare i documenti, prenotare l'alloggio e comprare i biglietti.
-      </p>
-      <p>
-        Per quanto riguarda i mezzi di trasporto, mi piace viaggiare in treno, perché è comodo e abbastanza economico.
-        Per viaggi più lunghi l'aereo è più veloce, ma spesso è più costoso. In città uso spesso il trasporto pubblico,
-        per esempio l'autobus, il tram o la metropolitana.
-      </p>
-      <p>
-        Ci sono vacanze autogestite e vacanze preorganizzate. Una vacanza autogestita dà più libertà,
-        perché possiamo decidere il programma da soli. Una vacanza preorganizzata invece è più comoda,
-        perché l'agenzia organizza tutto. Io preferisco una vacanza autogestita, perché mi piace scegliere cosa fare ogni giorno.
-      </p>
-    </div>
-
-    <h3>Magyar jelentés röviden</h3>
-    <div class="hungarian">
-      <p>
-        A monológ arról szól, hogy szeretsz utazni, mert új helyeket és kultúrákat ismersz meg.
-        Magyarországon például a Balatont és Budapestet említed, külföldön pedig Olaszországot.
-        Beszélsz a közlekedési eszközökről, az utazás megszervezéséről, valamint a saját szervezésű
-        és előre szervezett nyaralás különbségéről.
-      </p>
-    </div>
-  </section>
-
-  <section id="kerdesek">
-    <h2>Gyakorló kérdések</h2>
-
-    <h3>Divertimento</h3>
-    <div class="question">1. Che cosa fai nel tuo tempo libero?</div>
-    <div class="question">2. Qual è il tuo hobby preferito?</div>
-    <div class="question">3. Ti piace andare al cinema o a teatro?</div>
-    <div class="question">4. Fai sport? Quale sport ti piace?</div>
-    <div class="question">5. Preferisci leggere libri o usare Internet?</div>
-    <div class="question">6. Quali eventi culturali ci sono nella tua città?</div>
-
-    <h3>Viaggi e vacanze</h3>
-    <div class="question">1. Ti piace viaggiare? Perché?</div>
-    <div class="question">2. Dove vai di solito in vacanza?</div>
-    <div class="question">3. Preferisci le vacanze in Ungheria o all'estero?</div>
-    <div class="question">4. Quali mezzi di trasporto usi di solito?</div>
-    <div class="question">5. Come organizzi una vacanza?</div>
-    <div class="question">6. Preferisci una vacanza autogestita o preorganizzata?</div>
-  </section>
-
-  <section id="sajat">
-    <h2>Saját monológ gyakorlása</h2>
     <p>
-      Írd ide a saját olasz monológodat, majd próbáld meg hangosan elmondani.
-      Jó módszer: először vázlat alapján beszélj, ne teljes szöveget magolj.
+      Con i miei genitori vado abbastanza d'accordo, anche se qualche volta litighiamo per piccole cose.
+      A casa tutti aiutano: io di solito lavo i piatti, faccio la spesa e tengo in ordine la mia camera.
     </p>
+    <p>
+      Secondo me ogni fase della vita e importante: l'infanzia, l'adolescenza e poi l'eta adulta.
+      Adesso sono nell'adolescenza ed e un periodo pieno di cambiamenti.
+    </p>
+    <p>
+      Per il futuro ho molti progetti. Dopo la maturita vorrei studiare all'universita,
+      imparare bene le lingue straniere e trovare un lavoro interessante. Il mio sogno e poter viaggiare molto.
+    </p>
+  </div>
+</section>
 
-    <textarea placeholder="Írd ide a saját olasz monológodat..."></textarea>
+<!-- ============ 2. GENTE E SOCIETA ============ -->
+<section id="gente">
+  <h2>2. Gente e societa - Emberek es tarsadalom</h2>
 
-    <br />
-    <button onclick="alert('Tipp: próbáld meg elmondani 1-2 percben, majd javítsd a hibákat!')">
-      Gyakorlási tipp
-    </button>
-  </section>
+  <h3>Alap szokincs</h3>
+  <table>
+    <tr><th>Olaszul</th><th>Magyarul</th></tr>
+    <tr><td>l'aspetto fisico</td><td>kulso, megjelenes</td></tr>
+    <tr><td>il carattere</td><td>jellem</td></tr>
+    <tr><td>simpatico / antipatico</td><td>szimpatikus / ellenszenves</td></tr>
+    <tr><td>l'amicizia</td><td>baratsag</td></tr>
+    <tr><td>l'adolescente</td><td>kamasz</td></tr>
+    <tr><td>il ruolo sociale</td><td>tarsadalmi szerep</td></tr>
+    <tr><td>la festa</td><td>unnep</td></tr>
+    <tr><td>la moda</td><td>divat</td></tr>
+    <tr><td>l'abbigliamento</td><td>oltozkodes</td></tr>
+    <tr><td>la tolleranza</td><td>tolerancia</td></tr>
+    <tr><td>il conflitto</td><td>konfliktus</td></tr>
+    <tr><td>il volontariato</td><td>onkentes munka</td></tr>
+  </table>
 
-  <section>
-    <h2>Hasznos mondatkezdések</h2>
+  <details>
+    <summary>Aspetto fisico e carattere, somiglianze e differenze</summary>
+    <ul>
+      <li>alto / basso - magas / alacsony</li>
+      <li>i capelli biondi / castani / neri - szoke / barna / fekete haj</li>
+      <li>gentile, simpatico, timido, allegro - kedves, szimpatikus, felenk, vidam</li>
+      <li>assomigliare a - hasonlitani valakire</li>
+      <li>la differenza - kulonbseg</li>
+    </ul>
+  </details>
 
-    <table>
-      <tr>
-        <th>Olaszul</th>
-        <th>Magyarul</th>
-      </tr>
-      <tr>
-        <td>Secondo me...</td>
-        <td>Szerintem...</td>
-      </tr>
-      <tr>
-        <td>Penso che...</td>
-        <td>Azt gondolom, hogy...</td>
-      </tr>
-      <tr>
-        <td>Mi piace...</td>
-        <td>Szeretem...</td>
-      </tr>
-      <tr>
-        <td>Non mi piace molto...</td>
-        <td>Nem nagyon szeretem...</td>
-      </tr>
-      <tr>
-        <td>Di solito...</td>
-        <td>Általában...</td>
-      </tr>
-      <tr>
-        <td>Qualche volta...</td>
-        <td>Néha...</td>
-      </tr>
-      <tr>
-        <td>Nel mio tempo libero...</td>
-        <td>Szabadidőmben...</td>
-      </tr>
-      <tr>
-        <td>Durante le vacanze...</td>
-        <td>A nyaralás alatt...</td>
-      </tr>
-      <tr>
-        <td>Per esempio...</td>
-        <td>Például...</td>
-      </tr>
-      <tr>
-        <td>Per concludere...</td>
-        <td>Összefoglalva...</td>
-      </tr>
-    </table>
-  </section>
+  <details>
+    <summary>Amicizia e amici</summary>
+    <ul>
+      <li>il migliore amico / la migliore amica - legjobb barat / baratno</li>
+      <li>fidarsi di qualcuno - megbizni valakiben</li>
+      <li>aiutarsi a vicenda - segiteni egymasnak</li>
+      <li>passare il tempo insieme - egyutt tolteni az idot</li>
+      <li>un vero amico - igazi barat</li>
+    </ul>
+  </details>
+
+  <details>
+    <summary>Il mondo degli adolescenti e il loro rapporto con gli altri</summary>
+    <ul>
+      <li>i problemi dei giovani - a fiatalok problemai</li>
+      <li>la pressione dei coetanei - kortarsak nyomasa</li>
+      <li>i social media - kozossegi media</li>
+      <li>il rapporto con i genitori - kapcsolat a szulokkel</li>
+      <li>essere indipendente - fuggetlennek lenni</li>
+    </ul>
+  </details>
+
+  <details>
+    <summary>Il ruolo sociale delle donne e degli uomini</summary>
+    <ul>
+      <li>la parita - egyenloseg</li>
+      <li>lavorare e occuparsi della famiglia - dolgozni es a csaladdal foglalkozni</li>
+      <li>i ruoli tradizionali - hagyomanyos szerepek</li>
+      <li>oggi le cose sono cambiate - ma mar megvaltoztak a dolgok</li>
+    </ul>
+  </details>
+
+  <details>
+    <summary>Vacanze, feste, feste familiari e celebrazioni</summary>
+    <ul>
+      <li>il Natale - karacsony</li>
+      <li>la Pasqua - husvet</li>
+      <li>il compleanno - szuletesnap</li>
+      <li>festeggiare - unnepelni</li>
+      <li>fare un regalo - ajandekot adni</li>
+    </ul>
+  </details>
+
+  <details>
+    <summary>Moda e abbigliamento</summary>
+    <ul>
+      <li>i vestiti - ruhak</li>
+      <li>essere alla moda - divatosnak lenni</li>
+      <li>lo stile - stilus</li>
+      <li>comodo / elegante - kenyelmes / elegans</li>
+      <li>seguire la moda - kovetni a divatot</li>
+    </ul>
+  </details>
+
+  <details>
+    <summary>Lavoro sociale, tolleranza, conflitti</summary>
+    <ul>
+      <li>il volontariato - onkentes munka</li>
+      <li>aiutare gli altri - segiteni masoknak</li>
+      <li>rispettare le differenze - tisztelni a kulonbsegeket</li>
+      <li>la discriminazione - diszkriminacio</li>
+      <li>risolvere un conflitto - megoldani egy konfliktust</li>
+    </ul>
+  </details>
+
+  <h3>Vazlat - Gente e societa</h3>
+  <div class="box-hu">
+    <ol>
+      <li>Kulso es jellem leirasa, hasonlosagok es kulonbsegek.</li>
+      <li>Baratsag: mitol jo egy barat.</li>
+      <li>A kamaszok vilaga es kapcsolatuk masokkal.</li>
+      <li>Noi es ferfi szerepek a tarsadalomban.</li>
+      <li>Unnepek, csaladi unnepek.</li>
+      <li>Divat es oltozkodes.</li>
+      <li>Onkentesseg, tolerancia, konfliktusok.</li>
+    </ol>
+  </div>
+
+  <h3>Mintamonolog - Gente e societa</h3>
+  <div class="box-it">
+    <p>
+      Ogni persona e diversa: c'e chi e alto e chi e basso, chi e timido e chi e estroverso.
+      Secondo me e piu importante il carattere dell'aspetto fisico.
+    </p>
+    <p>
+      L'amicizia per me e molto importante. Un vero amico e una persona di cui ci si puo fidare,
+      che ci aiuta nei momenti difficili e con cui possiamo passare il tempo libero.
+    </p>
+    <p>
+      Noi adolescenti a volte abbiamo problemi con i genitori, perche vogliamo essere piu indipendenti.
+      I social media sono molto presenti nella nostra vita e influenzano anche la moda e lo stile.
+    </p>
+    <p>
+      Mi piacciono molto le feste familiari, come il Natale o i compleanni, perche tutta la famiglia sta insieme.
+      Penso anche che sia importante la tolleranza: dobbiamo rispettare le differenze e aiutare gli altri,
+      per esempio con il volontariato.
+    </p>
+  </div>
+</section>
+
+<!-- ============ 3. AMBIENTE ============ -->
+<section id="ambiente">
+  <h2>3. Ambiente - Kornyezet</h2>
+
+  <h3>Alap szokincs</h3>
+  <table>
+    <tr><th>Olaszul</th><th>Magyarul</th></tr>
+    <tr><td>la casa</td><td>haz, otthon</td></tr>
+    <tr><td>l'appartamento</td><td>lakas</td></tr>
+    <tr><td>la stanza / la camera</td><td>szoba</td></tr>
+    <tr><td>il quartiere</td><td>negyed, kornyek</td></tr>
+    <tr><td>la citta</td><td>varos</td></tr>
+    <tr><td>la campagna</td><td>videk</td></tr>
+    <tr><td>la natura</td><td>termeszet</td></tr>
+    <tr><td>l'animale</td><td>allat</td></tr>
+    <tr><td>la pianta</td><td>novey</td></tr>
+    <tr><td>il tempo (meteo)</td><td>idojaras</td></tr>
+    <tr><td>l'ambiente</td><td>kornyezet</td></tr>
+    <tr><td>l'inquinamento</td><td>szennyezes</td></tr>
+  </table>
+
+  <details>
+    <summary>Casa, abitazione e i dintorni</summary>
+    <ul>
+      <li>la cucina, il bagno, il soggiorno, la camera da letto - konyha, furdo, nappali, haloszoba</li>
+      <li>abito in un appartamento / in una casa - lakasban / hazban lakom</li>
+      <li>al centro / in periferia - kozpontban / kulvarosban</li>
+      <li>i dintorni - kornyek</li>
+      <li>comodo, luminoso, spazioso - kenyelmes, vilagos, tagas</li>
+    </ul>
+  </details>
+
+  <details>
+    <summary>Attrazioni nella propria citta</summary>
+    <ul>
+      <li>il monumento - emlekmu</li>
+      <li>il museo - muzeum</li>
+      <li>la piazza - ter</li>
+      <li>il parco - park</li>
+      <li>vale la pena visitare - erdemes meglatogatni</li>
+    </ul>
+  </details>
+
+  <details>
+    <summary>Vivere in campagna o in citta</summary>
+    <ul>
+      <li>la citta: piu servizi, piu rumore - varos: tobb szolgaltatas, tobb zaj</li>
+      <li>la campagna: piu tranquilla, aria pulita - videk: nyugodtabb, tiszta levego</li>
+      <li>i vantaggi e gli svantaggi - elonyok es hatranyok</li>
+      <li>il traffico - forgalom</li>
+    </ul>
+  </details>
+
+  <details>
+    <summary>Piante e animali attorno a noi</summary>
+    <ul>
+      <li>gli animali domestici - haziallatok</li>
+      <li>il cane, il gatto - kutya, macska</li>
+      <li>gli alberi, i fiori - fak, viragok</li>
+      <li>prendersi cura di - gondoskodni valamirol</li>
+    </ul>
+  </details>
+
+  <details>
+    <summary>Tempo (meteo)</summary>
+    <ul>
+      <li>fa caldo / fa freddo - meleg / hideg van</li>
+      <li>piove / nevica - esik / havazik</li>
+      <li>c'e il sole / e nuvoloso - sut a nap / felhos</li>
+      <li>le stagioni - evszakok</li>
+    </ul>
+  </details>
+
+  <details>
+    <summary>Tutela dell'ambiente</summary>
+    <ul>
+      <li>proteggere l'ambiente - vedeni a kornyezetet</li>
+      <li>il riciclaggio - ujrahasznositas</li>
+      <li>risparmiare energia / acqua - energiat / vizet sporolni</li>
+      <li>l'inquinamento dell'aria - legszennyezes</li>
+      <li>il cambiamento climatico - klimavaltozas</li>
+    </ul>
+  </details>
+
+  <h3>Vazlat - Ambiente</h3>
+  <div class="box-hu">
+    <ol>
+      <li>Hol laksz: haz vagy lakas, helyisegek.</li>
+      <li>Varosod latnivaloi.</li>
+      <li>Varos vs. videk: elonyok es hatranyok.</li>
+      <li>Allatok es novenyek kornyezetedben.</li>
+      <li>Idojaras es evszakok.</li>
+      <li>Kornyezetvedelem: mit tehetunk.</li>
+    </ol>
+  </div>
+
+  <h3>Mintamonolog - Ambiente</h3>
+  <div class="box-it">
+    <p>
+      Io abito in un appartamento con la mia famiglia. Non e molto grande, ma e comodo e luminoso.
+      Ci sono una cucina, un bagno, un soggiorno e le camere da letto.
+    </p>
+    <p>
+      La mia citta e abbastanza interessante: ci sono musei, parchi e belle piazze che vale la pena visitare.
+      Secondo me vivere in citta ha dei vantaggi, perche ci sono molti servizi, ma c'e anche piu traffico e piu rumore.
+      In campagna invece l'aria e piu pulita e tutto e piu tranquillo.
+    </p>
+    <p>
+      Mi piacciono molto gli animali; a casa abbiamo un cane di cui mi prendo cura.
+      Il tempo in Ungheria cambia con le stagioni: in estate fa caldo, in inverno fa freddo e qualche volta nevica.
+    </p>
+    <p>
+      Penso che proteggere l'ambiente sia molto importante. Possiamo fare il riciclaggio,
+      risparmiare energia e acqua e usare di piu i mezzi pubblici per ridurre l'inquinamento.
+    </p>
+  </div>
+</section>
+
+<!-- ============ 4. SCUOLA ============ -->
+<section id="scuola">
+  <h2>4. Scuola - Iskola</h2>
+
+  <h3>Alap szokincs</h3>
+  <table>
+    <tr><th>Olaszul</th><th>Magyarul</th></tr>
+    <tr><td>la scuola</td><td>iskola</td></tr>
+    <tr><td>il liceo</td><td>gimnazium</td></tr>
+    <tr><td>la materia</td><td>tantargy</td></tr>
+    <tr><td>l'orario</td><td>orarend</td></tr>
+    <tr><td>la lezione</td><td>tanora</td></tr>
+    <tr><td>l'insegnante / il professore</td><td>tanar</td></tr>
+    <tr><td>lo studente</td><td>diak</td></tr>
+    <tr><td>il voto</td><td>jegy, osztalyzat</td></tr>
+    <tr><td>l'esame di maturita</td><td>erettsegi vizsga</td></tr>
+    <tr><td>studiare</td><td>tanulni</td></tr>
+    <tr><td>la lingua straniera</td><td>idegen nyelv</td></tr>
+    <tr><td>le attivita extracurricolari</td><td>tanorán kivuli tevekenysegek</td></tr>
+  </table>
+
+  <details>
+    <summary>Scuola (caratteristiche locali, formazione professionale)</summary>
+    <ul>
+      <li>la mia scuola e un liceo - az iskolam egy gimnazium</li>
+      <li>la formazione professionale - szakkepzes</li>
+      <li>l'aula, la palestra, la biblioteca - tanterem, tornaterem, konyvtar</li>
+      <li>frequentare la scuola - iskolaba jarni</li>
+    </ul>
+  </details>
+
+  <details>
+    <summary>Materie, orario, interessi, studi</summary>
+    <ul>
+      <li>la matematica, la storia, la geografia - matek, tortenelem, foldrajz</li>
+      <li>le lingue, le scienze - nyelvek, termeszettudomanyok</li>
+      <li>la mia materia preferita e... - a kedvenc tantargyam...</li>
+      <li>le lezioni cominciano alle 8 - az orak 8-kor kezdodnek</li>
+    </ul>
+  </details>
+
+  <details>
+    <summary>I diversi metodi di studio</summary>
+    <ul>
+      <li>prendere appunti - jegyzetelni</li>
+      <li>ripetere ad alta voce - hangosan ismetelni</li>
+      <li>fare riassunti - osszefoglalokat keszteni</li>
+      <li>studiare in gruppo - csoportban tanulni</li>
+      <li>usare Internet per studiare - neten tanulni</li>
+    </ul>
+  </details>
+
+  <details>
+    <summary>Il ruolo e l'importanza delle lingue straniere</summary>
+    <ul>
+      <li>imparare le lingue e utile - hasznos nyelvet tanulni</li>
+      <li>per il lavoro e per viaggiare - munkahoz es utazashoz</li>
+      <li>parlare con persone di altri paesi - mas orszagok lakoival beszelni</li>
+      <li>l'inglese e l'italiano - az angol es az olasz</li>
+    </ul>
+  </details>
+
+  <details>
+    <summary>Attivita extracurricolari, tradizioni scolastiche</summary>
+    <ul>
+      <li>il coro, il teatro scolastico - korus, iskolai szinjatszas</li>
+      <li>le gite scolastiche - osztalykirandulasok</li>
+      <li>le feste della scuola - iskolai unnepsegek</li>
+      <li>le competizioni - versenyek</li>
+    </ul>
+  </details>
+
+  <h3>Vazlat - Scuola</h3>
+  <div class="box-hu">
+    <ol>
+      <li>Milyen iskolaba jarsz, milyen az epulet.</li>
+      <li>Tantargyak, orarend, kedvenc targy.</li>
+      <li>Tanulasi modszereid.</li>
+      <li>Idegen nyelvek fontossaga.</li>
+      <li>Tanórán kivuli tevekenysegek, iskolai hagyomanyok.</li>
+    </ol>
+  </div>
+
+  <h3>Mintamonolog - Scuola</h3>
+  <div class="box-it">
+    <p>
+      Io frequento un liceo. La mia scuola e abbastanza grande: ci sono molte aule, una palestra e una biblioteca.
+      Le lezioni cominciano la mattina e finiscono nel pomeriggio.
+    </p>
+    <p>
+      Studiamo molte materie, per esempio matematica, storia, geografia, scienze e lingue straniere.
+      La mia materia preferita e l'italiano, perche mi piace imparare le lingue.
+    </p>
+    <p>
+      Ognuno ha il suo metodo di studio. Io di solito prendo appunti, faccio riassunti e ripeto ad alta voce.
+      Qualche volta studio anche in gruppo con i miei compagni o uso Internet.
+    </p>
+    <p>
+      Secondo me imparare le lingue straniere e molto importante, perche e utile per il lavoro e per viaggiare.
+      Nella mia scuola ci sono anche attivita extracurricolari, come gite, feste e competizioni,
+      e a me piacciono molto perche cosi la scuola non e solo studio.
+    </p>
+  </div>
+</section>
+
+<!-- ============ 5. IL MONDO DEL LAVORO ============ -->
+<section id="lavoro">
+  <h2>5. Il mondo del lavoro - A munka vilaga</h2>
+
+  <h3>Alap szokincs</h3>
+  <table>
+    <tr><th>Olaszul</th><th>Magyarul</th></tr>
+    <tr><td>il lavoro</td><td>munka</td></tr>
+    <tr><td>il lavoro estivo</td><td>nyari munka</td></tr>
+    <tr><td>il lavoro part-time</td><td>reszmunkaido</td></tr>
+    <tr><td>guadagnare</td><td>keresni (penzt)</td></tr>
+    <tr><td>lo stipendio</td><td>fizetes</td></tr>
+    <tr><td>l'esperienza</td><td>tapasztalat</td></tr>
+    <tr><td>la carriera</td><td>karrier</td></tr>
+    <tr><td>l'universita</td><td>egyetem</td></tr>
+    <tr><td>il colloquio di lavoro</td><td>allasinterju</td></tr>
+    <tr><td>il curriculum</td><td>onyeletrajz</td></tr>
+    <tr><td>il datore di lavoro</td><td>munkaado</td></tr>
+    <tr><td>il dipendente</td><td>alkalmazott</td></tr>
+  </table>
+
+  <details>
+    <summary>Lavori estivi, lavori part-time</summary>
+    <ul>
+      <li>lavorare durante l'estate - nyaron dolgozni</li>
+      <li>fare il cameriere / la commessa - pincernek / eladonak lenni</li>
+      <li>guadagnare i primi soldi - elso penzt keresni</li>
+      <li>avere piu indipendenza - fuggetlenebbnek lenni</li>
+      <li>fare esperienza - tapasztalatot szerezni</li>
+    </ul>
+  </details>
+
+  <details>
+    <summary>Scegliere tra carriera e l'educazione accademica-universitaria</summary>
+    <ul>
+      <li>continuare gli studi - tovabb tanulni</li>
+      <li>iniziare subito a lavorare - rogton dolgozni kezdeni</li>
+      <li>il diploma / la laurea - bizonyitvany / diploma</li>
+      <li>i vantaggi e gli svantaggi - elonyok es hatranyok</li>
+      <li>seguire le proprie passioni - kovetni a szenvedelyeinket</li>
+    </ul>
+  </details>
+
+  <h3>Vazlat - Il mondo del lavoro</h3>
+  <div class="box-hu">
+    <ol>
+      <li>Diakmunka, nyari es reszmunka: miert jo.</li>
+      <li>Sajat (esetleges) munkatapasztalat.</li>
+      <li>Tovabbtanulas vagy azonnali munka.</li>
+      <li>Egyetem elonyei es hatranyai.</li>
+      <li>Sajat velemeny a jovorol.</li>
+    </ol>
+  </div>
+
+  <h3>Mintamonolog - Il mondo del lavoro</h3>
+  <div class="box-it">
+    <p>
+      Molti giovani in Ungheria fanno lavori estivi o part-time durante le vacanze.
+      Per esempio lavorano come camerieri, commessi o aiutano in piccole aziende.
+    </p>
+    <p>
+      Secondo me lavorare da giovani e una buona idea, perche cosi si guadagnano i primi soldi,
+      si diventa piu indipendenti e si fa esperienza.
+    </p>
+    <p>
+      Dopo la maturita bisogna scegliere: continuare gli studi all'universita o iniziare subito a lavorare.
+      Studiare all'universita richiede piu tempo e a volte piu soldi, pero con una laurea
+      e piu facile trovare un buon lavoro in futuro.
+    </p>
+    <p>
+      Io penso che sia importante seguire le proprie passioni. Dopo la maturita vorrei continuare gli studi,
+      perche voglio avere una buona preparazione prima di iniziare la mia carriera.
+    </p>
+  </div>
+</section>
+
+<!-- ============ 6. MODO DI VIVERE ============ -->
+<section id="vivere">
+  <h2>6. Modo di vivere - Eletmod</h2>
+
+  <h3>Alap szokincs</h3>
+  <table>
+    <tr><th>Olaszul</th><th>Magyarul</th></tr>
+    <tr><td>la giornata tipica</td><td>egy atlagos nap</td></tr>
+    <tr><td>la routine</td><td>napirend</td></tr>
+    <tr><td>la vita sana</td><td>egeszseges eletmod</td></tr>
+    <tr><td>l'alimentazione</td><td>taplalkozas</td></tr>
+    <tr><td>mangiare bene / male</td><td>jol / rosszul enni</td></tr>
+    <tr><td>stare in forma</td><td>formaban lenni</td></tr>
+    <tr><td>il cibo</td><td>etel</td></tr>
+    <tr><td>il piatto preferito</td><td>kedvenc etel</td></tr>
+    <tr><td>il ristorante</td><td>etterem</td></tr>
+    <tr><td>la malattia</td><td>betegseg</td></tr>
+    <tr><td>il medico</td><td>orvos</td></tr>
+    <tr><td>la dipendenza</td><td>fuggoseg</td></tr>
+  </table>
+
+  <details>
+    <summary>Giorno tipico, gestione del tempo</summary>
+    <ul>
+      <li>mi sveglio / mi alzo - felebredek / felkelek</li>
+      <li>vado a scuola - iskolaba megyek</li>
+      <li>il pomeriggio studio - delutan tanulok</li>
+      <li>la sera mi rilasso - este pihenek</li>
+      <li>organizzare il tempo - beosztani az idot</li>
+    </ul>
+  </details>
+
+  <details>
+    <summary>Vita sana (alimentazione, stare in forma, curare il corpo)</summary>
+    <ul>
+      <li>mangiare frutta e verdura - gyumolcsot es zoldseget enni</li>
+      <li>bere molta acqua - sok vizet inni</li>
+      <li>fare sport regolarmente - rendszeresen sportolni</li>
+      <li>dormire abbastanza - eleget aludni</li>
+      <li>evitare il cibo spazzatura - kerulni a gyorsetelt</li>
+    </ul>
+  </details>
+
+  <details>
+    <summary>Abitudini alimentari, cibo, piatti preferiti</summary>
+    <ul>
+      <li>la colazione, il pranzo, la cena - reggeli, ebed, vacsora</li>
+      <li>la pasta, la pizza, la carne, l'insalata - teszta, pizza, hus, salata</li>
+      <li>il mio piatto preferito e... - a kedvenc etelem...</li>
+      <li>cucinare a casa - otthon fozni</li>
+    </ul>
+  </details>
+
+  <details>
+    <summary>Mangiare alla mensa, al ristorante, al fast-food</summary>
+    <ul>
+      <li>la mensa scolastica - iskolai menza</li>
+      <li>ordinare - rendelni</li>
+      <li>il menu - etlap</li>
+      <li>il fast-food: comodo ma non sano - gyorsetterem: kenyelmes de nem egeszseges</li>
+    </ul>
+  </details>
+
+  <details>
+    <summary>Malattie, lesioni, cura, dipendenze</summary>
+    <ul>
+      <li>il raffreddore, la febbre, la tosse - nathà, laz, kohoges</li>
+      <li>andare dal medico - orvoshoz menni</li>
+      <li>la medicina - gyogyszer</li>
+      <li>l'ospedale - korhaz</li>
+      <li>il fumo, l'alcol, il telefono - dohanyzas, alkohol, telefon (fuggoseg)</li>
+    </ul>
+  </details>
+
+  <h3>Vazlat - Modo di vivere</h3>
+  <div class="box-hu">
+    <ol>
+      <li>Egy atlagos napod, idobeosztas.</li>
+      <li>Egeszseges eletmod: taplalkozas, sport, alvas.</li>
+      <li>Etkezesi szokasok, kedvenc etelek.</li>
+      <li>Menza, etterem, gyorsetterem.</li>
+      <li>Gyakori betegsegek, orvos.</li>
+      <li>Fuggosegek es veszelyeik.</li>
+    </ol>
+  </div>
+
+  <h3>Mintamonolog - Modo di vivere</h3>
+  <div class="box-it">
+    <p>
+      Una mia giornata tipica e abbastanza normale: la mattina mi sveglio presto, vado a scuola,
+      il pomeriggio studio e la sera mi rilasso un po' con la famiglia o con gli amici.
+      Cerco di organizzare bene il mio tempo, ma non e sempre facile.
+    </p>
+    <p>
+      Secondo me la vita sana e molto importante. Per stare in forma bisogna mangiare bene,
+      per esempio frutta e verdura, bere molta acqua, dormire abbastanza e fare sport regolarmente.
+      Il cibo spazzatura e buono ma non e sano, quindi non bisogna mangiarlo troppo spesso.
+    </p>
+    <p>
+      A casa di solito mangiamo piatti cucinati dai miei genitori. Il mio piatto preferito e la pasta.
+      Qualche volta mangio alla mensa della scuola o al fast-food, perche e comodo e veloce.
+    </p>
+    <p>
+      Quando sono malato, per esempio quando ho la febbre o il raffreddore, vado dal medico e prendo le medicine.
+      Penso anche che le dipendenze, come il fumo o l'alcol, siano molto pericolose per la salute.
+    </p>
+  </div>
+</section>
+
+<!-- ============ 7. DIVERTIMENTO (kesz) ============ -->
+<section id="divertimento">
+  <h2>7. Divertimento - Szorakozas, szabadido</h2>
+
+  <h3>Alap szokincs</h3>
+  <table>
+    <tr><th>Olaszul</th><th>Magyarul</th></tr>
+    <tr><td>il divertimento</td><td>szorakozas</td></tr>
+    <tr><td>il tempo libero</td><td>szabadido</td></tr>
+    <tr><td>il passatempo</td><td>idotoltes</td></tr>
+    <tr><td>l'hobby</td><td>hobbi</td></tr>
+    <tr><td>rilassarsi</td><td>pihenni, kikapcsolodni</td></tr>
+    <tr><td>uscire con gli amici</td><td>baratokkal elmenni</td></tr>
+    <tr><td>andare al cinema</td><td>moziba menni</td></tr>
+    <tr><td>andare a teatro</td><td>szinhazba menni</td></tr>
+    <tr><td>ascoltare musica</td><td>zenet hallgatni</td></tr>
+    <tr><td>guardare la televisione</td><td>tevet nezni</td></tr>
+    <tr><td>navigare su Internet</td><td>internetezni</td></tr>
+    <tr><td>leggere un libro</td><td>konyvet olvasni</td></tr>
+    <tr><td>fare sport</td><td>sportolni</td></tr>
+    <tr><td>guardare una partita</td><td>meccset nezni</td></tr>
+    <tr><td>un evento culturale</td><td>kulturalis esemeny</td></tr>
+  </table>
+
+  <details>
+    <summary>Passatempi e hobby</summary>
+    <ul>
+      <li>Nel mio tempo libero mi piace... - Szabadidomben szeretek...</li>
+      <li>Il mio hobby preferito e... - A kedvenc hobbim...</li>
+      <li>Quando ho tempo, di solito... - Amikor van idom, altalaban...</li>
+      <li>Mi aiuta a rilassarmi. - Segit kikapcsolodni.</li>
+      <li>Preferisco attivita tranquille. - A nyugodt tevekenysegeket szeretem jobban.</li>
+    </ul>
+  </details>
+
+  <details>
+    <summary>Teatro, cinema, concerti, esposizioni</summary>
+    <ul>
+      <li>il teatro - szinhaz</li>
+      <li>il cinema - mozi</li>
+      <li>il concerto - koncert</li>
+      <li>la mostra - kiallitas</li>
+      <li>il biglietto - jegy</li>
+      <li>l'attore / l'attrice - szinesz / szineszno</li>
+      <li>il film - film</li>
+      <li>la commedia - vigjatek</li>
+      <li>il museo - muzeum</li>
+    </ul>
+  </details>
+
+  <details>
+    <summary>Sport (fare/guardare sport, sport scolastici)</summary>
+    <ul>
+      <li>giocare a calcio - focizni</li>
+      <li>giocare a pallacanestro - kosarlabdazni</li>
+      <li>nuotare - uszni</li>
+      <li>correre - futni</li>
+      <li>andare in palestra - edzoterembe jarni</li>
+      <li>lo sport scolastico - iskolai sport</li>
+      <li>la squadra - csapat</li>
+      <li>la partita - meccs</li>
+      <li>il tifoso - szurkolo</li>
+    </ul>
+  </details>
+
+  <details>
+    <summary>Leggere, radio, televisione, computer e Internet</summary>
+    <ul>
+      <li>leggere romanzi - regenyt olvasni</li>
+      <li>ascoltare la radio - radiot hallgatni</li>
+      <li>guardare serie - sorozatokat nezni</li>
+      <li>usare il computer - szamitogepet hasznalni</li>
+      <li>chattare con gli amici - baratokkal chatelni</li>
+      <li>usare i social media - kozossegi mediat hasznalni</li>
+      <li>giocare ai videogiochi - videojatekokkal jatszani</li>
+    </ul>
+  </details>
+
+  <details>
+    <summary>Eventi culturali</summary>
+    <ul>
+      <li>il festival - fesztival</li>
+      <li>la mostra d'arte - muveszeti kiallitas</li>
+      <li>il concerto all'aperto - szabadteri koncert</li>
+      <li>partecipare a un evento - reszt venni egy esemenyen</li>
+    </ul>
+  </details>
+
+  <h3>Vazlat - Divertimento</h3>
+  <div class="box-hu">
+    <ol>
+      <li>Mit jelent szamodra a szabadido?</li>
+      <li>Kedvenc hobbijaid.</li>
+      <li>Kulturalis programok: mozi, szinhaz, koncert, kiallitas.</li>
+      <li>Sport: sportolsz-e, nezel-e sportot?</li>
+      <li>Olvasas, media, internet szerepe.</li>
+      <li>Miert fontos a kikapcsolodas?</li>
+    </ol>
+  </div>
+
+  <h3>Mintamonolog - Divertimento</h3>
+  <div class="box-it">
+    <p>
+      Nel mio tempo libero mi piace rilassarmi e fare attivita che mi aiutano a dimenticare lo stress della scuola.
+      Di solito ascolto musica, guardo film o serie e passo un po' di tempo con i miei amici.
+    </p>
+    <p>
+      Il mio passatempo preferito e usare Internet, perche posso guardare video, leggere notizie,
+      chattare con gli amici e imparare cose nuove. Pero penso che sia importante non passare troppo tempo davanti al computer.
+    </p>
+    <p>
+      Mi piace anche andare al cinema. Preferisco i film d'azione e le commedie, perche sono divertenti e interessanti.
+      Qualche volta vado a concerti o a eventi culturali, ma non molto spesso, perche di solito non ho molto tempo.
+    </p>
+    <p>
+      Per quanto riguarda lo sport, mi piace fare sport perche e sano e aiuta a mantenersi in forma.
+      A scuola abbiamo educazione fisica, ma nel tempo libero preferisco camminare, correre o andare in palestra.
+    </p>
+    <p>
+      Secondo me il divertimento e molto importante, perche dopo lo studio bisogna riposarsi.
+      Se una persona ha hobby interessanti, puo vivere in modo piu equilibrato e felice.
+    </p>
+  </div>
+</section>
+
+<!-- ============ 8. VIAGGIO E VACANZE (kesz) ============ -->
+<section id="viaggi">
+  <h2>8. Viaggio e vacanze - Utazas es nyaralas</h2>
+
+  <h3>Alap szokincs</h3>
+  <table>
+    <tr><th>Olaszul</th><th>Magyarul</th></tr>
+    <tr><td>viaggiare</td><td>utazni</td></tr>
+    <tr><td>il viaggio</td><td>utazas</td></tr>
+    <tr><td>la vacanza</td><td>nyaralas</td></tr>
+    <tr><td>andare in vacanza</td><td>nyaralni menni</td></tr>
+    <tr><td>il turista</td><td>turista</td></tr>
+    <tr><td>la destinazione</td><td>uti cel</td></tr>
+    <tr><td>prenotare</td><td>lefoglalni</td></tr>
+    <tr><td>organizzare un viaggio</td><td>utazast szervezni</td></tr>
+    <tr><td>fare la valigia</td><td>bepakolni</td></tr>
+    <tr><td>il passaporto</td><td>utlevel</td></tr>
+    <tr><td>il documento d'identita</td><td>szemelyi igazolvany</td></tr>
+    <tr><td>il biglietto</td><td>jegy</td></tr>
+    <tr><td>l'albergo</td><td>szalloda</td></tr>
+    <tr><td>l'appartamento</td><td>apartman</td></tr>
+    <tr><td>il campeggio</td><td>kemping</td></tr>
+  </table>
+
+  <details>
+    <summary>Viaggiare, trasporto pubblico</summary>
+    <ul>
+      <li>andare in autobus - busszal menni</li>
+      <li>andare in treno - vonattal menni</li>
+      <li>andare in macchina - autoval menni</li>
+      <li>andare in aereo - repulovel menni</li>
+      <li>il trasporto pubblico - tomegkozlekedes</li>
+      <li>la stazione - allomas</li>
+      <li>l'aeroporto - repuloter</li>
+      <li>la fermata - megallo</li>
+      <li>comprare un biglietto - jegyet venni</li>
+      <li>perdere il treno - lekesni a vonatot</li>
+    </ul>
+  </details>
+
+  <details>
+    <summary>Vacanze in Ungheria e all'estero</summary>
+    <ul>
+      <li>in Ungheria - Magyarorszagon</li>
+      <li>all'estero - kulfoldon</li>
+      <li>al mare - tengerparton</li>
+      <li>in montagna - hegyekben</li>
+      <li>al lago Balaton - a Balatonnal</li>
+      <li>visitare una citta - meglatogatni egy varost</li>
+      <li>vedere monumenti - muemlekeket latni</li>
+      <li>conoscere una nuova cultura - uj kulturat megismerni</li>
+    </ul>
+  </details>
+
+  <details>
+    <summary>Prepararsi, progettare e organizzare le vacanze</summary>
+    <ul>
+      <li>scegliere la destinazione - kivalasztani az uti celt</li>
+      <li>prenotare l'alloggio - szallast foglalni</li>
+      <li>comprare i biglietti - jegyeket venni</li>
+      <li>fare un programma - programot kesziteni</li>
+      <li>controllare il tempo - megnezni az idojarast</li>
+      <li>preparare i documenti - elokesziteni az iratokat</li>
+      <li>fare la valigia - bepakolni</li>
+    </ul>
+  </details>
+
+  <details>
+    <summary>Vacanze autogestite e preorganizzate</summary>
+    <p><strong>Vacanza autogestita:</strong> sajat szervezesu nyaralas.</p>
+    <ul>
+      <li>piu liberta - tobb szabadsag</li>
+      <li>piu economica - olcsobb lehet</li>
+      <li>bisogna organizzare tutto - mindent magunknak kell megszervezni</li>
+    </ul>
+    <p><strong>Vacanza preorganizzata:</strong> utazasi iroda altal szervezett nyaralas.</p>
+    <ul>
+      <li>piu comoda - kenyelmesebb</li>
+      <li>meno stressante - kevesbe stresszes</li>
+      <li>puo essere piu cara - dragabb lehet</li>
+    </ul>
+  </details>
+
+  <h3>Vazlat - Viaggio e vacanze</h3>
+  <div class="box-hu">
+    <ol>
+      <li>Szeretsz-e utazni, es miert?</li>
+      <li>Milyen kozlekedesi eszkozoket hasznalsz?</li>
+      <li>Nyaralas Magyarorszagon: Balaton, Budapest, hegyek.</li>
+      <li>Nyaralas kulfoldon: tengerpart, varosnezes, kultura.</li>
+      <li>Hogyan kell megszervezni egy utazast?</li>
+      <li>Sajat szervezesu vagy elore szervezett nyaralas?</li>
+      <li>Szemelyes velemeny vagy sajat elmeny.</li>
+    </ol>
+  </div>
+
+  <h3>Mintamonolog - Viaggio e vacanze</h3>
+  <div class="box-it">
+    <p>
+      Mi piace molto viaggiare, perche durante un viaggio posso conoscere nuovi posti,
+      nuove culture e nuove persone. Secondo me viaggiare e anche un buon modo per rilassarsi.
+    </p>
+    <p>
+      Di solito viaggio con la mia famiglia o con i miei amici. In Ungheria mi piace andare al lago Balaton,
+      perche e un posto molto bello e in estate si puo nuotare, prendere il sole e fare passeggiate.
+    </p>
+    <p>
+      Mi piacerebbe viaggiare anche all'estero. Vorrei visitare l'Italia, perche mi interessa la lingua italiana,
+      la cultura, la cucina e le citta storiche come Roma, Firenze e Venezia.
+    </p>
+    <p>
+      Per quanto riguarda i mezzi di trasporto, mi piace viaggiare in treno, perche e comodo e abbastanza economico.
+      Per viaggi piu lunghi l'aereo e piu veloce, ma spesso e piu costoso.
+    </p>
+    <p>
+      Una vacanza autogestita da piu liberta, perche possiamo decidere il programma da soli.
+      Una vacanza preorganizzata invece e piu comoda, perche l'agenzia organizza tutto.
+      Io preferisco una vacanza autogestita, perche mi piace scegliere cosa fare ogni giorno.
+    </p>
+  </div>
+</section>
+
+<!-- ============ 9. SCIENZA E TECNOLOGIA ============ -->
+<section id="scienza">
+  <h2>9. Scienza e tecnologia - Tudomany es technologia</h2>
+
+  <h3>Alap szokincs</h3>
+  <table>
+    <tr><th>Olaszul</th><th>Magyarul</th></tr>
+    <tr><td>la scienza</td><td>tudomany</td></tr>
+    <tr><td>la tecnologia</td><td>technologia</td></tr>
+    <tr><td>la scoperta</td><td>felfedezes</td></tr>
+    <tr><td>l'invenzione</td><td>talalmany</td></tr>
+    <tr><td>il computer</td><td>szamitogep</td></tr>
+    <tr><td>lo smartphone</td><td>okostelefon</td></tr>
+    <tr><td>Internet</td><td>internet</td></tr>
+    <tr><td>il social media</td><td>kozossegi media</td></tr>
+    <tr><td>l'applicazione (app)</td><td>alkalmazas</td></tr>
+    <tr><td>l'intelligenza artificiale</td><td>mesterseges intelligencia</td></tr>
+    <tr><td>essere utile</td><td>hasznosnak lenni</td></tr>
+    <tr><td>i pericoli</td><td>veszelyek</td></tr>
+  </table>
+
+  <details>
+    <summary>Scienze popolari</summary>
+    <ul>
+      <li>le scoperte scientifiche - tudomanyos felfedezesek</li>
+      <li>la medicina - orvostudomany</li>
+      <li>lo spazio - vilagur</li>
+      <li>la ricerca - kutatas</li>
+      <li>migliorare la vita - jobba tenni az eletet</li>
+    </ul>
+  </details>
+
+  <details>
+    <summary>Tecnologia nella vita quotidiana, computer, Internet</summary>
+    <ul>
+      <li>usare lo smartphone ogni giorno - mindennap hasznalni a telefont</li>
+      <li>cercare informazioni - informaciot keresni</li>
+      <li>fare i compiti online - online hazit csinalni</li>
+      <li>comunicare con gli amici - kommunikalni a baratokkal</li>
+      <li>i vantaggi e i pericoli di Internet - az internet elonyei es veszelyei</li>
+      <li>passare troppo tempo online - tul sok idot tolteni a neten</li>
+    </ul>
+  </details>
+
+  <h3>Vazlat - Scienza e tecnologia</h3>
+  <div class="box-hu">
+    <ol>
+      <li>Tudomanyos felfedezesek, miert fontosak.</li>
+      <li>Technologia a mindennapokban.</li>
+      <li>Szamitogep es internet hasznalata.</li>
+      <li>Elonyok es veszelyek (pl. tul sok keperny ido).</li>
+      <li>Sajat velemeny a technologia szereperol.</li>
+    </ol>
+  </div>
+
+  <h3>Mintamonolog - Scienza e tecnologia</h3>
+  <div class="box-it">
+    <p>
+      La scienza e la tecnologia sono molto importanti nella vita moderna.
+      Grazie alle scoperte scientifiche, per esempio nella medicina, oggi viviamo meglio e piu a lungo.
+    </p>
+    <p>
+      Nella vita quotidiana uso la tecnologia ogni giorno. Lo smartphone e il computer mi servono
+      per cercare informazioni, fare i compiti, comunicare con gli amici e divertirmi.
+    </p>
+    <p>
+      Internet ha molti vantaggi, perche possiamo trovare quasi tutto e imparare cose nuove.
+      Pero ci sono anche dei pericoli: per esempio si puo passare troppo tempo online
+      e non sempre le informazioni sono vere.
+    </p>
+    <p>
+      Secondo me la tecnologia e molto utile, ma bisogna usarla con attenzione e non dipendere troppo da essa.
+    </p>
+  </div>
+</section>
+
+<!-- ============ 10. QUESTIONI FINANZIARIE ============ -->
+<section id="finanze">
+  <h2>10. Questioni finanziarie - Penzugyek</h2>
+
+  <h3>Alap szokincs</h3>
+  <table>
+    <tr><th>Olaszul</th><th>Magyarul</th></tr>
+    <tr><td>il denaro / i soldi</td><td>penz</td></tr>
+    <tr><td>il budget</td><td>koltsegvetes</td></tr>
+    <tr><td>risparmiare</td><td>sporolni</td></tr>
+    <tr><td>spendere</td><td>kolteni</td></tr>
+    <tr><td>la banca</td><td>bank</td></tr>
+    <tr><td>il conto bancario</td><td>bankszamla</td></tr>
+    <tr><td>la carta di credito</td><td>bankkartya</td></tr>
+    <tr><td>il negozio</td><td>uzlet, bolt</td></tr>
+    <tr><td>fare la spesa</td><td>bevasarolni</td></tr>
+    <tr><td>il prezzo</td><td>ar</td></tr>
+    <tr><td>lo sconto</td><td>kedvezmeny</td></tr>
+    <tr><td>la pubblicita</td><td>reklam</td></tr>
+  </table>
+
+  <details>
+    <summary>Budget familiare, denaro nella vita quotidiana</summary>
+    <ul>
+      <li>gestire i soldi - kezelni a penzt</li>
+      <li>la paghetta - zsebpenz</li>
+      <li>risparmiare per qualcosa - sporolni valamire</li>
+      <li>le spese mensili - havi kiadasok</li>
+      <li>il denaro non e tutto - a penz nem minden</li>
+    </ul>
+  </details>
+
+  <details>
+    <summary>Servizi bancari</summary>
+    <ul>
+      <li>aprire un conto - szamlat nyitni</li>
+      <li>prelevare soldi - penzt felvenni</li>
+      <li>pagare con la carta - kartyaval fizetni</li>
+      <li>il bancomat - bankautomata</li>
+      <li>il pagamento online - online fizetes</li>
+    </ul>
+  </details>
+
+  <details>
+    <summary>Negozi e fare la spesa, pubblicita</summary>
+    <ul>
+      <li>il supermercato - szupermarket</li>
+      <li>il centro commerciale - bevasarlokozpont</li>
+      <li>fare acquisti online - online vasarolni</li>
+      <li>la pubblicita ci influenza - a reklam befolyasol minket</li>
+      <li>comprare in saldo - akcioban venni</li>
+    </ul>
+  </details>
+
+  <details>
+    <summary>Servizi</summary>
+    <ul>
+      <li>la posta - posta</li>
+      <li>il parrucchiere - fodrasz</li>
+      <li>il meccanico - szereło</li>
+      <li>usare un servizio - igenybe venni egy szolgaltatast</li>
+    </ul>
+  </details>
+
+  <h3>Vazlat - Questioni finanziarie</h3>
+  <div class="box-hu">
+    <ol>
+      <li>Penz a mindennapokban, zsebpenz, sporolas.</li>
+      <li>Banki szolgaltatasok: szamla, kartya, bankautomata.</li>
+      <li>Vasarlas: bolt, szupermarket, online.</li>
+      <li>Reklam szerepe es hatasa.</li>
+      <li>Sajat velemeny a penz kezeleserol.</li>
+    </ol>
+  </div>
+
+  <h3>Mintamonolog - Questioni finanziarie</h3>
+  <div class="box-it">
+    <p>
+      Secondo me e importante saper gestire bene il denaro. Io ricevo una piccola paghetta dai miei genitori
+      e cerco di non spendere tutto subito, ma di risparmiare un po' per le cose che mi piacciono.
+    </p>
+    <p>
+      Oggi quasi tutti usano i servizi bancari. Si puo aprire un conto, prelevare soldi al bancomat
+      e pagare con la carta o online. Per me e molto comodo pagare con la carta.
+    </p>
+    <p>
+      Mi piace fare la spesa, soprattutto nei centri commerciali o online.
+      Pero penso che la pubblicita ci influenzi molto e a volte ci faccia comprare cose che non ci servono.
+    </p>
+    <p>
+      Per questo cerco di stare attento: confronto i prezzi, approfitto degli sconti
+      e compro solo quello di cui ho davvero bisogno.
+    </p>
+  </div>
+</section>
+
+<!-- ============ KERDESEK ============ -->
+<section id="kerdesek">
+  <h2>Gyakorlo kerdesek</h2>
+
+  <h3>1. Aspetti personali, famiglia</h3>
+  <div class="question">1. Puoi presentarti e parlare della tua famiglia?</div>
+  <div class="question">2. Chi fa i lavori domestici a casa tua?</div>
+  <div class="question">3. Quali sono i tuoi progetti per il futuro?</div>
+
+  <h3>2. Gente e societa</h3>
+  <div class="question">1. Com'e un vero amico secondo te?</div>
+  <div class="question">2. Quali feste familiari ti piacciono di piu?</div>
+  <div class="question">3. Segui la moda?</div>
+
+  <h3>3. Ambiente</h3>
+  <div class="question">1. Dove abiti, in citta o in campagna?</div>
+  <div class="question">2. Cosa possiamo fare per proteggere l'ambiente?</div>
+
+  <h3>4. Scuola</h3>
+  <div class="question">1. Qual e la tua materia preferita e perche?</div>
+  <div class="question">2. Perche e importante imparare le lingue straniere?</div>
+
+  <h3>5. Il mondo del lavoro</h3>
+  <div class="question">1. Hai mai fatto un lavoro estivo o part-time?</div>
+  <div class="question">2. Preferisci continuare gli studi o iniziare a lavorare?</div>
+
+  <h3>6. Modo di vivere</h3>
+  <div class="question">1. Com'e una tua giornata tipica?</div>
+  <div class="question">2. Cosa fai per avere una vita sana?</div>
+
+  <h3>7. Divertimento</h3>
+  <div class="question">1. Che cosa fai nel tuo tempo libero?</div>
+  <div class="question">2. Fai sport? Quale sport ti piace?</div>
+
+  <h3>8. Viaggio e vacanze</h3>
+  <div class="question">1. Ti piace viaggiare? Perche?</div>
+  <div class="question">2. Preferisci una vacanza autogestita o preorganizzata?</div>
+
+  <h3>9. Scienza e tecnologia</h3>
+  <div class="question">1. Come usi la tecnologia ogni giorno?</div>
+  <div class="question">2. Quali sono i vantaggi e i pericoli di Internet?</div>
+
+  <h3>10. Questioni finanziarie</h3>
+  <div class="question">1. Come gestisci i tuoi soldi?</div>
+  <div class="question">2. La pubblicita ti influenza quando fai acquisti?</div>
+</section>
+
+<!-- ============ SAJAT MONOLOG ============ -->
+<section id="sajat">
+  <h2>Sajat monolog gyakorlasa</h2>
+  <p>Ird ide a sajat olasz monologodat, majd probald meg hangosan elmondani.</p>
+  <textarea placeholder="Ird ide a sajat olasz monologodat..."></textarea>
+</section>
+
+<section>
+  <h2>Hasznos mondatkezdesek</h2>
+  <table>
+    <tr><th>Olaszul</th><th>Magyarul</th></tr>
+    <tr><td>Secondo me...</td><td>Szerintem...</td></tr>
+    <tr><td>Penso che...</td><td>Azt gondolom, hogy...</td></tr>
+    <tr><td>Mi piace...</td><td>Szeretem...</td></tr>
+    <tr><td>Non mi piace molto...</td><td>Nem nagyon szeretem...</td></tr>
+    <tr><td>Di solito...</td><td>Altalaban...</td></tr>
+    <tr><td>Qualche volta...</td><td>Neha...</td></tr>
+    <tr><td>Per esempio...</td><td>Peldaul...</td></tr>
+    <tr><td>Per concludere...</td><td>Osszefoglalva...</td></tr>
+  </table>
+</section>
 
 </main>
 
 <footer>
-  Olasz középszintű szóbeli érettségi gyakorló — Divertimento és Viaggi e vacanze
+  Olasz szobeli erettsegi gyakorlo - 10 temakor
 </footer>
 
 </body>
