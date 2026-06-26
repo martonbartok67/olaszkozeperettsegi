@@ -84,40 +84,6 @@
   </style>
 </head>
 
-<script>
-  (function () {
-    var wrap = document.getElementById('smWrap');
-    var toggle = document.getElementById('smToggle');
-    var panel = document.getElementById('smPanel');
-    var text = document.getElementById('smToggleText');
-    var links = panel.querySelectorAll('.sm-list a, .sm-extra a');
-
-    function setOpen(open) {
-      if (open) { wrap.setAttribute('data-open', ''); }
-      else { wrap.removeAttribute('data-open'); }
-      toggle.setAttribute('aria-expanded', open);
-      panel.setAttribute('aria-hidden', !open);
-      text.textContent = open ? 'Close' : 'Temak';
-      panel.querySelectorAll('.sm-list a').forEach(function (a, i) {
-        a.style.transitionDelay = open ? (0.22 + i * 0.05) + 's' : '0s';
-      });
-    }
-
-    toggle.addEventListener('click', function () {
-      setOpen(!wrap.hasAttribute('data-open'));
-    });
-    links.forEach(function (a) {
-      a.addEventListener('click', function () { setOpen(false); });
-    });
-    document.addEventListener('click', function (e) {
-      if (!wrap.hasAttribute('data-open')) return;
-      if (!panel.contains(e.target) && !toggle.contains(e.target)) setOpen(false);
-    });
-    document.addEventListener('keydown', function (e) {
-      if (e.key === 'Escape') setOpen(false);
-    });
-  })();
-</script>
   
 <body>
 <!-- Staggered tetelvalaszto menu -->
@@ -1316,6 +1282,40 @@
 <footer>
   Olasz szobeli erettsegi gyakorlo - 10 temakor
 </footer>
+<script>
+  (function () {
+    var wrap = document.getElementById('smWrap');
+    var toggle = document.getElementById('smToggle');
+    var panel = document.getElementById('smPanel');
+    var text = document.getElementById('smToggleText');
+    var links = panel.querySelectorAll('.sm-list a, .sm-extra a');
+
+    function setOpen(open) {
+      if (open) { wrap.setAttribute('data-open', ''); }
+      else { wrap.removeAttribute('data-open'); }
+      toggle.setAttribute('aria-expanded', open);
+      panel.setAttribute('aria-hidden', !open);
+      text.textContent = open ? 'Close' : 'Temak';
+      panel.querySelectorAll('.sm-list a').forEach(function (a, i) {
+        a.style.transitionDelay = open ? (0.22 + i * 0.05) + 's' : '0s';
+      });
+    }
+
+    toggle.addEventListener('click', function () {
+      setOpen(!wrap.hasAttribute('data-open'));
+    });
+    links.forEach(function (a) {
+      a.addEventListener('click', function () { setOpen(false); });
+    });
+    document.addEventListener('click', function (e) {
+      if (!wrap.hasAttribute('data-open')) return;
+      if (!panel.contains(e.target) && !toggle.contains(e.target)) setOpen(false);
+    });
+    document.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape') setOpen(false);
+    });
+  })();
+</script>
 
 </body>
 </html>
